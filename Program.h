@@ -10,6 +10,7 @@ class Program
 	void render();
 protected:
 	sf::RenderWindow win;
+    Console console;
  
     virtual void onRender();
 	virtual void onUpdate();
@@ -17,7 +18,7 @@ protected:
 	
 public:
 	Program();
-	~Program();
+    virtual ~Program();
 	
 	void run();
 };

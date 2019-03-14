@@ -1,9 +1,12 @@
 #include "Program.h"
 
 Program::Program()
-	: win(sf::VideoMode::getDesktopMode(), "title")
+    : win(sf::VideoMode::getDesktopMode(), "title"), console(win)
 {
+    auto vm = sf::VideoMode::getDesktopMode();
+    //std::cout<<vm.width<<" "<<vm.height<<std::endl;
 	win.setFramerateLimit(30);
+
 }
 
 Program::~Program()
@@ -11,8 +14,11 @@ Program::~Program()
 
 void Program::run()
 {
+    int tick = 0;
 	while(win.isOpen())
 	{
+        console<<tick;
+        tick++;
 		input();
 		onUpdate();
 		render();
@@ -32,7 +38,10 @@ void Program::input()
 void Program::render()
 {
 	win.clear(sf::Color::Yellow);
+
 	onRender();
+    console.draw();
+
 	win.display();
 }
 
