@@ -6,29 +6,37 @@ class ConsoleData;
 
 class Console
 {
+    static Console * instance;
+    static sf::RenderWindow * main_window;
+    static constexpr int constent_size = 15;
+    static constexpr int character_size = 20;
+
 	sf::Font font;
 	sf::Text text;
     sf::RenderTexture texture;
     sf::Sprite area;
 
-    static constexpr int constent_size = 15;
-    static constexpr int character_size = 20;
     std::string content [constent_size];
     int bottom = 2;
     int top = 0;
 
     bool is_shown = true;
 
+    Console(sf::RenderWindow &window);
+
 public:
 	sf::RenderWindow & window;
-	
-    Console(sf::RenderWindow &window);
 
     template<typename T>
     friend Console & operator<<(Console & c, const T & data);
 
     void show(bool is);
 	void draw();
+    void display();
+
+    static void set_window(sf::RenderWindow * window);
+    static Console & get();
+    static void dealloc();
 
 private:
     void addContent(const std::string & text);

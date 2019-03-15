@@ -1,6 +1,9 @@
 #include "Console.h"
 #include <exception>
 
+Console * Console::instance = nullptr;
+sf::RenderWindow * Console::main_window = nullptr;
+
 Console::Console(sf::RenderWindow & window)
 : window(window)
 {
@@ -18,6 +21,7 @@ Console::Console(sf::RenderWindow & window)
 
       content[0] = "Android Console v0.1";
       content[1] = "Hello";
+      addContent("\n");
 }
 
 void Console::show(bool is)
@@ -27,31 +31,55 @@ void Console::show(bool is)
 
 void Console::draw()
 {
+    texture.clear(sf::Color(0,0,0,128));
+
+    int row = 0;
+    for (int i = top; i != bottom; (++i) %= constent_size, ++row) {
+        text.setString(content[i]);
+        text.setPosition(5,row*character_size);
+        texture.draw(text);
+    }
+}
+
+void Console::display()
+{
     if(is_shown)
-    {
-        texture.clear(sf::Color(0,0,0,128));
-
-        int row = 0;
-        for (int i = top; i != bottom; ++i, ++row) {
-            i = i%constent_size;
-            text.setString(content[i]);
-            text.setPosition(5,row*character_size);
-            texture.draw(text);
-            if(i == bottom) break;
-        }
-
         window.draw(area);
+}
+
+void Console::set_window(sf::RenderWindow *window)
+{
+    main_window = window;
+}
+
+Console &Console::get()
+{
+    if(! instance ) instance = new Console(*main_window);
+    return *instance;
+}
+
+void Console::dealloc()
+{
+    if(instance)
+    {
+        delete instance;
+        instance = nullptr;
     }
 }
 
 void Console::addContent(const std::string &text)
 {
     content[bottom] = content[bottom] + text;
+    draw();
 }
 
 void Console::nextLine()
 {
     bottom = (bottom+1)%constent_size;
-    if( bottom == top ) top = (top +1)% constent_size;
+    if( bottom == top ) {
+        content[top] = "";
+        top = (top +1)% constent_size;
+       }
+    draw();
 }
 	
