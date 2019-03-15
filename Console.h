@@ -2,6 +2,8 @@
 #include <sstream>
 #include <iostream>
 
+class ConsoleData;
+
 class Console
 {
 	sf::Font font;
@@ -21,31 +23,33 @@ public:
 	sf::RenderWindow & window;
 	
     Console(sf::RenderWindow &window);
-	
-    template<class T>
-    void operator<<(T data)
-    {
-        std::stringstream ss;
-        std::string text;
-        ss<<data;
-        text = ss.str();
 
-        while (true) {
-            size_t endline = text.find('\n');
-            if( endline == std::string::npos ) {
-                addContent(text);
-                break;
-            }
-
-            addContent(text.substr(0,endline));
-            text = text.substr(endline+1, text.size()-endline);
-        }
-
-    }
+    template<typename T>
+    friend Console & operator<<(Console & c, const T & data);
 
     void show(bool is);
 	void draw();
 
 private:
     void addContent(const std::string & text);
+    void nextLine();
 };
+
+template <typename T>
+Console & operator<<(Console & c, const T &data)
+{
+    std::stringstream ss;
+    std::string text;
+    ss<<data;
+    text = ss.str();
+
+    while (true) {
+        size_t endline = text.find('\n');
+        c.addContent(text.substr(0,endline));
+        text = text.substr(endline+1, text.size()-endline);
+        if(endline == std::string::npos) break;
+        else c.nextLine();
+    }
+
+    return c;
+}

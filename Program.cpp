@@ -6,7 +6,6 @@ Program::Program()
     auto vm = sf::VideoMode::getDesktopMode();
     //std::cout<<vm.width<<" "<<vm.height<<std::endl;
 	win.setFramerateLimit(30);
-
 }
 
 Program::~Program()
@@ -17,7 +16,7 @@ void Program::run()
     int tick = 0;
 	while(win.isOpen())
 	{
-        console<<tick;
+        console<<"tick: "<<tick<<'\n';
         tick++;
 		input();
 		onUpdate();

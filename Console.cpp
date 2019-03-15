@@ -20,8 +20,6 @@ Console::Console(sf::RenderWindow & window)
       content[1] = "Hello";
 }
 
-
-
 void Console::show(bool is)
 {
     is_shown = is;
@@ -42,16 +40,18 @@ void Console::draw()
             if(i == bottom) break;
         }
 
-
         window.draw(area);
     }
 }
 
 void Console::addContent(const std::string &text)
 {
-    content[bottom] = text;
+    content[bottom] = content[bottom] + text;
+}
+
+void Console::nextLine()
+{
     bottom = (bottom+1)%constent_size;
     if( bottom == top ) top = (top +1)% constent_size;
-
 }
 	
