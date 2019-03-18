@@ -8,8 +8,8 @@ class Console
 {
     static Console * instance;
     static sf::RenderWindow * main_window;
-    static constexpr int constent_size = 15;
-    static constexpr int character_size = 20;
+    static constexpr int constent_size = 26;
+    static constexpr int character_size = 12;
 
 	sf::Font font;
 	sf::Text text;

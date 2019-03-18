@@ -16,8 +16,8 @@ Console::Console(sf::RenderWindow & window)
       area.setTexture(texture.getTexture());
 
       area.setOrigin(area.getLocalBounds().width/2, area.getLocalBounds().height/2);
-      area.setScale(1.0f, -1.0f);
-      area.setPosition(area.getLocalBounds().width/2, area.getLocalBounds().height/2);
+      area.setScale(2.0f, -2.0f);
+      area.setPosition(area.getLocalBounds().width, area.getLocalBounds().height);
 
       content[0] = "Android Console v0.1";
       content[1] = "Hello";

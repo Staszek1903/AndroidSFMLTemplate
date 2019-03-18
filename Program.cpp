@@ -3,7 +3,7 @@
 Program::Program()
     : win(sf::VideoMode::getDesktopMode(), "title")
 {
-    auto vm = sf::VideoMode::getDesktopMode();
+    //auto vm = sf::VideoMode::getDesktopMode();
     //std::cout<<vm.width<<" "<<vm.height<<std::endl;
 	win.setFramerateLimit(30);
     Console::set_window(&win);
