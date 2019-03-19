@@ -15,11 +15,11 @@ Program::~Program()
 
 void Program::run()
 {
-    int tick = 0;
+    //int tick = 0;
 	while(win.isOpen())
 	{
-        Console::get()<<"tick: "<<tick<<'\n';
-        tick++;
+        //Console::get()<<"tick: "<<tick<<'\n';
+        //tick++;
 		input();
 		onUpdate();
 		render();
