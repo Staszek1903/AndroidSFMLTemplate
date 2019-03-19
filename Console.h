@@ -39,7 +39,7 @@ public:
 
     static void set_window(sf::RenderWindow * window);
     static Console & get();
-    static void dealloc();
+    static void release();
 
 private:
     void addContent(const std::string & text);

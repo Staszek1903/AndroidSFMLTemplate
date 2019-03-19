@@ -58,7 +58,7 @@ Console &Console::get()
     return *instance;
 }
 
-void Console::dealloc()
+void Console::release()
 {
     if(instance)
     {

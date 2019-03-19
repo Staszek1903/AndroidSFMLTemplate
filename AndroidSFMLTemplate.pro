@@ -9,9 +9,11 @@ SOURCES += \
         main.cpp \
     Program.cpp \
     Console.cpp \
-    p.cpp
+    p.cpp \
+    touchbuffer.cpp
 
 HEADERS += \
     Program.h \
     Console.h \
-    p.h
+    p.h \
+    touchbuffer.h

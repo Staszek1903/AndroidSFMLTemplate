@@ -2,6 +2,7 @@
 #define PROGRAM_H_
 
 #include "Console.h"
+#include "touchbuffer.h"
 #include <SFML/Graphics.hpp>
 
 class Program 
