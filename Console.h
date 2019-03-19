@@ -1,5 +1,5 @@
-#ifndef C_H
-#define C_H
+#ifndef CONSOLE_H_
+#define CONSOLE_H_
 
 #include <SFML/Graphics.hpp>
 #include <sstream>
@@ -65,4 +65,4 @@ Console & operator<<(Console & c, const T &data)
     return c;
 }
 
-#endif /* C_H */
+#endif /* CONSOLE_H_ */
