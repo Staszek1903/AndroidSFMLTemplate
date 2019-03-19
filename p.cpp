@@ -20,10 +20,15 @@ void P::onRender()
 
 void P::onEvent(sf::Event &ev)
 {
+	int x, y, f;
 	switch(ev.type)
 	{
 		case sf::Event::TouchBegan:
-//			Console::ge()<<"touch kurva\n";
+		x = ev.touch.x;
+		y = ev.touch.y;
+		f = ev.touch.finger;
+		Console::get()<<"finger: "<<f
+		<<" touch: "<<x<<" "<<y<<"\n";
 		break;
 		
 		default:
