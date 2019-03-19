@@ -17,3 +17,16 @@ void P::onRender()
 {
     win.draw(s);
 }
+
+void P::onEvent(sf::Event &ev)
+{
+	switch(ev.type)
+	{
+		case sf::Event::TouchBegan:
+//			Console::ge()<<"touch kurva\n";
+		break;
+		
+		default:
+		break;
+	}
+}
