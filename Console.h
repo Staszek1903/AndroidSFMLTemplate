@@ -1,3 +1,6 @@
+#ifndef C_H
+#define C_H
+
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include <iostream>
@@ -61,3 +64,5 @@ Console & operator<<(Console & c, const T &data)
 
     return c;
 }
+
+#endif /* C_H */
