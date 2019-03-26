@@ -4,11 +4,13 @@ Program::Program()
     : win(sf::VideoMode::getDesktopMode(), "title"), renderer(win)
 {
 	Console::set_window(&win);
-	Console::get()<< " inited\n\n";
-    //auto vm = sf::VideoMode::getDesktopMode();
-    //std::cout<<vm.width<<" "<<vm.height<<std::endl;
+	Console::get()<< " inited \n\n";
 	win.setFramerateLimit(30);
     TouchBuffer::get();
+ 
+    //auto mode = sf::VideoMode::getDesktopMode();
+	//float aspect_ratio = (float)mode.height / (float)mode.width;   
+    //Console::get()<<"aspect_ratio: "<<aspect_ratio<<" Pixelsize: "<<PIXEL_WIDTH<<"  "<<(PIXEL_WIDTH*aspect_ratio)<<"\n" << "width: "<<mode.width << " height: "<<mode.height<<"\n";;
 }
 
 Program::~Program()
