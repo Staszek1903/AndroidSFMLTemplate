@@ -3,6 +3,7 @@
 
 #include "Console.h"
 #include "touchbuffer.h"
+#include "Renderer.h"
 #include <SFML/Graphics.hpp>
 
 class Program 
@@ -11,6 +12,7 @@ class Program
 	void render();
 protected:
 	sf::RenderWindow win;
+	Renderer renderer;
  
     virtual void onRender();
 	virtual void onUpdate();
