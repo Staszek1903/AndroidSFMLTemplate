@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
-//#include "Console.h"
-#define PIXEL_WIDTH 1000.0f
+#define PIXEL_WIDTH 1200.0f
 
 class Renderer
 {
