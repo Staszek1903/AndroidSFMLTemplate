@@ -4,9 +4,8 @@ Renderer::Renderer(sf::RenderWindow &win)
 : win(win)
 {
 	auto mode = sf::VideoMode::getDesktopMode();
-	aspect_ratio = mode.height / mode.width;
-	//Console::get();//<<"\n\naspect_ratio: ";//<<aspect_ratio<<" Pixelsize: "<<PIXEL_WIDTH<<"  "<<(PIXEL_WIDTH*aspect_ratio)<<"\n";
-	//view.reset(sf::FloatRect(0,0,PIXEL_WIDTH, PIXEL_WIDTH*aspect_ratio));
+	aspect_ratio = (float)mode.height / (float) mode.width;
+view.reset(sf::FloatRect(0,0,PIXEL_WIDTH, PIXEL_WIDTH*aspect_ratio));
 	win.setView(view);	
 }
 
