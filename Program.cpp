@@ -1,13 +1,13 @@
 #include "Program.h"
 
 Program::Program()
-    : win(sf::VideoMode::getDesktopMode(), "title")
+    : win(sf::VideoMode::getDesktopMode(), "title"), renderer(win)
 {
+	Console::set_window(&win);
+	Console::get()<< " inited\n\n";
     //auto vm = sf::VideoMode::getDesktopMode();
     //std::cout<<vm.width<<" "<<vm.height<<std::endl;
 	win.setFramerateLimit(30);
-    Console::set_window(&win);
-    Console::get();
     TouchBuffer::get();
 }
 
