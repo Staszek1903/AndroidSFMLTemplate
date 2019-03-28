@@ -70,7 +70,14 @@ void Program::input()
             TouchBuffer::get().pushEvent(TouchEvent(ev.mouseButton.x, ev.mouseButton.y, ev.mouseButton.button, TouchEvent::END));
             mousePressed--;
             break;
-
+            
+		case sf::Event::KeyPressed:	TouchBuffer::get().pushEvent(KeyboardEvent(ev.key.code, KeyboardEvent::PRESSED));
+			break;
+			
+		case sf::Event::KeyReleased:
+		TouchBuffer::get().pushEvent(KeyboardEvent(ev.key.code, KeyboardEvent::RELEASED));
+			
+			
         default:
             break;
         }
