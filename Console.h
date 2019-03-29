@@ -5,12 +5,14 @@
 #include <sstream>
 #include <iostream>
 
+#include <sstream>
+
 class ConsoleData;
 
 class Console
 {
     static Console * instance;
-    static sf::RenderWindow * main_window;
+    static sf::RenderWindow * win_pointer;
     static constexpr int constent_size = 26;
     static constexpr int character_size = 12;
 
