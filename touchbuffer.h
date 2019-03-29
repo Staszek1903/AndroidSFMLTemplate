@@ -1,8 +1,25 @@
 #ifndef TOUCHBUFFER_H
 #define TOUCHBUFFER_H
 
-#include <queue>
+#include <vector>
 #include "Console.h"
+
+class TouchEvent;
+class KeyboardEvent;
+
+class TouchHandler
+{
+public:
+  virtual void handle(const TouchEvent & ev) = 0;
+  virtual ~TouchHandler(){}
+};
+
+class KeyboardHandler
+{
+public:
+	virtual void handle( const KeyboardEvent & ev) = 0;
+	virtual ~KeyboardHandler(){}
+};
 
 class TouchEvent
 {
@@ -23,17 +40,34 @@ public:
     int state;
 };
 
+class KeyboardEvent
+{
+public:
+	enum{
+		PRESSED,
+		RELEASED,
+	};
+	int state;
+	int code;
+	
+	KeyboardEvent(int code, int state)
+	: state(state), code(code){}	
+};
+
 class TouchBuffer
 {
     static TouchBuffer * instance;
     TouchBuffer();
 
-    std::queue <TouchEvent> event_queue;
+    std::vector <TouchHandler*> t_handlers;
+    std::vector <KeyboardHandler*> k_handlers;
     TouchEvent current;
 
 public:
-    void pushEvent(const TouchEvent &ev);
-    TouchEvent pollEvent();
+    void emit(const TouchEvent &ev);
+    void emit(const KeyboardEvent & ev);
+    void addHandler(TouchHandler & h);
+    void addHandler(KeyboardHandler & h);
     TouchEvent getCurrent();
 
     static TouchBuffer & get();
