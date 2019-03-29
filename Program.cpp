@@ -1,10 +1,14 @@
 #include "Program.h"
 
 Program::Program()
-    : win(sf::VideoMode::getDesktopMode(), "title"), renderer(win)
+    : win(sf::VideoMode::getDesktopMode(), "title")
 {
 	Console::set_window(&win);
+	Renderer::setWindow(win);
+
 	Console::get()<< " inited \n\n";
+	Renderer::get();
+	
 	win.setFramerateLimit(30);
     TouchBuffer::get();
  
@@ -45,37 +49,37 @@ void Program::input()
             break;
 
         case sf::Event::TouchBegan:
-            TouchBuffer::get().pushEvent(TouchEvent(ev.touch.x, ev.touch.y, ev.touch.finger, TouchEvent::BEGIN));
+            TouchBuffer::get().emit(TouchEvent(ev.touch.x, ev.touch.y, ev.touch.finger, TouchEvent::BEGIN));
             break;
 
         case sf::Event::TouchMoved:
-            TouchBuffer::get().pushEvent(TouchEvent(ev.touch.x, ev.touch.y, ev.touch.finger, TouchEvent::SWIPE));
+            TouchBuffer::get().emit(TouchEvent(ev.touch.x, ev.touch.y, ev.touch.finger, TouchEvent::SWIPE));
             break;
 
         case sf::Event::TouchEnded:
-            TouchBuffer::get().pushEvent(TouchEvent(ev.touch.x, ev.touch.y, ev.touch.finger, TouchEvent::END));
+            TouchBuffer::get().emit(TouchEvent(ev.touch.x, ev.touch.y, ev.touch.finger, TouchEvent::END));
             break;
 
         case sf::Event::MouseButtonPressed:
-            TouchBuffer::get().pushEvent(TouchEvent(ev.mouseButton.x, ev.mouseButton.y, ev.mouseButton.button, TouchEvent::BEGIN));
+            TouchBuffer::get().emit(TouchEvent(ev.mouseButton.x, ev.mouseButton.y, ev.mouseButton.button, TouchEvent::BEGIN));
             mousePressed++;
             break;
 
         case sf::Event::MouseMoved:
             if(mousePressed>0)
-                TouchBuffer::get().pushEvent(TouchEvent(ev.mouseMove.x, ev.mouseMove.y, 0, TouchEvent::SWIPE));
+                TouchBuffer::get().emit(TouchEvent(ev.mouseMove.x, ev.mouseMove.y, 0, TouchEvent::SWIPE));
             break;
 
         case sf::Event::MouseButtonReleased:
-            TouchBuffer::get().pushEvent(TouchEvent(ev.mouseButton.x, ev.mouseButton.y, ev.mouseButton.button, TouchEvent::END));
+            TouchBuffer::get().emit(TouchEvent(ev.mouseButton.x, ev.mouseButton.y, ev.mouseButton.button, TouchEvent::END));
             mousePressed--;
             break;
             
-		case sf::Event::KeyPressed:	TouchBuffer::get().pushEvent(KeyboardEvent(ev.key.code, KeyboardEvent::PRESSED));
+		case sf::Event::KeyPressed:	TouchBuffer::get().emit(KeyboardEvent(ev.key.code, KeyboardEvent::PRESSED));
 			break;
 			
 		case sf::Event::KeyReleased:
-		TouchBuffer::get().pushEvent(KeyboardEvent(ev.key.code, KeyboardEvent::RELEASED));
+		TouchBuffer::get().emit(KeyboardEvent(ev.key.code, KeyboardEvent::RELEASED));
 			
 			
         default:
@@ -88,7 +92,13 @@ void Program::input()
 
 void Program::render()
 {
-	win.clear(sf::Color::Yellow);
+	win.clear(sf::Color::Black);
+	sf::RectangleShape shape;
+	shape.setFillColor(sf::Color::Yellow);
+	shape.setPosition(0,0) ;
+	shape.setSize(sf::Vector2f (1000,1000 ));
+	win.draw(shape);
+	
 	onRender();
     Console::get().display();
 	win.display();
