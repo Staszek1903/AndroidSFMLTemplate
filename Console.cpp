@@ -2,7 +2,7 @@
 #include <exception>
 
 Console * Console::instance = nullptr;
-sf::RenderWindow * Console::main_window = nullptr;
+sf::RenderWindow * Console::win_pointer = nullptr;
 
 Console::Console(sf::RenderWindow & window)
 : window(window)
@@ -34,8 +34,11 @@ void Console::draw()
     texture.clear(sf::Color(0,0,0,128));
 
     int row = 0;
-    for (int i = top; i != bottom; (++i) %= constent_size, ++row) {
-        text.setString(content[i]);
+    for (int i = top; i != bottom; (++i) %= constent_size, ++row) 
+    {
+    	std::stringstream ss;
+    	ss<<i;
+        text.setString(ss.str() + content[i]);
         text.setPosition(5,row*character_size);
         texture.draw(text);
     }
@@ -49,12 +52,12 @@ void Console::display()
 
 void Console::set_window(sf::RenderWindow *window)
 {
-    main_window = window;
+    win_pointer = window;
 }
 
 Console &Console::get()
 {
-    if(! instance ) instance = new Console(*main_window);
+    if(! instance ) instance = new Console(*win_pointer);
     return *instance;
 }
 
