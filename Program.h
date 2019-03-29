@@ -12,7 +12,6 @@ class Program
 	void render();
 protected:
 	sf::RenderWindow win;
-	Renderer renderer;
  
     virtual void onRender();
 	virtual void onUpdate();
