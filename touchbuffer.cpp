@@ -7,29 +7,34 @@ TouchBuffer::TouchBuffer()
 
 }
 
-void TouchBuffer::pushEvent(const TouchEvent &ev)
+void TouchBuffer::emit(const TouchEvent &ev)
 {
-    event_queue.push(ev);
     current = ev;
-    Console::get()<<"finger: "<<ev.finger
-    <<" touch: "<<ev.x<<" "<<ev.y<<"\n";
+    
+    for(auto * h : t_handlers)
+    	h->handle(ev);
 }
 
-TouchEvent TouchBuffer::pollEvent()
+void TouchBuffer::emit(const KeyboardEvent & ev)
 {
-    TouchEvent ret;
-    if(!event_queue.empty())
-    {
-        ret = event_queue.front();
-        event_queue.pop();
-    }
+	for(auto * h: k_handlers)
+		h->handle(ev);
+}
 
-    return ret;
+void TouchBuffer::addHandler( TouchHandler & h)
+{
+	TouchHandler *  ptr = &h; 
+	t_handlers.push_back(ptr);
+}
+
+void TouchBuffer::addHandler( KeyboardHandler & h)
+{
+	KeyboardHandler * ptr = &h; 
+	k_handlers.push_back(ptr);
 }
 
 TouchEvent TouchBuffer::getCurrent()
 {
-    std::queue<TouchEvent>().swap(event_queue);
     return current;
 }
 
