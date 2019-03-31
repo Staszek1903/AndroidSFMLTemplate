@@ -13,7 +13,8 @@ class Console
 {
     static Console * instance;
     static sf::RenderWindow * win_pointer;
-    static constexpr int constent_size = 26;
+    static constexpr int content_size = 26;
+    static constexpr int line_size = 40;
     static constexpr int character_size = 12;
 
 	sf::Font font;
@@ -21,11 +22,12 @@ class Console
     sf::RenderTexture texture;
     sf::Sprite area;
 
-    std::string content [constent_size];
+    char content [content_size][line_size];
     int bottom = 2;
-    int top = 0;
+    int carriage =0;
 
     bool is_shown = true;
+    bool need_redraw = true;
 
     Console(sf::RenderWindow &window);
 
@@ -45,7 +47,9 @@ public:
 
 private:
     void addContent(const std::string & text);
+    void addChar(char c);
     void nextLine();
+    void clearLine(int line);
 };
 
 template <typename T>
@@ -56,13 +60,7 @@ Console & operator<<(Console & c, const T &data)
     ss<<data;
     text = ss.str();
 
-    while (true) {
-        size_t endline = text.find('\n');
-        c.addContent(text.substr(0,endline));
-        text = text.substr(endline+1, text.size()-endline);
-        if(endline == std::string::npos) break;
-        else c.nextLine();
-    }
+    c.addContent(text);
 
     return c;
 }

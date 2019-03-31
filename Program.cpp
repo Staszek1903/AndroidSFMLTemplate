@@ -6,7 +6,7 @@ Program::Program()
 	Console::set_window(&win);
 	Renderer::setWindow(win);
 
-	Console::get()<< " inited \n\n";
+	//Console::get()<< " inited\nkurrrrrrrrrrrrrrrrrrrr\n;
 	Renderer::get();
 	
 	win.setFramerateLimit(30);
@@ -25,11 +25,11 @@ Program::~Program()
 
 void Program::run()
 {
-    //int tick = 0;
+    int tick = 0;
 	while(win.isOpen())
 	{
-        //Console::get()<<"tick: "<<tick<<'\n';
-        //tick++;
+        Console::get()<<"tick: "<<tick<<'\n';
+        tick++;
 		input();
 		onUpdate();
 		render();

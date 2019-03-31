@@ -19,9 +19,12 @@ Console::Console(sf::RenderWindow & window)
       area.setScale(2.0f, -2.0f);
       area.setPosition(area.getLocalBounds().width, area.getLocalBounds().height);
 
-      content[0] = "Android Console v0.1";
-      content[1] = "Hello";
-      addContent("\n");
+      for(int i = 0; i < content_size; ++i)
+      for(int j = 0; j < line_size; ++j)
+      content[i][j] = '\0';
+      
+      addContent("Android Console V0.2\n");
+      addContent("Hello!\n");
 }
 
 void Console::show(bool is)
@@ -32,13 +35,13 @@ void Console::show(bool is)
 void Console::draw()
 {
     texture.clear(sf::Color(0,0,0,128));
-
-    int row = 0;
-    for (int i = top; i != bottom; (++i) %= constent_size, ++row) 
+    int row = 0; // rzad graficzny
+    for (int i = (bottom +1)%content_size;
+     i != bottom; 
+     (++i) %= content_size, ++row) 
     {
-    	std::stringstream ss;
-    	ss<<i;
-        text.setString(ss.str() + content[i]);
+    	std::string l(content[i]);
+    	text.setString(l);
         text.setPosition(5,row*character_size);
         texture.draw(text);
     }
@@ -46,6 +49,11 @@ void Console::draw()
 
 void Console::display()
 {
+	if(need_redraw)
+	{
+		need_redraw = false;
+	    draw();
+	}
     if(is_shown)
         window.draw(area);
 }
@@ -72,17 +80,30 @@ void Console::release()
 
 void Console::addContent(const std::string &text)
 {
-    content[bottom] = content[bottom] + text;
-    draw();
+    for(auto a: text)
+    {
+    	addChar(a);
+    	if(a == '\n') nextLine();
+    }
+    need_redraw = true;
+}
+
+void Console::addChar(char c)
+{
+	content[bottom][carriage] = c;
+	++c;
+	if(carriage > line_size - 2)  nextLine();
 }
 
 void Console::nextLine()
 {
-    bottom = (bottom+1)%constent_size;
-    if( bottom == top ) {
-        content[top] = "";
-        top = (top +1)% constent_size;
-       }
-    draw();
+	content[bottom][carriage] = '\0';
+    bottom = (bottom+1)%content_size;
+    clearLine(bottom);
+}
+
+void Console::clearLine(int line)
+{
+	for(int i=0; i<line_size; i++) content[line][i] = '\0';
 }
 	
