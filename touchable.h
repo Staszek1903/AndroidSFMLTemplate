@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "Touchbuffer.h"
+#include "touchbuffer.h"
 #include "Console.h"
 #include "Renderer.h"
 

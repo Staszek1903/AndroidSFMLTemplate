@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Program.h"
 #include "Console.h"
-#include "Touchable.h"
+#include "touchable.h"
 
 class P : public Program
 {

@@ -10,10 +10,14 @@ SOURCES += \
     Program.cpp \
     Console.cpp \
     p.cpp \
-    touchbuffer.cpp
+    touchbuffer.cpp \
+    touchable.cpp \
+    Renderer.cpp
 
 HEADERS += \
     Program.h \
     Console.h \
     p.h \
-    touchbuffer.h
+    touchbuffer.h \
+    touchable.h \
+    Renderer.h

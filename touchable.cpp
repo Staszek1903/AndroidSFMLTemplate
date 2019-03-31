@@ -15,7 +15,7 @@ void Touchable::handle(const TouchEvent & ev)
 		
 	if(x>b.left&&x<(b.left+b.width)&& y>b.top&&y<(b.top+b.height))
 	{
-	 	
+        Console::get()<<"siemma\n";
 	} 
 }
 
