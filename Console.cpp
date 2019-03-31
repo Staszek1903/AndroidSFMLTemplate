@@ -1,6 +1,5 @@
 #include "Console.h"
 #include <exception>
-
 Console * Console::instance = nullptr;
 sf::RenderWindow * Console::win_pointer = nullptr;
 
@@ -9,10 +8,11 @@ Console::Console(sf::RenderWindow & window)
 {
       if( ! font.loadFromFile( "Arial.ttf" ) )
 	    throw std::runtime_error( " no font.ttf ");	    
+      text.setString("SAMPLE TEXT");
       text.setFont(font);
       text.setFillColor(sf::Color::White);
       text.setCharacterSize(character_size);
-      texture.create(400,300);
+      texture.create(400,315);
       area.setTexture(texture.getTexture());
 
       area.setOrigin(area.getLocalBounds().width/2, area.getLocalBounds().height/2);
@@ -25,6 +25,7 @@ Console::Console(sf::RenderWindow & window)
       
       addContent("Android Console V0.2\n");
       addContent("Hello!\n");
+      (*this)<<"character height:"<<text.getLocalBounds().height<<" dsads\n";
 }
 
 void Console::show(bool is)
@@ -37,13 +38,14 @@ void Console::draw()
     texture.clear(sf::Color(0,0,0,128));
     int row = 0; // rzad graficzny
     for (int i = (bottom +1)%content_size;
-     i != bottom; 
+     ;
      (++i) %= content_size, ++row) 
     {
-    	std::string l(content[i]);
+        std::string l(/*"dupa");*/content[i]);
     	text.setString(l);
         text.setPosition(5,row*character_size);
         texture.draw(text);
+        if(i == bottom) break;
     }
 }
 
@@ -91,7 +93,7 @@ void Console::addContent(const std::string &text)
 void Console::addChar(char c)
 {
 	content[bottom][carriage] = c;
-	++c;
+    ++carriage;
 	if(carriage > line_size - 2)  nextLine();
 }
 
@@ -99,6 +101,7 @@ void Console::nextLine()
 {
 	content[bottom][carriage] = '\0';
     bottom = (bottom+1)%content_size;
+    carriage = 0;
     clearLine(bottom);
 }
 
