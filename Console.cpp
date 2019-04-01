@@ -25,7 +25,7 @@ Console::Console(sf::RenderWindow & window)
       
       addContent("Android Console V0.2\n");
       addContent("Hello!\n");
-      (*this)<<"character height:"<<text.getLocalBounds().height<<" dsads\n";
+   //   (*this)<<"character height:"<<text.getLocalBounds().height<<" dsads\n";
 }
 
 void Console::show(bool is)
