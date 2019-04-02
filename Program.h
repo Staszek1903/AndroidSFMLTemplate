@@ -4,7 +4,10 @@
 #include "Console.h"
 #include "touchbuffer.h"
 #include "Renderer.h"
+#include "Touchable.h"
 #include <SFML/Graphics.hpp>
+
+class ConsoleButtonHandler;
 
 class Program 
 {
@@ -12,6 +15,8 @@ class Program
 	void render();
 protected:
 	sf::RenderWindow win;
+ 	Touchable console_button;
+ 	ConsoleButtonHandler cb_handler;
  
     virtual void onRender();
 	virtual void onUpdate();
@@ -22,6 +27,11 @@ public:
     virtual ~Program();
 	
 	void run();
+};
+
+class ConsoleButtonHandler : public TouchableHandler
+{
+	virtual void handle() override;
 };
 
 #endif /* PROGRAM_H_ */
