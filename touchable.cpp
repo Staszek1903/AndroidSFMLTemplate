@@ -14,8 +14,14 @@ void Touchable::handle(const TouchEvent & ev)
 	auto b = getGlobalBounds();
 		
 	if(x>b.left&&x<(b.left+b.width)&& y>b.top&&y<(b.top+b.height))
-	{
-        Console::get()<<"siemma\n";
+	{/*
+        if(handler)
+        {
+        	Console::get()<<"jest H\n";
+        	handler->handle();
+        } else
+       		Console::get()<<"ni ma H\n";
+   */     
 	} 
 }
 
