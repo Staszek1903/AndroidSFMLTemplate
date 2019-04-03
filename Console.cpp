@@ -56,8 +56,17 @@ void Console::display()
 		need_redraw = false;
 	    draw();
 	}
-    if(is_shown)
-        window.draw(area);
+	
+	if(is_shown && hide_level < 2)
+		hide_level += 0.1;
+		
+	if(!is_shown && hide_level > 0)
+		hide_level -= 0.1;
+		
+	area.setScale(hide_level, -hide_level);
+	
+    if(hide_level > 0)
+    	window.draw(area);
 }
 
 void Console::set_window(sf::RenderWindow *window)
