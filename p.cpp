@@ -7,10 +7,11 @@ P::P()
     s.setFillColor(sf::Color::Blue);
     s.setRadius(100);
  	t1.setFillColor(sf::Color::Blue);
- 	t2.setFillColor(sf::Color::Green);   
-	
-	TouchBuffer::get().addHandler(t1);
-	TouchBuffer::get().addHandler(t2);
+ 	t2.setFillColor(sf::Color::Green);
+ 	Renderer::get().addDrawable(t1);
+ 	Renderer::get().addDrawable(t2);
+ 	
+ 	ui.createDefault();
 }
 
 void P::onUpdate()
@@ -22,8 +23,6 @@ void P::onUpdate()
 void P::onRender()
 {
     win.draw(s);
-    win.draw(t1);
-    win.draw(t2);
 }
 
 void P::onEvent(sf::Event &ev)
