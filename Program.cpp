@@ -96,7 +96,7 @@ void Program::render()
 {
 	win.clear(sf::Color::Black);
 	sf::RectangleShape shape;
-	shape.setFillColor(sf::Color::Yellow);
+	shape.setFillColor(sf::Color(80,80,10));
 	shape.setPosition(0,0) ;
 	shape.setSize(sf::Vector2f (1000,1000 ));
 	win.draw(shape);
