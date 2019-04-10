@@ -3,10 +3,20 @@
 Touchable::Touchable(float x, float y, float w, float h)
 	:handler(nullptr)
 {
+	TouchBuffer::get().addHandler(*this);
+	//Renderer::get().addDrawable(*this);
 	setPosition(x,y);
 	create_rect(w,h);
 }
 
+Touchable::Touchable(float x, float y, const std::vector<sf::Vector2f > &points)
+:handler(nullptr), points(points)
+	{
+		TouchBuffer::get().addHandler(*this);
+		setPosition(x,y);
+		update();
+	}
+	
 void Touchable::handle(const TouchEvent & ev)
 {
 	float x,y;
@@ -14,14 +24,13 @@ void Touchable::handle(const TouchEvent & ev)
 	auto b = getGlobalBounds();
 		
 	if(x>b.left&&x<(b.left+b.width)&& y>b.top&&y<(b.top+b.height))
-	{/*
+	{
         if(handler)
         {
-        	Console::get()<<"jest H\n";
-        	handler->handle();
-        } else
-       		Console::get()<<"ni ma H\n";
-   */     
+        	//Console::get()<<"jest H\n";
+        	handler->handle(ev);
+        } //else
+       	//	Console::get()<<"ni ma H\n";     
 	} 
 }
 
