@@ -9,11 +9,10 @@ Program::Program()
 	//Console::get()<< " inited\nkurrrrrrrrrrrrrrrrrrrr\n;
 	Renderer::get();
 
-	console_button.setFillColor(sf::Color(0,0,0,200));
+	console_button.setFillColor(sf::Color(0,0,0,128));
 	console_button.setHandler(cb_handler);
 	win.setFramerateLimit(30);
-    TouchBuffer::get().addHandler(console_button);
-    
+	Renderer::get().addDrawable(console_button);
  
     //auto mode = sf::VideoMode::getDesktopMode();
 	//float aspect_ratio = (float)mode.height / (float)mode.width;   
@@ -103,8 +102,8 @@ void Program::render()
 	win.draw(shape);
 	
 	onRender();
+	Renderer::get().drawAll();
     Console::get().display();
-    win.draw(console_button);
 	win.display();
 }
 
@@ -117,7 +116,13 @@ void Program::onUpdate()
 void Program::onEvent(sf::Event &ev)
 {}
 
-void ConsoleButtonHandler::handle()
+void ConsoleButtonHandler::handle(const TouchEvent & ev)
 {
-	Console::get()<<"Console BUTTON\n";
+	static bool shown = true;
+	if(ev.state == TouchEvent::END)
+	{  
+		shown = !shown;
+		Console::get()<<"Console BUTTON"<<shown<<"\n";
+		Console::get().show(shown);
+	}
 };
