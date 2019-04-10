@@ -3,8 +3,7 @@
 Renderer * Renderer::instance = nullptr;
 sf::RenderWindow * Renderer::win_pointer = nullptr;
 
-Renderer::Renderer(sf::RenderWindow &win)
-: win(win)
+Renderer::Renderer()
 {
 	auto mode = sf::VideoMode::getDesktopMode();
 	aspect_ratio = (float)mode.height / (float) mode.width;
@@ -18,26 +17,37 @@ Renderer::Renderer(sf::RenderWindow &win)
 		view.setViewport(sf::FloatRect(0.0f,0.0f,1.2f,1.0f));
 		
 view.reset(sf::FloatRect(0,0,PIXEL_WIDTH, PIXEL_WIDTH*aspect_ratio));
-	win.setView(view);	
+	win_pointer->setView(view);	
 }
 
 void Renderer::mapCtoP(float xi, float yi, float & xo,float & yo)
 {
-	auto out = win.mapCoordsToPixel(sf::Vector2f (xi,yi));
+	auto out = win_pointer->mapCoordsToPixel(sf::Vector2f (xi,yi));
 	xo = out.x;
 	yo = out.y;
 }
 
 void Renderer::mapPtoC(float xi, float yi, float & xo,float & yo)
 {
-	auto out = win.mapPixelToCoords(sf::Vector2i(xi,yi));
+	auto out = win_pointer->mapPixelToCoords(sf::Vector2i(xi,yi));
 	xo = out.x;
 	yo = out.y;
 }
 	
 void Renderer::draw(sf::Drawable & d)
 {
-	win.draw(d);
+	win_pointer->draw(d);
+}
+
+void Renderer::addDrawable(sf::Drawable & d)
+{
+	drawables.push_back(&d);
+}
+
+void Renderer::drawAll()
+{
+	for(auto d : drawables)
+		draw(*d);
 }
 
 void Renderer::setWindow(sf::RenderWindow & win)
@@ -48,7 +58,7 @@ void Renderer::setWindow(sf::RenderWindow & win)
 Renderer& Renderer::get()
 {
  	if(!instance)
- 		instance = new Renderer(*win_pointer);
+ 		instance = new Renderer();
  		
  	return *instance;
 }
