@@ -10,7 +10,7 @@ struct Description
 {
 	sf::Vector2f pos;
 	std::vector <sf::Vector2f> vert;
-}
+};
 
 class UI
 {
@@ -20,6 +20,18 @@ public:
 	~UI();
 	void addNode(Touchable * t );
 	void createDefault();
+	int getSize(){return nodes.size();}
+	
+	void setHandler(int t, TouchableHandler & h);
+	
+	enum Default
+	{
+		UP,
+		RIGHT,
+		DOWN,
+		LEFT,
+		BUTTON
+	};
 };
 
 #endif /* DFAULTUI_H_ */
