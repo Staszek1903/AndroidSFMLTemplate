@@ -11,6 +11,8 @@ void TouchBuffer::emit(const TouchEvent &ev)
 {
     current = ev;
     
+    //Console::get()<<"handlers: "<<t_handlers.size()<<"\n";
+    
     for(auto * h : t_handlers)
     	h->handle(ev);
 }
