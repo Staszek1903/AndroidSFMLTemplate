@@ -10,8 +10,8 @@
 class TouchableHandler
 {
 public:
-	virtual void handle() =0;
-	virtual ~TouchableHandler();
+	virtual void handle(const TouchEvent & ev) =0;
+	virtual ~TouchableHandler() {}
 };
 
 class Touchable : public TouchHandler, public sf::Shape
@@ -21,6 +21,7 @@ class Touchable : public TouchHandler, public sf::Shape
 		
 public:
 	Touchable(float x, float y, float w, float h);
+	Touchable(float x, float y, const std::vector<sf::Vector2f > &points);
 	virtual void handle(const TouchEvent & ev) override;
 	virtual std::size_t getPointCount() const override;
 	virtual sf::Vector2f getPoint(std::size_t i) const override;
