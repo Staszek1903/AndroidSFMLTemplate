@@ -10,7 +10,6 @@
 class P : public Program
 {
     sf::CircleShape s;
-    Touchable t1,t2;
     UI ui;
     
 public:
