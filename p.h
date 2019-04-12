@@ -6,12 +6,23 @@
 #include "Console.h"
 #include "touchable.h"
 #include "ui.h"
+#include "EntityMenager.h"
+
+class Ca : public Component<Ca>
+{};
+
+class Cb : public Component<Cb>
+{};
+
+class Cc : public Component<Cc>
+{};
 
 class P : public Program
 {
     sf::CircleShape s;
     UI ui;
-    
+	EntityMenager em;
+	    
 public:
     P();
     virtual void onRender() override;
