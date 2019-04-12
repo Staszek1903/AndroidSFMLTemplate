@@ -1,15 +1,16 @@
-#include "entitymenager.h";
+#include "entitymenager.h"
 
-EntityMenager()
+EntityMenager::EntityMenager()
 {
 }
 
 
-~EntityMenager()
+EntityMenager::~EntityMenager()
 {
-	for(auto p: systems)
-		delete p;
-	for(auto c: components)
-		delete c;
+	for( BaseSystem * p: systems )
+		{delete p;}
+		
+	for( BaseComponent * c: components )
+		{delete c;}
 }
 	
