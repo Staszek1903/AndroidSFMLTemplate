@@ -21,5 +21,13 @@ void P::onRender()
 
 void P::onEvent(sf::Event &ev)
 {
-
+	if(ev.type == sf::Event::KeyPressed)
+	{
+		if(ev.key.code == sf::Keyboard::A)
+			em.addEntity<Ca>();
+		if(ev.key.code == sf::Keyboard::B)
+			em.addEntity<Cb>();
+		if(ev.key.code == sf::Keyboard::C)
+			em.addEntity<Cc>();
+	}
 }
