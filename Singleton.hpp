@@ -4,6 +4,8 @@
 template < class T >
 class Singleton
 {
+protected:
+	Singleton(){}
 	Singleton(const Singleton&) = delete;
 	Singleton & operator= (const Singleton&) = delete;
 	
@@ -19,7 +21,7 @@ public:
  template < class T>
   T& Singleton<T>::get()
   {
-  	if(!instance) instance = new Singleton<T>();
+  	if(!instance) instance = new T();
   	return *instance;
   }
   
