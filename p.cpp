@@ -1,5 +1,18 @@
 #include "p.h"
 
+class S : public System
+{
+public: 
+	S(){}
+protected:
+	virtual void addComponent(Component * )  override;
+};
+
+void S::addComponent(Component * c)
+{
+	
+}
+
 P::P()
 {
     s.setPosition(sf::Vector2f (200,200));
@@ -8,6 +21,7 @@ P::P()
  	ui.createDefault();
  	
  	EntityStuff::get();
+	EntityStuff::get().addSystem<S>();	
  }
  
  P::~P()
