@@ -36,14 +36,16 @@ template<class C>
 void EntityMenager::addEntity()
 {
 	 components.push_back(new C());
-	 std::string name = C::getName();
+	 //std::string name = C::getName();
 	 
-	 if(id_map.find(name) == id_map.end())
-	 {
-	 	Console::get()<<"new name: "<<name<<"\n";
-	 	id_map[name] = next_id;
-	 	next_id <<= 1;
-	 }
+	 //if(id_map.find(name) == id_map.end())
+	 //{
+	 	//Console::get()<<"new name: "<<name<<"\n";
+	 	//id_map[name] = next_id;
+	 	//next_id <<= 1;
+	 //}
+	 
+	 Console::get()<<"juss\n";
 }
 
 #endif
