@@ -4,10 +4,11 @@
 #include <vector>
 
 #include "../Singleton.hpp"
+#include "../Console.h"
 #include "Component.h"
 #include "System.h"
 
-class EntityStuff : public Singleton<EntitiStuff>
+class EntityStuff : public Singleton<EntityStuff>
 {
 	std::vector <Component *> components;
 	std::vector <System *> systems;
