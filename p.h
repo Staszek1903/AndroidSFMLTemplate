@@ -6,32 +6,12 @@
 #include "Console.h"
 #include "touchable.h"
 #include "ui.h"
-#include "EntityMenager.h"
-
-class Ca : public Component<Ca>
-{};
-
-class Cb : public Component<Cb>
-{};
-
-class Cc : public Component<Cc>
-{};
-
-{
-public:
-	std::string name;
-	
-	virtual void addName(std::string name) override
-	{
-		this->name = this->name + " + " + name;
-	}
-};
+#include "EntityStuff/EntityStuff.h"
 
 class P : public Program
 {
     sf::CircleShape s;
     UI ui;
-	EntityMenager em;
 	    
 public:
     P();
