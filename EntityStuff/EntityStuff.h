@@ -20,14 +20,14 @@ private:
 	
 public:
 	
-	template <class System::S>
+	template < class S >
 	void addSystem();
 };
 
-template < class System::S >
+template < class S >
 void EntityStuff::addSystem()
 {
-	systems.push_back(new S())
+	systems.push_back(new S());
 }
 
 #endif
