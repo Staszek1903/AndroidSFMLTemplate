@@ -17,6 +17,16 @@ class Cb : public Component<Cb>
 class Cc : public Component<Cc>
 {};
 
+{
+public:
+	std::string name;
+	
+	virtual void addName(std::string name) override
+	{
+		this->name = this->name + " + " + name;
+	}
+};
+
 class P : public Program
 {
     sf::CircleShape s;
