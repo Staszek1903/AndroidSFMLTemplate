@@ -10,8 +10,24 @@
 
 class EntityStuff : public Singleton<EntityStuff>
 {
+protected:
+	EntityStuff();
+	~EntityStuff();
+	friend class Singleton<EntityStuff>;
+
+private:
 	std::vector <System *> systems;
 	
+public:
+	
+	template <class System::S>
+	void addSystem();
 };
+
+template < class System::S >
+void EntityStuff::addSystem()
+{
+	systems.push_back(new S())
+}
 
 #endif
