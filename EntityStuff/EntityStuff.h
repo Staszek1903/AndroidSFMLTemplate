@@ -10,8 +10,8 @@
 
 class EntityStuff : public Singleton<EntityStuff>
 {
-	std::vector <Component *> components;
 	std::vector <System *> systems;
+	
 };
 
 #endif
