@@ -7,22 +7,26 @@ class Singleton
 	Singleton(const Singleton&) = delete;
 	Singleton & operator= (const Singleton&) = delete;
 	
-	static T * instance
+	static T * instance;
 public:
 	static T& get();
 	static void release();
-}
+};
 
  template <class T>
- T* Singleton::instance = nullptr;
+ T* Singleton<T>::instance = nullptr;
  
  template < class T>
-  T& Singleton::get()
+  T& Singleton<T>::get()
   {
   	if(!instance) instance = new Singleton<T>();
   	return *instance;
-  {
-  	
-  void Singleton::release()
+  }
+  
+  template < class T >
+  void Singleton<T>::release()
   {
   	delete instance;
+  }
+  
+  #endif
