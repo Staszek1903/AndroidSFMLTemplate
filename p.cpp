@@ -6,7 +6,14 @@ P::P()
     s.setFillColor(sf::Color::Blue);
     s.setRadius(100);
  	ui.createDefault();
-}
+ 	
+ 	EntityStuff::get();
+ }
+ 
+ P::~P()
+ {
+ 	EntityStuff::release();
+ }
 
 void P::onUpdate()
 {
@@ -23,12 +30,13 @@ void P::onEvent(sf::Event &ev)
 {
 	if(ev.type == sf::Event::KeyPressed)
 	{
-		if(ev.key.code == sf::Keyboard::A)
+		/*if(ev.key.code == sf::Keyboard::A)
 			em.addEntity<Ca>();
 		if(ev.key.code == sf::Keyboard::B)
 			em.addEntity<Cb>();
 		if(ev.key.code == sf::Keyboard::C)
 			em.addEntity<Cc>();
 		if(ev.key.code == sf::Keyboard::E)
+	*/
 	}
 }
