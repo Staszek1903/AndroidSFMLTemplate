@@ -15,6 +15,7 @@ class P : public Program
 	    
 public:
     P();
+    ~P();
     virtual void onRender() override;
     virtual void onUpdate() override;
     virtual void onEvent(sf::Event &ev) override;
