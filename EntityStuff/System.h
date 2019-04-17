@@ -3,7 +3,10 @@
 
 class System
 {
-  System() = 0;
+public:
+    System() = delete;
+	std::vector<Component *> components;
+	
 };
 
 #endif
