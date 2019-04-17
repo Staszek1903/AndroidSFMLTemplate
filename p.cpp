@@ -29,5 +29,6 @@ void P::onEvent(sf::Event &ev)
 			em.addEntity<Cb>();
 		if(ev.key.code == sf::Keyboard::C)
 			em.addEntity<Cc>();
+		if(ev.key.code == sf::Keyboard::E)
 	}
 }
