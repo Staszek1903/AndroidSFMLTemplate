@@ -1,6 +1,8 @@
 #ifndef COMPONENT_H_
 #define COMPONENT_H_
 
+#include "Console.h"
+
 #include <string>
 
 class BaseComponent
@@ -10,15 +12,26 @@ public:
 };
 
 template<class C>
-class Component : public BaseComponent
+class Component : virtual public BaseComponent
 {
-public:
-	Component(){}
+	static std::string name;
+protected:
+	virtual void addName(std::string name) = 0;
 	
-	static std::string getName()
-	{
-		return typeid(C).name();
-	}
+public:
+	Component(){
+		if(name.size() == 0)
+		{
+			name = typeid(this).name();
+			addName(name);
+		}
+		Console::get()<<"component c-tor:  "<<name<<"\n";
+		}
+	
+	//static std::string getName()
+	//{
+		//return typeid(C).name();
+	//}
 	
 };
 
