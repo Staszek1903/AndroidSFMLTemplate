@@ -28,6 +28,7 @@ class Console
 
     bool is_shown = true;
     bool need_redraw = true;
+    float hide_level = 2.0f;
 
     Console(sf::RenderWindow &window);
 

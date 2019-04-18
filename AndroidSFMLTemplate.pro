@@ -12,7 +12,10 @@ SOURCES += \
     p.cpp \
     touchbuffer.cpp \
     touchable.cpp \
-    Renderer.cpp
+    Renderer.cpp \
+    EntityStuff/System.cpp \
+    EntityStuff/EntityStuff.cpp \
+    ui.cpp
 
 HEADERS += \
     Program.h \
@@ -20,4 +23,9 @@ HEADERS += \
     p.h \
     touchbuffer.h \
     touchable.h \
-    Renderer.h
+    Renderer.h \
+    EntityStuff/System.h \
+    EntityStuff/EntityStuff.h \
+    EntityStuff/Component.h \
+    UI.h \
+    Singleton.hpp

@@ -4,10 +4,13 @@
 #include "Console.h"
 #include "touchbuffer.h"
 #include "Renderer.h"
-#include "Touchable.h"
+#include "touchable.h"
 #include <SFML/Graphics.hpp>
 
-class ConsoleButtonHandler;
+class ConsoleButtonHandler : public TouchableHandler
+{
+    virtual void handle(const TouchEvent & ev) override;
+};
 
 class Program 
 {
@@ -29,9 +32,5 @@ public:
 	void run();
 };
 
-class ConsoleButtonHandler : public TouchableHandler
-{
-	virtual void handle() override;
-};
 
 #endif /* PROGRAM_H_ */

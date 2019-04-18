@@ -5,7 +5,7 @@
 #include "Program.h"
 #include "Console.h"
 #include "touchable.h"
-#include "ui.h"
+#include "UI.h"
 #include "EntityStuff/EntityStuff.h"
 
 class P : public Program
