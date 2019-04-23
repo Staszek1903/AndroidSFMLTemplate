@@ -20,7 +20,7 @@ protected:
 	friend class Singleton<EntityStuff>;
 
 private:
-    int last_id = 0;
+    int next_id = 1;
     std::map<std::string, int> components_ids;
     std::vector <void *> components;
     std::vector <BaseSystem *> systems;
@@ -34,30 +34,45 @@ public:
     Component<C> addComponent();
 
 private:
-    int get_component_id(BaseComponent& comp);
+    int get_component_id(const std::string & name);
 };
 
 template<class C>
 Component<C> EntityStuff::addComponent()
 {
     Component<C> temp;
-    int id = get_component_id(temp);
+    int id = get_component_id(temp.getClassName());
     components.push_back(temp.getDataPtr());
     for(auto s: systems)
     {
         if(s->getId() == id)
+        {
             s->addComponent(temp);
+            break;
+        }
     }
+    
+    Console::get()<<"component "<< temp.getClassName() << " id: " << id <<"\n";
 }
 
 template < class S >
 void EntityStuff::addSystem()
 {
     auto * s = new S();
-
-    //int id = get_component_id();
-    //s->setId(id);
+    int id;
+    
+    try
+    {
+ 	  id = get_component_id( s->getComponentName() );
+    }catch(std::exception & e)
+   {
+	   Console::get()<<e.what()<<"\n";
+   }
+    s->setId(id);
     systems.push_back(s);
+    
+    
+    Console::get()<<"system "<< s->getComponentName() << " id: " << id <<"\n";
 }
 
 /*
@@ -69,5 +84,3 @@ void EntityStuff::addSystem()
  *
  */
 #endif
-
-
