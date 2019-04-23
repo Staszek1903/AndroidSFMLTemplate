@@ -1,9 +1,9 @@
 #ifndef PROGRAM_H_
 #define PROGRAM_H_
 
-#include "Console.h"
+#include "console.h"
 #include "touchbuffer.h"
-#include "Renderer.h"
+#include "renderer.h"
 #include "touchable.h"
 #include <SFML/Graphics.hpp>
 

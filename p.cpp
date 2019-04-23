@@ -1,17 +1,17 @@
 #include "p.h"
 
-class S : public System
+struct C
+{
+
+};
+
+class S : public System<C>
 {
 public: 
 	S(){}
-protected:
-	virtual void addComponent(Component * )  override;
+    virtual ~S() override {}
+    virtual void update() override;
 };
-
-void S::addComponent(Component * c)
-{
-	
-}
 
 P::P()
 {
@@ -21,7 +21,8 @@ P::P()
  	ui.createDefault();
  	
  	EntityStuff::get();
-	EntityStuff::get().addSystem<S>();	
+    EntityStuff::get().addSystem<S>();
+    Console::get()<<"empty size: "<<Component<C>().getClassName()<<'\n';
  }
  
  P::~P()
@@ -53,4 +54,9 @@ void P::onEvent(sf::Event &ev)
 		if(ev.key.code == sf::Keyboard::E)
 	*/
 	}
+}
+
+void S::update()
+{
+
 }

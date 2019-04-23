@@ -2,7 +2,7 @@
 #define TOUCHBUFFER_H
 
 #include <vector>
-#include "Console.h"
+#include "console.h"
 
 class TouchEvent;
 class KeyboardEvent;

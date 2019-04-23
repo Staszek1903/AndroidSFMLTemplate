@@ -1,4 +1,4 @@
-#include "Program.h"
+#include "program.h"
 
 Program::Program()
     : win(sf::VideoMode::getDesktopMode(), "title"), console_button(10,50,50,50)

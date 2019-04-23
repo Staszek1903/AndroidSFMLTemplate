@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "touchable.h"
-#include "Renderer.h"
+#include "renderer.h"
 
 struct Description
 {

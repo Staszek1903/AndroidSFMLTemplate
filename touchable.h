@@ -4,8 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "touchbuffer.h"
-#include "Console.h"
-#include "Renderer.h"
+#include "console.h"
+#include "renderer.h"
 
 class TouchableHandler
 {

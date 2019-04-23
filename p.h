@@ -2,11 +2,11 @@
 #define P_H
 
 #include <SFML/Graphics.hpp>
-#include "Program.h"
-#include "Console.h"
+#include "program.h"
+#include "console.h"
 #include "touchable.h"
-#include "UI.h"
-#include "EntityStuff/EntityStuff.h"
+#include "ui.h"
+#include "EntityStuff/entity_stuff.h"
 
 class P : public Program
 {
@@ -15,7 +15,7 @@ class P : public Program
 	    
 public:
     P();
-    ~P();
+    ~P() override;
     virtual void onRender() override;
     virtual void onUpdate() override;
     virtual void onEvent(sf::Event &ev) override;

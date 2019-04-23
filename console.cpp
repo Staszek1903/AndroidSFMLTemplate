@@ -1,4 +1,4 @@
-#include "Console.h"
+#include "console.h"
 #include <exception>
 Console * Console::instance = nullptr;
 sf::RenderWindow * Console::win_pointer = nullptr;

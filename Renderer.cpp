@@ -1,4 +1,4 @@
-#include "Renderer.h"
+#include "renderer.h"
 
 Renderer * Renderer::instance = nullptr;
 sf::RenderWindow * Renderer::win_pointer = nullptr;
