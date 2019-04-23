@@ -10,14 +10,13 @@ EntityStuff::~EntityStuff()
     }
 }
 
-int EntityStuff::get_component_id(BaseComponent &comp)
+int EntityStuff::get_component_id(const std::string & name)
 {
-    auto name = comp.getClassName();
     if(components_ids.find(name) != components_ids.end())
     {
-        last_id <<= 1;
-        components_ids.at(name) = last_id;
+        components_ids[name]= next_id;
+        next_id <<=1;
     }
 
-    return (components_ids.at(name));
+    return (components_ids[name]);
 }
