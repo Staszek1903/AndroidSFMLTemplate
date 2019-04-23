@@ -13,6 +13,7 @@ public:
     virtual void update() override;
 };
 
+
 P::P()
 {
     s.setPosition(sf::Vector2f (200,200));
@@ -22,7 +23,7 @@ P::P()
  	
  	EntityStuff::get();
     EntityStuff::get().addSystem<S>();
-    Console::get()<<"empty size: "<<Component<C>().getClassName()<<'\n';
+   // Console::get()<<"empty size: "<<Component<C>().getClassName()<<'\n';
  }
  
  P::~P()
