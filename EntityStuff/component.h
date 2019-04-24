@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <string>
 
+#include "../console.h"
+
 class BaseComponent
 {
 protected:
@@ -32,6 +34,12 @@ class Component : public BaseComponent
 public:
     Component();
     Component(void *ptr);
+    Component( const Component<T> & other)
+    	:BaseComponent(other){}
+    Component<T> & operator= (const Component<T> & other)
+    {
+    	return static_cast <Component<T> > (BaseComponent::operator= (other) );
+    }
     ~Component();
 
     T& getComponent();
@@ -40,12 +48,16 @@ public:
 template <class T>
 Component<T>::Component()
     :BaseComponent(typeid(T).name(), new uint8_t [sizeof(T)], sizeof(T))
-{}
+{
+	Console::get()<< "component constructor\n";
+}
 
 template<class T>
 Component<T>::Component(void *ptr)
     :BaseComponent(typeid(T).name(), (uint8_t*)ptr, sizeof(T))
-{}
+{
+	Console::get()<<"component ptr c-tor\n";
+}
 
 template <class T>
 Component<T>::~Component()
