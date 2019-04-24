@@ -19,7 +19,7 @@ int EntityStuff::get_component_id(const std::string & name)
         next_id <<=1;
     }
 
-    return (components_ids[name]);
+    return (components_ids.at(name));
 }
 
 void EntityStuff::update_systems()
@@ -29,4 +29,11 @@ void EntityStuff::update_systems()
 	{
 		sys->update();
 	}
+}
+
+int EntityStuff::get_component_id(BaseComponent & c)
+{
+	std::string name = c.getClassName();
+	if(components_ids.find(name) == components_ids.end()) return 0;
+	return components_ids.at(name);
 }
