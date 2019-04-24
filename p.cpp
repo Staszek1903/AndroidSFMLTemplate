@@ -14,7 +14,7 @@ public:
 	S(){}
     virtual ~S() override {}
 protected:
-    virtual void update_elem(Component<C> & comp) override 
+    virtual void update_elem(Component<C>  comp) override 
     {
     	C & c = comp.getComponent();
     	c.i++;
@@ -27,7 +27,7 @@ class S2 : public System<C2>
 public: 
 	S2(){}
     virtual ~S2() override {}
-    virtual void update_elem(Component<C2> & comp) override {Console::get()<<"comp C2"<<"\n";}
+    virtual void update_elem(Component<C2>  comp) override {Console::get()<<"comp C2"<<"\n";}
 };
 
 class S3 : public System<C3>
@@ -35,7 +35,7 @@ class S3 : public System<C3>
 public: 
 	S3(){}
     virtual ~S3() override {}
-    virtual void update_elem(Component<C3> & comp) override {Console::get()<<"comp C3"<<"\n";};
+    virtual void update_elem(Component<C3> comp) override {Console::get()<<"comp C3"<<"\n";};
 };
 
 
