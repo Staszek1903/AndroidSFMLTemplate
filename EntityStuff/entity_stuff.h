@@ -32,6 +32,8 @@ public:
 
     template< class C>
     Component<C> addComponent();
+    
+    void update_systems();
 
 private:
     int get_component_id(const std::string & name);
@@ -53,6 +55,8 @@ Component<C> EntityStuff::addComponent()
     }
     
     Console::get()<<"component "<< temp.getClassName() << " id: " << id <<"\n";
+    
+    return temp;
 }
 
 template < class S >
