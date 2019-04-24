@@ -4,7 +4,7 @@ find_package(SFML 2 REQUIRED COMPONENTS graphics audio)
 
 # all source files
 set(SRC main.cpp p.cpp program.cpp console.cpp touchbuffer.cpp renderer.cpp touchable.cpp ui.cpp EntityStuff/entity_stuff.cpp EntityStuff/system.cpp
-EntityStuff/component.cpp)
+EntityStuff/component.cpp EntityStuff/entity.cpp)
 
 # define the pong target
 add_executable(exec ${SRC})
