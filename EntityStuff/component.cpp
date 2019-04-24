@@ -5,20 +5,23 @@ BaseComponent::BaseComponent()
 {;}
 
 BaseComponent::BaseComponent(const BaseComponent & other)
-    :BaseComponent(other.getClassName(), new uint8_t [ other.getDataSize()], other.getDataSize())
+    :BaseComponent(other.getClassName(), static_cast<uint8_t*>(other.getDataPtr()), other.getDataSize())
 {
-    auto * other_data = static_cast<uint8_t*>(other.getDataPtr());
-    for(int i=0; i<size; ++i) data[i] = other_data[i];
+//    auto * other_data = static_cast<uint8_t*>(other.getDataPtr());
+ //   for(int i=0; i<size; ++i) data[i] = other_data[i];
 }
 
 BaseComponent & BaseComponent::operator= (const BaseComponent & other)
 {
     delete [] data;
     size = other.getDataSize();
-    data = new uint8_t [ size ] ;
-    auto * other_data = static_cast<uint8_t*>(other.getDataPtr());
-    for(int i=0; i<size; ++i) data[i] = other_data[i];
+    data = static_cast<uint8_t*>(other.getDataPtr());
+    // new uint8_t [ size ] ;
+    //auto * other_data = static_cast<uint8_t*>(other.getDataPtr());
+    //for(int i=0; i<size; ++i) data[i] = other_data[i];
     class_name = other.getClassName();
+    
+    return *this;
 }
 
 BaseComponent::BaseComponent(std::string class_name, uint8_t *data, int size)
