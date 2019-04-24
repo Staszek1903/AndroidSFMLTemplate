@@ -7,6 +7,7 @@
 #include "../console.h"
 #include "component.h"
 #include "system.h"
+
 #include <map>
 
 /**
@@ -34,6 +35,7 @@ public:
     Component<C> addComponent();
     
     void update_systems();
+    int get_component_id(BaseComponent & c);
 
 private:
     int get_component_id(const std::string & name);
