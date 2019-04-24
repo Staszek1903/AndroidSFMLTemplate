@@ -8,8 +8,8 @@ class Entity
 	int component_mask;
 	
 public:
-	Entity(){}
-	virtual ~Entity(){}
+	Entity();
+	virtual ~Entity();
 	
 	template<class C>
 	Component<C> assign();	
@@ -18,8 +18,9 @@ public:
 template<class C>
 Component<C> Entity::assign()
 {
-	EntityStuff::get().addComponent<C>();
-	//Adding bit to component mask;
+	
+	//auto c = //EntityStuff::get().addComponent<C>();
+	
 }
 
 #endif
