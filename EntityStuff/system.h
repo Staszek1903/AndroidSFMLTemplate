@@ -29,7 +29,7 @@ public:
     void update();
     
 protected:
-	virtual void update_elem(Component<C> &comp) = 0;
+	virtual void update_elem(Component<C> comp) = 0;
 };
 
 template <class C>
