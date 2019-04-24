@@ -26,7 +26,10 @@ class System : public BaseSystem
 public:
     System();
     virtual ~System();
-    virtual void update() = 0;
+    void update();
+    
+protected:
+	virtual void update_elem(Component<C> &comp) = 0;
 };
 
 template <class C>
@@ -42,6 +45,16 @@ System<C>::~System()
         temp.release();
     }
 
+}
+
+template< class C >
+void System<C>::update()
+{
+	for(void * ptr : components)
+	{
+		Component<C> temp (ptr);
+		update_elem(temp);
+	}
 }
 
 #endif
