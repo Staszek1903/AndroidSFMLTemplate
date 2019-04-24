@@ -7,8 +7,7 @@ BaseComponent::BaseComponent()
 BaseComponent::BaseComponent(const BaseComponent & other)
     :BaseComponent(other.getClassName(), static_cast<uint8_t*>(other.getDataPtr()), other.getDataSize())
 {
-//    auto * other_data = static_cast<uint8_t*>(other.getDataPtr());
- //   for(int i=0; i<size; ++i) data[i] = other_data[i];
+	Console::get()<<"base copy_constructor\n";
 }
 
 BaseComponent & BaseComponent::operator= (const BaseComponent & other)
@@ -16,11 +15,9 @@ BaseComponent & BaseComponent::operator= (const BaseComponent & other)
     delete [] data;
     size = other.getDataSize();
     data = static_cast<uint8_t*>(other.getDataPtr());
-    // new uint8_t [ size ] ;
-    //auto * other_data = static_cast<uint8_t*>(other.getDataPtr());
-    //for(int i=0; i<size; ++i) data[i] = other_data[i];
     class_name = other.getClassName();
     
+    Console::get()<<"base copy operator\n";
     return *this;
 }
 
