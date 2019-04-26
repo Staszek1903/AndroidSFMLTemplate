@@ -7,16 +7,17 @@ LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 
 SOURCES += \
         main.cpp \
-    Program.cpp \
     p.cpp \
     touchbuffer.cpp \
     touchable.cpp \
-    Renderer.cpp \
     ui.cpp \
     EntityStuff/component.cpp \
     EntityStuff/system.cpp \
     EntityStuff/entity_stuff.cpp \
-    console.cpp
+    console.cpp \
+    renderer.cpp \
+    program.cpp \
+    EntityStuff/entity.cpp
 
 HEADERS += \
     p.h \
@@ -29,4 +30,5 @@ HEADERS += \
     program.h \
     renderer.h \
     singleton.hpp \
-    ui.h
+    ui.h \
+    EntityStuff/entity.h
