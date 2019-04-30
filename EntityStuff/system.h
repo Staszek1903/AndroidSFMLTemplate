@@ -9,15 +9,14 @@ class BaseSystem
 protected:
     std::vector<void *> components;
     std::string component_name;
-    int id;
+    int component_mask;
 public:
-    BaseSystem(std::string comp_name);
+    BaseSystem(int component_mask);
+    BaseSystem(const BaseSystem &) = delete;
     virtual ~BaseSystem();
     virtual void addComponent(BaseComponent & comp);
     virtual void update() = 0;
-    virtual std::string getComponentName();
-    int getId() const;
-    void setId(int value);
+    int get_mask() const;
 };
 
 template <class C>
@@ -25,6 +24,7 @@ class System : public BaseSystem
 {
 public:
     System();
+    System(const System & )  = delete;
     virtual ~System();
     void update();
     
@@ -34,7 +34,7 @@ protected:
 
 template <class C>
 System<C>::System()
-    :BaseSystem (typeid (C).name()){}
+    :BaseSystem (Component<C>().get_id()){}
 
 template <class C>
 System<C>::~System()
@@ -44,7 +44,6 @@ System<C>::~System()
         Component<C> temp(ptr);
         temp.release();
     }
-
 }
 
 template< class C >
