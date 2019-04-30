@@ -9,7 +9,9 @@
 class BaseComponent
 {
 protected:
-    std::string class_name;
+	static int base_id;
+	
+protected:
     uint8_t * data;
     int size;
 
@@ -18,11 +20,10 @@ public:
     BaseComponent(const BaseComponent &);
     BaseComponent & operator= (const BaseComponent &);
 
-    BaseComponent(std::string class_name, uint8_t *data, int size);
+    BaseComponent(uint8_t *data, int size);
     virtual ~BaseComponent();
     virtual void * getDataPtr() const;
     virtual int getDataSize() const;
-    virtual std::string getClassName() const;
     virtual void release();
 };
 
@@ -30,31 +31,45 @@ public:
 template <class T>
 class Component : public BaseComponent
 {
-
+private:
+	static int _id;
 public:
     Component();
     Component(void *ptr);
     Component( const Component<T> & other)
     	:BaseComponent(other){}
-    Component<T> & operator= (const Component<T> & other)
-    {
-    	return static_cast <Component<T> > (BaseComponent::operator= (other) );
-    }
+    Component<T> & operator= (const Component<T> & other);
     ~Component();
 
     T& getComponent();
+    
+    static int get_id();
 };
+
+template < class T >
+int Component <T> ::_id = 0;
 
 template <class T>
 Component<T>::Component()
-    :BaseComponent(typeid(T).name(), new uint8_t [sizeof(T)], sizeof(T))
+    :BaseComponent(new uint8_t [sizeof(T)], sizeof(T))
 {
-	Console::get()<< "component constructor\n";
+	if(!_id)
+	{
+		_id = base_id;
+		base_id<<=1;
+	}
+	//Console::get()<< "component constructor base id:"<<_id<<"\n";
 }
 
+template< class T > 
+    Component<T> & Component<T>::operator= (const Component<T> & other)
+    {
+    	return static_cast <Component<T> > (BaseComponent::operator= (other) );
+    }
+    
 template<class T>
 Component<T>::Component(void *ptr)
-    :BaseComponent(typeid(T).name(), (uint8_t*)ptr, sizeof(T))
+    :BaseComponent((uint8_t*)ptr, sizeof(T))
 {
 	Console::get()<<"component ptr c-tor\n";
 }
@@ -70,4 +85,13 @@ T& Component<T>::getComponent()
     return *((T*)d);
 }
 
+template< class T >
+int Component<T>::get_id()
+{
+	if(!_id)
+	{
+		_id = base_id;
+		base_id<<=1;
+	}
+}
 #endif
