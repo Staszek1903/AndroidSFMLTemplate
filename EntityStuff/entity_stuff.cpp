@@ -1,6 +1,7 @@
 #include "entity_stuff.h"
 
-EntityStuff::EntityStuff() = default;
+EntityStuff::EntityStuff()
+    :  next_entity_id(1) {}
 
 EntityStuff::~EntityStuff()
 {
@@ -16,5 +17,16 @@ void EntityStuff::update_systems()
 	for(BaseSystem * sys : systems)
 	{
 		sys->update();
-	}
+    }
+}
+
+size_t EntityStuff::newEntityId()
+{
+    size_t temp = next_entity_id;
+    ++next_entity_id;
+    if(!next_entity_id)
+        throw std::runtime_error
+            (std::string("run out of ids for entities ")+ __FILE__ + __FUNCTION__);
+
+    return temp;
 }

@@ -35,7 +35,7 @@ class S3 : public System<C3>
 public: 
 	S3(){}
     virtual ~S3() override {}
-    virtual void update_elem(Component<C3> comp) override {Console::get()<<"comp C3"<<"\n";};
+    virtual void update_elem(Component<C3> comp) override {Console::get()<<"comp C3"<<"\n";}
 };
 
 

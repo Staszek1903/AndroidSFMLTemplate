@@ -7,6 +7,8 @@
 #include "../console.h"
 #include "component.h"
 #include "system.h"
+#include <exception>
+#include <stdlib.h>
 
 #include <map>
 
@@ -21,8 +23,18 @@ protected:
 	friend class Singleton<EntityStuff>;
 
 private:
+
+    /**
+     * !!!!!!!!!!!!!!!
+     * @brief components - zamiast tego
+     * robimy vector component geterów
+     * każdy komponent getter przychowuje jeden typ komponentu
+     * i znajduje sie w wektorze na indeksie rownym Component<T>::get_id()
+     * ComponentGetter sam wie jak wybrac component gdy ma podane ID encji;
+     */
     std::vector <void *> components;
     std::vector <BaseSystem *> systems;
+    size_t next_entity_id;
 	
 public:
 	
@@ -33,10 +45,8 @@ public:
     Component<C> addComponent();
     
     void update_systems();
-    int get_component_id(BaseComponent & c);
 
-private:
-    int get_component_id(const std::string & name);
+    size_t newEntityId();
 };
 
 template<class C>
@@ -54,7 +64,7 @@ Component<C> EntityStuff::addComponent()
         }
     }
     
-    Console::get()<<"component  id: " << id <<"\n";
+    Console::get()<<"component added id: " << id <<"\n";
     
     return temp;
 }
@@ -64,9 +74,7 @@ void EntityStuff::addSystem()
 {
     auto * s = new S();
     systems.push_back(s);
-    
-    
-    Console::get()<<"system id: " << s->get_mask() <<"\n";
+    Console::get()<<"system mask: " << s->get_mask() <<"\n";
 }
 
 /*

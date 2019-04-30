@@ -5,11 +5,14 @@
 #include <string>
 
 #include "../console.h"
+#include <exception>
+
+#define MAX_COMPONENT_ID 31
 
 class BaseComponent
 {
 protected:
-	static int base_id;
+    static size_t base_id;
 	
 protected:
     uint8_t * data;
@@ -43,21 +46,30 @@ public:
 
     T& getComponent();
     
-    static int get_id();
+    static void assign_id();
+    static size_t get_mask();
+    static size_t get_id();
 };
 
 template < class T >
 int Component <T> ::_id = 0;
 
 template <class T>
+void Component<T>::assign_id()
+{
+    if(!_id)
+    {
+        if(base_id>MAX_COMPONENT_ID) throw std::runtime_error("run out of ids for components");
+        _id = base_id;
+        ++base_id;
+    }
+}
+
+template <class T>
 Component<T>::Component()
     :BaseComponent(new uint8_t [sizeof(T)], sizeof(T))
 {
-	if(!_id)
-	{
-		_id = base_id;
-		base_id<<=1;
-	}
+    assign_id();
 	//Console::get()<< "component constructor base id:"<<_id<<"\n";
 }
 
@@ -69,7 +81,7 @@ template< class T >
     
 template<class T>
 Component<T>::Component(void *ptr)
-    :BaseComponent((uint8_t*)ptr, sizeof(T))
+    :BaseComponent(static_cast<uint8_t*>(ptr), sizeof(T))
 {
 	Console::get()<<"component ptr c-tor\n";
 }
@@ -81,17 +93,21 @@ Component<T>::~Component()
 template <class T>
 T& Component<T>::getComponent()
 {
-    void * d = (void*)data;
-    return *((T*)d);
+    void * d = static_cast<void*>(data);
+    return *(static_cast<T*>(d));
 }
 
 template< class T >
-int Component<T>::get_id()
+size_t Component<T>::get_id()
 {
-	if(!_id)
-	{
-		_id = base_id;
-		base_id<<=1;
-	}
+    assign_id();
+    return _id;
+}
+
+template < class T >
+size_t Component<T>::get_mask()
+{
+    size_t ret = 1<<get_id();
+    return ret;
 }
 #endif

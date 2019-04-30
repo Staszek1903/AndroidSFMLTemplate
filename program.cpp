@@ -81,7 +81,8 @@ void Program::input()
 			break;
 			
 		case sf::Event::KeyReleased:
-		TouchBuffer::get().emit(KeyboardEvent(ev.key.code, KeyboardEvent::RELEASED));
+            TouchBuffer::get().emit(KeyboardEvent(ev.key.code, KeyboardEvent::RELEASED));
+            break;
 			
 			
         default:

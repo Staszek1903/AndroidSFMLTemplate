@@ -1,6 +1,6 @@
 #include "component.h"
 
-int BaseComponent::base_id = 1;  
+size_t BaseComponent::base_id = 1;
 
 BaseComponent::BaseComponent()
     :data(nullptr), size(0)

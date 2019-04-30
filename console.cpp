@@ -58,10 +58,10 @@ void Console::display()
 	}
 	
 	if(is_shown && hide_level < 2)
-		hide_level += 0.1;
+        hide_level += 0.1f;
 		
 	if(!is_shown && hide_level > 0)
-		hide_level -= 0.1;
+        hide_level -= 0.1f;
 		
 	area.setScale(hide_level, -hide_level);
 	

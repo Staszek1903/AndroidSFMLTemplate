@@ -41,7 +41,7 @@ void UI::createDefault()
 	}
 }
 
-void UI::setHandler(int t, TouchableHandler & h)
+void UI::setHandler(size_t t, TouchableHandler & h)
 {
 	if(t >= nodes.size()) return;
 	nodes.at(t)->setHandler(h);

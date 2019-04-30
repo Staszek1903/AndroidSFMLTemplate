@@ -1,5 +1,10 @@
 #include "touchable.h"
 
+TouchableHandler::~TouchableHandler()
+{
+
+}
+
 Touchable::Touchable(float x, float y, float w, float h)
 	:handler(nullptr)
 {
@@ -10,7 +15,7 @@ Touchable::Touchable(float x, float y, float w, float h)
 }
 
 Touchable::Touchable(float x, float y, const std::vector<sf::Vector2f > &points)
-:handler(nullptr), points(points)
+:points(points), handler(nullptr)
 	{
 		TouchBuffer::get().addHandler(*this);
 		setPosition(x,y);
@@ -55,13 +60,13 @@ void Touchable::create_rect(float w, float h)
 	
 void Touchable::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
-	const int size = points.size();
-	sf::VertexArray array(sf::TriangleFan, size);
+    const size_t size = points.size();
+    sf::VertexArray array(sf::TriangleFan, size);
 	
 	states.transform = getTransform();
 	states.texture = getTexture();
 	
-	for(int i=0; i<size; ++i)
+    for(size_t i=0; i<size; ++i)
 	{
 		array[i].position = points.at(i);
 		array[i].color = getFillColor();

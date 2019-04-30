@@ -11,14 +11,14 @@ class TouchHandler
 {
 public:
   virtual void handle(const TouchEvent & ev) = 0;
-  virtual ~TouchHandler(){}
+  virtual ~TouchHandler();
 };
 
 class KeyboardHandler
 {
 public:
 	virtual void handle( const KeyboardEvent & ev) = 0;
-	virtual ~KeyboardHandler(){}
+    virtual ~KeyboardHandler();
 };
 
 class TouchEvent
@@ -32,7 +32,7 @@ public:
         NO_EVENT
     };
 
-    TouchEvent(int x, int y, int finger, State state);
+    TouchEvent(int x, int y, unsigned int finger, State state);
     TouchEvent();
     int x;
     int y;

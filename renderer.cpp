@@ -6,7 +6,7 @@ sf::RenderWindow * Renderer::win_pointer = nullptr;
 Renderer::Renderer()
 {
 	auto mode = sf::VideoMode::getDesktopMode();
-	aspect_ratio = (float)mode.height / (float) mode.width;
+    aspect_ratio = static_cast<float>(mode.height) / static_cast<float>(mode.width);
 	
 	if(aspect_ratio >1.0f) 
 	{
@@ -29,7 +29,7 @@ void Renderer::mapCtoP(float xi, float yi, float & xo,float & yo)
 
 void Renderer::mapPtoC(float xi, float yi, float & xo,float & yo)
 {
-	auto out = win_pointer->mapPixelToCoords(sf::Vector2i(xi,yi));
+    auto out = win_pointer->mapPixelToCoords(sf::Vector2i(static_cast<int>(xi),static_cast<int>(yi)));
 	xo = out.x;
 	yo = out.y;
 }

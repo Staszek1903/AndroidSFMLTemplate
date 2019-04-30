@@ -11,7 +11,7 @@ class TouchableHandler
 {
 public:
 	virtual void handle(const TouchEvent & ev) =0;
-	virtual ~TouchableHandler() {}
+    virtual ~TouchableHandler();
 };
 
 class Touchable : public TouchHandler, public sf::Shape
@@ -31,7 +31,7 @@ public:
   virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const override;		
 
 	void setHandler(TouchableHandler & h);
-	virtual ~Touchable();
+    virtual ~Touchable() override;
 };
 
 #endif 

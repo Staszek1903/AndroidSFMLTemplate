@@ -20,9 +20,9 @@ public:
 	~UI();
 	void addNode(Touchable * t );
 	void createDefault();
-	int getSize(){return nodes.size();}
+    size_t getSize(){return nodes.size();}
 	
-	void setHandler(int t, TouchableHandler & h);
+    void setHandler(size_t t, TouchableHandler & h);
 	
 	enum Default
 	{

@@ -2,6 +2,12 @@
 
 TouchBuffer * TouchBuffer::instance = nullptr;
 
+TouchHandler::~TouchHandler()
+{}
+
+KeyboardHandler::~KeyboardHandler()
+{}
+
 TouchBuffer::TouchBuffer()
 {
 
@@ -56,8 +62,8 @@ void TouchBuffer::release()
     }
 }
 
-TouchEvent::TouchEvent(int x, int y, int finger, State state)
-    :x(x), y(y), finger(finger), state(state)
+TouchEvent::TouchEvent(int x, int y, unsigned int finger, State state)
+    :x(x), y(y), finger(static_cast<int>(finger)), state(state)
 {}
 
 TouchEvent::TouchEvent()
