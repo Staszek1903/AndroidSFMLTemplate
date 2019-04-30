@@ -56,9 +56,9 @@ P::P()
 	c1.getComponent().i = 0;
 	auto c2 = EntityStuff::get().addComponent<C>();
 	c2.getComponent().i  = 10;
-		EntityStuff::get().addComponent<C2>();
-	EntityStuff::get().addComponent<C3>();
-	EntityStuff::get().addComponent<C3>();
+	auto c3 =	EntityStuff::get().addComponent<C2>();
+	auto c4 = EntityStuff::get().addComponent<C3>();
+	auto c5 = EntityStuff::get().addComponent<C3>();
 	
       // Console::get()<<"empty size: "<<Component<C>().getClassName()<<'\n';
  }
