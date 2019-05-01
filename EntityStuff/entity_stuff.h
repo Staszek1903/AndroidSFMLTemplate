@@ -7,6 +7,7 @@
 #include "../console.h"
 #include "component.h"
 #include "system.h"
+#include "componentcontainer.h"
 #include <exception>
 #include <stdlib.h>
 
@@ -32,6 +33,7 @@ private:
      * i znajduje sie w wektorze na indeksie rownym Component<T>::get_id()
      * ComponentGetter sam wie jak wybrac component gdy ma podane ID encji;
      */
+    std::vector < ComponentContainer > containers;
     std::vector <void *> components;
     std::vector <BaseSystem *> systems;
     size_t next_entity_id;
@@ -53,16 +55,11 @@ template<class C>
 Component<C> EntityStuff::addComponent()
 {
     Component<C> temp;
-    int id = Component<C>::get_id();
-    components.push_back(temp.getDataPtr());
-    for(auto s: systems)
-    {
-        if(s->get_mask() & id)
-        {
-            s->addComponent(temp);
-            break;
-        }
-    }
+    size_t id = Component<C>::get_id();
+    
+    while(id <= containers.size()) containers.push_back(ComponentContainer( sizeof(C) ));
+    
+    
     
     Console::get()<<"component added id: " << id <<"\n";
     
