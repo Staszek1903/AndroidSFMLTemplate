@@ -72,7 +72,7 @@ void Touchable::draw(sf::RenderTarget & target, sf::RenderStates states) const
 		array[i].color = getFillColor();
 	}
 	
-	target.draw(array, states);
+    target.draw(array, states);
 }
 
 void Touchable::setHandler(TouchableHandler & h)

@@ -34,26 +34,26 @@ protected:
 
 template <class C>
 System<C>::System()
-    :BaseSystem (Component<C>().get_id()){}
+    :BaseSystem (0){}//Component<C>().get_id()){}
 
 template <class C>
 System<C>::~System()
 {
-    for(void * ptr: components)
+   /* for(void * ptr: components)
     {
-        Component<C> temp(ptr);
+        Component<C> temp(ptr, EntityStuff::get);
         temp.release();
-    }
+    }*/
 }
 
 template< class C >
 void System<C>::update()
 {
-	for(void * ptr : components)
+    /*for(void * ptr : components)
 	{
 		Component<C> temp (ptr);
 		update_elem(temp);
-	}
+    }*/
 }
 
 #endif

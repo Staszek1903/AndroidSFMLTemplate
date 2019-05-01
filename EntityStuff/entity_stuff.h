@@ -7,7 +7,7 @@
 #include "../console.h"
 #include "component.h"
 #include "system.h"
-#include "componentcontainer.h"
+#include "componentmanager.h"
 #include <exception>
 #include <stdlib.h>
 
@@ -33,7 +33,7 @@ private:
      * i znajduje sie w wektorze na indeksie rownym Component<T>::get_id()
      * ComponentGetter sam wie jak wybrac component gdy ma podane ID encji;
      */
-    std::vector < ComponentContainer > containers;
+    ComponentManager component_manager;
     std::vector <void *> components;
     std::vector <BaseSystem *> systems;
     size_t next_entity_id;
@@ -44,25 +44,30 @@ public:
 	void addSystem();
 
     template< class C>
-    Component<C> addComponent();
+    Component<C> addComponent(size_t ent_id);
     
     void update_systems();
 
     size_t newEntityId();
+
+    ComponentManager & get_component_menager();
 };
 
 template<class C>
-Component<C> EntityStuff::addComponent()
+Component<C> EntityStuff::addComponent(size_t ent_id)
 {
-    Component<C> temp;
-    size_t id = Component<C>::get_id();
-    
-    while(id <= containers.size()) containers.push_back(ComponentContainer( sizeof(C) ));
-    
-    
-    
-    Console::get()<<"component added id: " << id <<"\n";
-    
+    Component<C> temp(component_manager);
+    size_t comp_id = temp.get_id();
+
+    /*while(comp_id >= containers.size()) containers.push_back(new ComponentGetter<C>());
+
+    auto container = containers.at(comp_id);
+    ComponentGetter<C> * getter = static_cast <ComponentGetter<C>*>(container);
+    getter->addComponent(temp, ent_id);
+
+    Console::get()<<"component added id: " << comp_id <<"\n";
+    */
+    temp.release();
     return temp;
 }
 

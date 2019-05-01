@@ -34,7 +34,7 @@ void UI::createDefault()
 	for(int i=0; i<5; ++i)
 	{
 		auto t = new Touchable(default_ui[i].pos.x, default_ui[i].pos.y, default_ui[i].vert);
-		Console::get()<<"added "<<i<<"\n";
+        Console::get()<<" Default UI elem added "<<i<<"\n";
 			t->setFillColor(sf::Color(255,255,255,128));
 	addNode(t);		
 	

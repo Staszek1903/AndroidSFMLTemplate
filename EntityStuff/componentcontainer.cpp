@@ -1,26 +1,36 @@
 #include "componentcontainer.h"
 
-ComponentContainer:: ComponentContainer(size_t elem_size)
+DataContainer:: DataContainer(size_t elem_size)
     :elem_size(elem_size), elems_count(0), capacity(0), data_ptr(nullptr)
 {}
 
-ComponentContainer:: ComponentContainer(const ComponentContainer & other)
+DataContainer:: DataContainer(const DataContainer & other)
 : elem_size(other.elem_size), elems_count(other.elems_count), capacity(other.capacity), data_ptr(new char [capacity*elem_size])
 {
 	std::memcpy(data_ptr, other.data_ptr, elems_count*elem_size);
 }
 
-ComponentContainer::~ComponentContainer()
+DataContainer::~DataContainer()
 {
-    if(data_ptr) delete data_ptr;
+    if(data_ptr) delete [] data_ptr;
 }
 
-size_t ComponentContainer::size()
+size_t DataContainer::size()
 {
-	return elems_count;
+    return elems_count;
 }
 
-void ComponentContainer::resise(size_t n_elems)
+size_t DataContainer::get_elem_size()
+{
+    return elem_size;
+}
+
+size_t DataContainer::get_capacity()
+{
+    return capacity;
+}
+
+void DataContainer::resise(size_t n_elems)
 {
      char * temp = data_ptr;
      size_t new_capacity = n_elems * elem_size;
@@ -33,7 +43,7 @@ void ComponentContainer::resise(size_t n_elems)
      if( temp ) delete  temp;
 }
 
-void ComponentContainer::push(const char *data)
+void DataContainer::push(const char *data)
 {
     if(elems_count >= capacity) resise(capacity+ CHUNK_SIZE);
     char * dest = data_ptr + (elems_count*elem_size);
@@ -41,11 +51,39 @@ void ComponentContainer::push(const char *data)
     elems_count++;
 }
 
-void *ComponentContainer::operator[](size_t n)
+void *DataContainer::operator[](size_t n)
 {
     if(n < elems_count)
         return static_cast<void*>(data_ptr + (elem_size*n));
     else
-        throw std::runtime_error("component_container out of bounds:");
+        throw std::runtime_error("Data_container out of bounds:");
 
+}
+
+ComponentContainer::ComponentContainer(size_t elem_size)
+    : DataContainer (elem_size)
+{
+}
+
+void *ComponentContainer::addComponent(size_t entity_id)
+{
+    if(id_component_map.find(entity_id) !=
+            id_component_map.end())
+    {
+        std::stringstream ss;
+        ss<<entity_id;
+        throw std::runtime_error("component if id : <" + ss.str() + "allready exists");
+    }
+
+    id_component_map[entity_id] = this->size();
+    char * buffer = new char [get_elem_size()];
+    push(buffer);
+    delete [] buffer;
+
+    return this->operator[](id_component_map.at(entity_id));
+}
+
+void *ComponentContainer::getComponent(size_t entity_id)
+{
+    return this->operator[](id_component_map.at(entity_id));
 }

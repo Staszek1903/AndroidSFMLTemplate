@@ -42,4 +42,6 @@ int BaseComponent::getDataSize() const
 void BaseComponent::release()
 {
     delete[] data;
+    data = nullptr;
+    size = 0;
 }

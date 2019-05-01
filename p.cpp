@@ -52,13 +52,13 @@ P::P()
 	EntityStuff::get().addSystem<S3>();
 	
 	
-	auto c1 = EntityStuff::get().addComponent<C>();
-	c1.getComponent().i = 0;
-	auto c2 = EntityStuff::get().addComponent<C>();
-	c2.getComponent().i  = 10;
-	auto c3 =	EntityStuff::get().addComponent<C2>();
-	auto c4 = EntityStuff::get().addComponent<C3>();
-	auto c5 = EntityStuff::get().addComponent<C3>();
+    auto c1 = EntityStuff::get().addComponent<C>(1);
+//	c1.getComponent().i = 0;
+    auto c2 = EntityStuff::get().addComponent<C>(2);
+//	c2.getComponent().i  = 10;
+    auto c3 =	EntityStuff::get().addComponent<C2>(1);
+    auto c4 = EntityStuff::get().addComponent<C3>(1);
+    auto c5 = EntityStuff::get().addComponent<C3>(2);
 	
       // Console::get()<<"empty size: "<<Component<C>().getClassName()<<'\n';
  }

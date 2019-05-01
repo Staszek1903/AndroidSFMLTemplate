@@ -18,7 +18,8 @@ SOURCES += \
     renderer.cpp \
     program.cpp \
     EntityStuff/entity.cpp \
-    EntityStuff/componentcontainer.cpp
+    EntityStuff/componentcontainer.cpp \
+    EntityStuff/componentmanager.cpp
 
 HEADERS += \
     p.h \
@@ -33,4 +34,5 @@ HEADERS += \
     singleton.hpp \
     ui.h \
     EntityStuff/entity.h \
-    EntityStuff/componentcontainer.h
+    EntityStuff/componentcontainer.h \
+    EntityStuff/componentmanager.h

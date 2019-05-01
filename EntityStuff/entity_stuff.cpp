@@ -30,3 +30,8 @@ size_t EntityStuff::newEntityId()
 
     return temp;
 }
+
+ComponentManager &EntityStuff::get_component_menager()
+{
+    return component_manager;
+}
