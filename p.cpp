@@ -8,34 +8,29 @@ struct C
 struct C2{};
 struct C3{};
 
-class S : public System<C>
+class S : public System
 {
 public: 
 	S(){}
     virtual ~S() override {}
 protected:
-    virtual void update_elem(Component<C>  comp) override 
-    {
-    	C & c = comp.getComponent();
-    	c.i++;
-    	Console::get()<<"comp C "<<c.i<<" \n";
-    }
+    virtual void update() override{}
 };
 
-class S2 : public System<C2>
+class S2 : public System
 {
 public: 
 	S2(){}
     virtual ~S2() override {}
-    virtual void update_elem(Component<C2>  comp) override {Console::get()<<"comp C2"<<"\n";}
+    virtual void update() override {Console::get()<<"comp C2"<<"\n";}
 };
 
-class S3 : public System<C3>
+class S3 : public System
 {
 public: 
 	S3(){}
     virtual ~S3() override {}
-    virtual void update_elem(Component<C3> comp) override {Console::get()<<"comp C3"<<"\n";}
+    virtual void update() override {Console::get()<<"comp C3"<<"\n";}
 };
 
 
@@ -53,12 +48,13 @@ P::P()
 	
 	
     auto c1 = EntityStuff::get().addComponent<C>(1);
-//	c1.getComponent().i = 0;
+    c1.getComponent().i = 0;
     auto c2 = EntityStuff::get().addComponent<C>(2);
-//	c2.getComponent().i  = 10;
+    c2.getComponent().i  = 10;
     auto c3 =	EntityStuff::get().addComponent<C2>(1);
     auto c4 = EntityStuff::get().addComponent<C3>(1);
     auto c5 = EntityStuff::get().addComponent<C3>(2);
+
 	
       // Console::get()<<"empty size: "<<Component<C>().getClassName()<<'\n';
  }
@@ -85,9 +81,9 @@ void P::onEvent(sf::Event &ev)
 	{
 		if(ev.key.code == sf::Keyboard::A)
 			EntityStuff::get().update_systems();
-		/*if(ev.key.code == sf::Keyboard::B)
-			em.addEntity<Cb>();
-		if(ev.key.code == sf::Keyboard::C)
+        if(ev.key.code == sf::Keyboard::B)
+            EntityStuff::get().addComponent<C3>(1);
+        /*if(ev.key.code == sf::Keyboard::C)
 			em.addEntity<Cc>();
 		if(ev.key.code == sf::Keyboard::E)
 	*/

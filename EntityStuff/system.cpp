@@ -1,16 +1,21 @@
 #include "system.h"
 
-BaseSystem::BaseSystem(int component_mask)
-    :component_mask(component_mask){;}
+System::System()
+    :component_mask(0){;}
 
-BaseSystem::~BaseSystem(){;}
+System::~System(){;}
 
-void BaseSystem::addComponent(BaseComponent &comp)
+void System::add_entity_id(size_t id)
 {
-    components.push_back(comp.getDataPtr());
+    entity_ids.push_back(id);
 }
 
-int BaseSystem::get_mask() const
+size_t System::get_mask() const
 {
     return component_mask;
+}
+
+bool System::has_component_set(size_t mask)
+{
+    return ((component_mask & mask) == mask);
 }

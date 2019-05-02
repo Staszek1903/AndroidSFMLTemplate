@@ -3,13 +3,14 @@
 
 #include "entity_stuff.h"
 #include <vector>
+#include <exception>
+#include <sstream>
 
 class Entity
 {
     size_t entity_id;
-	int component_mask;
-    std::vector <void*> components;
-	
+    size_t component_mask;
+
 public:
 	Entity();
 	virtual ~Entity();
@@ -21,9 +22,19 @@ public:
 template<class C>
 Component<C> Entity::assign()
 {
-    auto c = EntityStuff::get().addComponent<C>();
-    component_mask |= Component<C>::get_id();
-    components.push_back( c.getDataPointer() );
+    size_t mask = Component<C>::get_mask();
+
+    std::stringstream e_id;
+    e_id<<entity_id;
+
+    if(mask & component_mask)
+        throw std::runtime_error(std::string("Entity::assign entity <")+ e_id.str() +
+                                 "> allredy contains component " + typeid(C).name());
+    if(!entity_id)
+        throw std::runtime_error("cannot assign component to non existent entity");
+
+    component_mask |= mask;
+    EntityStuff::get().addComponent<C>(entity_id);
 }
 
 #endif

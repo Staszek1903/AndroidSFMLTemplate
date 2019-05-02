@@ -4,20 +4,35 @@
 #include <vector>
 #include "component.h"
 
-class BaseSystem
+class System
 {
-protected:
-    std::vector<void *> components;
-    std::string component_name;
-    int component_mask;
+private:
+
+    size_t component_mask;
+    std::vector <size_t> entity_ids;
+
 public:
-    BaseSystem(int component_mask);
-    BaseSystem(const BaseSystem &) = delete;
-    virtual ~BaseSystem();
-    virtual void addComponent(BaseComponent & comp);
+    System();
+    System(const System &) = delete;
+    virtual ~System();
+    virtual void add_entity_id(size_t id);
     virtual void update() = 0;
-    int get_mask() const;
+
+    size_t get_mask() const;
+    bool has_component_set(size_t mask);
+
+protected:
+    template<class C>
+    void update_mask();
 };
+
+template<class C>
+void System::update_mask()
+{
+    component_mask |= Component<C>::get_mask();
+}
+
+/*
 
 template <class C>
 class System : public BaseSystem
@@ -39,21 +54,21 @@ System<C>::System()
 template <class C>
 System<C>::~System()
 {
-   /* for(void * ptr: components)
+    for(void * ptr: components)
     {
         Component<C> temp(ptr, EntityStuff::get);
         temp.release();
-    }*/
+    }
 }
 
 template< class C >
 void System<C>::update()
 {
-    /*for(void * ptr : components)
+    for(void * ptr : components)
 	{
 		Component<C> temp (ptr);
 		update_elem(temp);
-    }*/
+    }
 }
-
+*/
 #endif

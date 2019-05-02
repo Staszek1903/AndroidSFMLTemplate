@@ -17,18 +17,20 @@ protected:
 	
 protected:
     uint8_t * data;
-    int size;
+    size_t size;
 
 public:
     BaseComponent();
     BaseComponent(const BaseComponent &);
     BaseComponent & operator= (const BaseComponent &);
 
-    BaseComponent(uint8_t *data, int size);
+    BaseComponent(uint8_t *data, size_t size);
     virtual ~BaseComponent();
     virtual void * getDataPtr() const;
-    virtual int getDataSize() const;
+    virtual size_t getDataSize() const;
     virtual void release();
+
+    void allocate(ComponentManager & manager, size_t entity_id, size_t component_id);
 };
 
 
@@ -38,20 +40,20 @@ class Component : public BaseComponent
 private:
 	static int _id;
 
-    ComponentManager & manager;
 public:
-    Component(ComponentManager & manager);
-    Component(void *ptr, ComponentManager & manager);
+    Component();
+    Component(void *ptr);
     Component( const Component<T> & other)
-        :BaseComponent(other), manager(other.manager){}
+        :BaseComponent(other){}
     Component<T> & operator= (const Component<T> & other);
     ~Component();
 
     T& getComponent();
     
-    void assign_id();
-    size_t get_mask();
-    size_t get_id();
+    static void assign_id();
+    static size_t get_mask();
+    static size_t get_id();
+    static size_t getTypeSize();
 };
 
 template < class T >
@@ -67,13 +69,12 @@ void Component<T>::assign_id()
         ++base_id;
 
         Console::get()<<"Componen::_id added: "<<_id<<"\n";
-        manager.allocate_id_container(_id,sizeof(T));
     }
 }
 
 template <class T>
-Component<T>::Component(ComponentManager & manager)
-    :BaseComponent(nullptr, sizeof(T)), manager(manager)
+Component<T>::Component()
+    :BaseComponent(nullptr, sizeof(T))
 {
     assign_id();
 	//Console::get()<< "component constructor base id:"<<_id<<"\n";
@@ -86,8 +87,8 @@ template< class T >
     }
     
 template<class T>
-Component<T>::Component(void *ptr, ComponentManager & manager)
-    :BaseComponent(static_cast<uint8_t*>(ptr), sizeof(T)), manager(manager)
+Component<T>::Component(void *ptr)
+    :BaseComponent(static_cast<uint8_t*>(ptr), sizeof(T))
 {
 	Console::get()<<"component ptr c-tor\n";
 }
@@ -113,7 +114,14 @@ size_t Component<T>::get_id()
 template < class T >
 size_t Component<T>::get_mask()
 {
-    size_t ret = 1<<get_id(manager);
+    size_t ret = 1<<get_id();
     return ret;
 }
+
+template<class T>
+size_t Component<T>::getTypeSize()
+{
+    return sizeof(T);
+}
+
 #endif

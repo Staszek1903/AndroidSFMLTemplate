@@ -24,6 +24,8 @@ protected:
     virtual void onRender();
 	virtual void onUpdate();
 	virtual void onEvent(sf::Event &ev);
+
+    void halt_for_input();
 	
 public:
 	Program();

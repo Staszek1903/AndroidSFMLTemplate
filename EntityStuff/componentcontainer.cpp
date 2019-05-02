@@ -72,7 +72,7 @@ void *ComponentContainer::addComponent(size_t entity_id)
     {
         std::stringstream ss;
         ss<<entity_id;
-        throw std::runtime_error("component if id : <" + ss.str() + "allready exists");
+        throw std::runtime_error("component if id : <" + ss.str() + "> allready exists");
     }
 
     id_component_map[entity_id] = this->size();

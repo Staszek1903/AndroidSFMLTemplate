@@ -34,8 +34,7 @@ private:
      * ComponentGetter sam wie jak wybrac component gdy ma podane ID encji;
      */
     ComponentManager component_manager;
-    std::vector <void *> components;
-    std::vector <BaseSystem *> systems;
+    std::vector <System *> systems;
     size_t next_entity_id;
 	
 public:
@@ -56,18 +55,9 @@ public:
 template<class C>
 Component<C> EntityStuff::addComponent(size_t ent_id)
 {
-    Component<C> temp(component_manager);
-    size_t comp_id = temp.get_id();
+    Component<C> temp;
+    temp.allocate(component_manager, ent_id, Component<C>::get_id());
 
-    /*while(comp_id >= containers.size()) containers.push_back(new ComponentGetter<C>());
-
-    auto container = containers.at(comp_id);
-    ComponentGetter<C> * getter = static_cast <ComponentGetter<C>*>(container);
-    getter->addComponent(temp, ent_id);
-
-    Console::get()<<"component added id: " << comp_id <<"\n";
-    */
-    temp.release();
     return temp;
 }
 
@@ -80,6 +70,7 @@ void EntityStuff::addSystem()
 }
 
 /*
+ * OGARNAAAC SYSTEMYYYYYYY
  * clrating entity:
  * struct Entity
  *  c-tor:

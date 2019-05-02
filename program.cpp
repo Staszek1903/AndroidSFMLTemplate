@@ -32,9 +32,17 @@ void Program::run()
 	{
         //Console::get()<<"tick: "<<tick<<'\n';
         //tick++;
-		input();
-		onUpdate();
-		render();
+        try
+        {
+            input();
+            onUpdate();
+            render();
+        } catch (std::exception& exc) {
+            Console::get()<<"EXCEPTION:\n "<<exc.what()<<"\n PRESS ANY KEY TO PROCEED\n";
+            render();
+            halt_for_input();
+        }
+
 	}
 }
 
@@ -116,6 +124,21 @@ void Program::onUpdate()
 
 void Program::onEvent(sf::Event &ev)
 {}
+
+void Program::halt_for_input()
+{
+    sf::Event ev;
+    while(true)
+        while(win.pollEvent(ev))
+        {
+            if(ev.type == sf::Event::KeyPressed)
+            {
+                if(ev.key.code == sf::Keyboard::Escape)
+                    win.close();
+                else return;
+            } else if(ev.type == sf::Event::TouchBegan) return;
+        }
+}
 
 void ConsoleButtonHandler::handle(const TouchEvent & ev)
 {

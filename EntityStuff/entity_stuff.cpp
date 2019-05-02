@@ -14,7 +14,7 @@ EntityStuff::~EntityStuff()
 void EntityStuff::update_systems()
 {
 	Console::get()<<"update systemow\n";
-	for(BaseSystem * sys : systems)
+    for(System * sys : systems)
 	{
 		sys->update();
     }
