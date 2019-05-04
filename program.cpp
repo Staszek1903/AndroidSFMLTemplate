@@ -116,15 +116,6 @@ void Program::render()
 	win.display();
 }
 
-void Program::onRender()
-{}
-
-void Program::onUpdate()
-{}
-
-void Program::onEvent(sf::Event &ev)
-{}
-
 void Program::halt_for_input()
 {
     sf::Event ev;

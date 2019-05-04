@@ -4,9 +4,9 @@
 #include <stdint.h>
 #include <string>
 
+#include "componentmanager.h"
 #include "../console.h"
 #include <exception>
-#include "componentmanager.h"
 
 #define MAX_COMPONENT_ID 31
 

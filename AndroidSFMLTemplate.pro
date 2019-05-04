@@ -19,7 +19,9 @@ SOURCES += \
     program.cpp \
     EntityStuff/entity.cpp \
     EntityStuff/componentcontainer.cpp \
-    EntityStuff/componentmanager.cpp
+    EntityStuff/componentmanager.cpp \
+    EntityStuff/entitymanager.cpp \
+    EntityStuff/systemmanager.cpp
 
 HEADERS += \
     p.h \
@@ -35,4 +37,6 @@ HEADERS += \
     ui.h \
     EntityStuff/entity.h \
     EntityStuff/componentcontainer.h \
-    EntityStuff/componentmanager.h
+    EntityStuff/componentmanager.h \
+    EntityStuff/entitymanager.h \
+    EntityStuff/systemmanager.h

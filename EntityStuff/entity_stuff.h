@@ -5,13 +5,15 @@
 
 #include "../singleton.hpp"
 #include "../console.h"
-#include "component.h"
-#include "system.h"
+#include "systemmanager.h"
 #include "componentmanager.h"
+#include "entitymanager.h"
 #include <exception>
 #include <stdlib.h>
 
 #include <map>
+
+
 
 /**
  * @brief The EntityStuff class
@@ -24,48 +26,27 @@ protected:
 	friend class Singleton<EntityStuff>;
 
 private:
-
-    /**
-     * !!!!!!!!!!!!!!!
-     * @brief components - zamiast tego
-     * robimy vector component geterów
-     * każdy komponent getter przychowuje jeden typ komponentu
-     * i znajduje sie w wektorze na indeksie rownym Component<T>::get_id()
-     * ComponentGetter sam wie jak wybrac component gdy ma podane ID encji;
-     */
     ComponentManager component_manager;
-    std::vector <System *> systems;
-    size_t next_entity_id;
+    EntityManager entity_manager;
+    SystemManager system_manager;
 	
 public:
 	
 	template < class S >
-	void addSystem();
-
-    template< class C>
-    Component<C> addComponent(size_t ent_id);
+    void addSystem();
     
     void update_systems();
 
-    size_t newEntityId();
-
     ComponentManager & get_component_menager();
+    EntityManager & get_entity_manager();
+    SystemManager & get_system_manager();
 };
-
-template<class C>
-Component<C> EntityStuff::addComponent(size_t ent_id)
-{
-    Component<C> temp;
-    temp.allocate(component_manager, ent_id, Component<C>::get_id());
-
-    return temp;
-}
 
 template < class S >
 void EntityStuff::addSystem()
 {
     auto * s = new S();
-    systems.push_back(s);
+    system_manager.addSystem(s);
     Console::get()<<"system mask: " << s->get_mask() <<"\n";
 }
 

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "component.h"
+#include "entity.h"
 
 class System
 {
@@ -15,8 +16,7 @@ public:
     System();
     System(const System &) = delete;
     virtual ~System();
-    virtual void add_entity_id(size_t id);
-    virtual void update() = 0;
+    virtual void update(EntityManager & em) = 0;
 
     size_t get_mask() const;
     bool has_component_set(size_t mask);

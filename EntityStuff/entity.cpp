@@ -1,10 +1,20 @@
 #include "entity.h"
 
-Entity::Entity()
-	:component_mask(0)
+Entity::Entity(EntityManager &manager)
+    :data(nullptr), e_manager(manager)
 {
-    entity_id = EntityStuff::get().newEntityId();
+}
+
+Entity::Entity(EntityData &data, EntityManager &em)
+    :data(nullptr), e_manager(em)
+{
+    this->data = &data;
 }
 	
 Entity::~Entity()
 {}
+
+void Entity::create()
+{
+    data = &e_manager.create_entity_data();
+}

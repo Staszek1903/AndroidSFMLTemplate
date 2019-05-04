@@ -35,15 +35,46 @@ class Console
 public:
 	sf::RenderWindow & window;
 
+    /**
+     *  @brief operator for outputing text daa to console
+     *  @param console
+     *  @param data any data that is convertable to text by stringstream
+     *  @return console
+     */
     template<typename T>
     friend Console & operator<<(Console & c, const T & data);
 
+    /**
+     * @brief show shows or hides console
+     * @param is
+     */
     void show(bool is);
+
+    /**
+     * @brief draw internaly creates an graphical image of current console state
+     */
 	void draw();
+
+    /**
+     * @brief display draws grafical image on render window
+     */
     void display();
 
+    /**
+     * @brief set_window sets render window which is to be passed to Console upon creation
+     * @param window
+     */
     static void set_window(sf::RenderWindow * window);
+
+    /**
+     * @brief get static console getter
+     * @return instance of console
+     */
     static Console & get();
+
+    /**
+     * @brief release frees the console data and deletes the instance
+     */
     static void release();
 
 private:

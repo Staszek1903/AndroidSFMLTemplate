@@ -5,11 +5,6 @@ System::System()
 
 System::~System(){;}
 
-void System::add_entity_id(size_t id)
-{
-    entity_ids.push_back(id);
-}
-
 size_t System::get_mask() const
 {
     return component_mask;
