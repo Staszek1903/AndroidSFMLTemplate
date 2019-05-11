@@ -32,7 +32,7 @@ protected:
        for(Entity en : get_entities<C>(em))
        {
            C &c = en.component<C>().getComponent();
-           //Console::get()<<" i: "<<c.i<<"\n j: "<<c.j<<"\n";
+           Console::get()<<" i: "<<c.i<<"\n j: "<<c.j<<"\n";
 
            c.i++;
            c.j--;
@@ -54,7 +54,7 @@ public:
             C2 & c2 = en.component<C2>().getComponent();
             C3 & c3 = en.component<C3>().getComponent();
 
-            //Console::get()<<c3.s<<" : "<<c2.a<< "\n";
+            Console::get()<<c3.s<<" : "<<c2.a<< "\n";
 
             c2.a *= 2;
         }
