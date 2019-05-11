@@ -5,33 +5,35 @@
 #include <vector>
 #include <exception>
 #include <sstream>
+#include <limits>
 
 class Entity
 {
-    //size_t entity_id;
-    //size_t component_mask;
-    EntityData * data;
+    size_t entity_data_index;
 
     EntityManager & e_manager;
 
 public:
     Entity(EntityManager & manager);
-    Entity(EntityData & data, EntityManager & em);
+    Entity(size_t data_index, EntityManager & em);
 	virtual ~Entity();
 	
     void create();
 
-	template<class C>
-    Component<C> assign();
+    template<class C, class ... Args>
+    Component<C> assign(Args&& ... args);
 
     template< class C >
     Component<C> component();
 };
 
-template<class C>
-Component<C> Entity::assign()
+template<typename  C, typename ... Args>
+Component<C> Entity::assign(Args&& ... args)
 {
     size_t mask = Component<C>::get_mask();
+    EntityData * data = e_manager.get_entity_data_ptr(entity_data_index);
+
+    if(!data) throw std::runtime_error("inexistent data_index");
 
     std::stringstream e_id;
     e_id<<data->entity_id;
@@ -43,13 +45,17 @@ Component<C> Entity::assign()
         throw std::runtime_error("cannot assign component to non existent entity");
 
     data->component_mask |= mask;
-    return e_manager.addComponent<C>(data->entity_id);
+    auto component = e_manager.addComponent<C>(data->entity_id);
+    C& c = component.getComponent();
+    c = C(std::forward<Args>(args) ...);
+
+    return component;
 }
 
 template<class C>
 Component<C> Entity::component()
 {
-    return e_manager.getComponent<C>(data->entity_id);
+    return e_manager.getComponent<C>(e_manager.get_entity_data_ptr(entity_data_index)->entity_id);
 }
 
 #endif

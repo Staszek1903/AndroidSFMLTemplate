@@ -18,7 +18,6 @@ class Console
     static constexpr int character_size = 12;
 
 	sf::Font font;
-	sf::Text text;
     sf::RenderTexture texture;
     sf::Sprite area;
 

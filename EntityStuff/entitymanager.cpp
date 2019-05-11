@@ -6,17 +6,17 @@ EntityManager::EntityManager(ComponentManager &manager)
     entities.resize(100);
 }
 
-std::vector<EntityData> EntityManager::get_entities(size_t mask)
+std::vector<size_t> EntityManager::get_entities(size_t mask)
 {
-    std::vector <EntityData> ret;
-    for(auto e : entities)
-        if( ( e.second & mask ) == mask )
-            ret.push_back(e);
+    std::vector <size_t> ret;
+    for(size_t i=0; i<entities.size(); ++i)
+        if( ( entities.at(i).second & mask ) == mask )
+            ret.push_back(i);
 
     return ret;
 }
 
-EntityData & EntityManager::create_entity_data()
+size_t EntityManager::create_entity_data()
 {
     size_t id = next_entity_id;
     ++next_entity_id;
@@ -28,5 +28,10 @@ EntityData & EntityManager::create_entity_data()
     EntityData & data = entities.at(entities.size()-1);
     data.entity_id = id;
     data.component_mask = 0;
-    return data;
+    return entities.size()-1;
+}
+
+EntityData *EntityManager::get_entity_data_ptr(size_t index)
+{
+    return &(entities.at(index));
 }

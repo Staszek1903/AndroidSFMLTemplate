@@ -18,12 +18,8 @@
 /**
  * @brief The EntityStuff class
  */
-class EntityStuff : public Singleton<EntityStuff>
+class EntityStuff
 {
-protected:
-	EntityStuff();
-	~EntityStuff();
-	friend class Singleton<EntityStuff>;
 
 private:
     ComponentManager component_manager;
@@ -31,6 +27,8 @@ private:
     SystemManager system_manager;
 	
 public:
+    EntityStuff();
+    ~EntityStuff();
 	
 	template < class S >
     void addSystem();
@@ -47,16 +45,5 @@ void EntityStuff::addSystem()
 {
     auto * s = new S();
     system_manager.addSystem(s);
-    Console::get()<<"system mask: " << s->get_mask() <<"\n";
 }
-
-/*
- * OGARNAAAC SYSTEMYYYYYYY
- * clrating entity:
- * struct Entity
- *  c-tor:
- *      ID id = EntityStuff::getID();
- *      EntityStuff::addComponent(C, id),...,...;
- *
- */
 #endif

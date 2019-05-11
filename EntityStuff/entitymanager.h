@@ -31,9 +31,10 @@ public:
      * @param mask component mask
      * @return chosen entities;
      */
-    std::vector <EntityData> get_entities(size_t mask);
+    std::vector<size_t> get_entities(size_t mask);
 
-    EntityData & create_entity_data();
+    size_t create_entity_data();
+    EntityData * get_entity_data_ptr(size_t index);
 
     template< class C >
     Component<C> addComponent(size_t entity_id);

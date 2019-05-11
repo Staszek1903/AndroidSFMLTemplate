@@ -4,6 +4,7 @@ Program::Program()
     : win(sf::VideoMode::getDesktopMode(), "title"), console_button(10,50,50,50)
 {
 	Console::set_window(&win);
+    Console::get();
 	Renderer::setWindow(win);
 
 	//Console::get()<< " inited\nkurrrrrrrrrrrrrrrrrrrr\n;
@@ -13,6 +14,7 @@ Program::Program()
 	console_button.setHandler(cb_handler);
 	win.setFramerateLimit(30);
 	Renderer::get().addDrawable(console_button);
+
  
     //auto mode = sf::VideoMode::getDesktopMode();
 	//float aspect_ratio = (float)mode.height / (float)mode.width;   

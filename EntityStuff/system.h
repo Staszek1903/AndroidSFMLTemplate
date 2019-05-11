@@ -4,13 +4,30 @@
 #include <vector>
 #include "component.h"
 #include "entity.h"
+#include <bitset>
 
 class System
 {
-private:
+protected:
 
-    size_t component_mask;
-    std::vector <size_t> entity_ids;
+    template <typename ...>
+    struct MaskGetter
+    {
+        static size_t get() {return 0;}
+    };
+
+    template<class T, class ... Args>
+    struct MaskGetter <T, Args ... >
+    {
+        static size_t get()
+        {
+            size_t mask = Component<T>::get_mask();
+            mask |= MaskGetter<Args...>::get();
+            return mask;
+        }
+    };
+
+    typedef std::vector<Entity> Entities;
 
 public:
     System();
@@ -18,57 +35,23 @@ public:
     virtual ~System();
     virtual void update(EntityManager & em) = 0;
 
-    size_t get_mask() const;
-    bool has_component_set(size_t mask);
+    template<class ... Args>
+    Entities get_entities(EntityManager & em);
 
-protected:
-    template<class C>
-    void update_mask();
 };
 
-template<class C>
-void System::update_mask()
+template<class ... Args>
+System::Entities System::get_entities(EntityManager &em)
 {
-    component_mask |= Component<C>::get_mask();
+    Entities ents;
+    size_t mask = MaskGetter<Args ...>::get();
+    auto etds = em.get_entities(mask);
+    for(size_t index : etds)
+        ents.push_back(Entity(index, em));
+
+    return ents;
 }
 
-/*
 
-template <class C>
-class System : public BaseSystem
-{
-public:
-    System();
-    System(const System & )  = delete;
-    virtual ~System();
-    void update();
-    
-protected:
-	virtual void update_elem(Component<C> comp) = 0;
-};
 
-template <class C>
-System<C>::System()
-    :BaseSystem (0){}//Component<C>().get_id()){}
-
-template <class C>
-System<C>::~System()
-{
-    for(void * ptr: components)
-    {
-        Component<C> temp(ptr, EntityStuff::get);
-        temp.release();
-    }
-}
-
-template< class C >
-void System<C>::update()
-{
-    for(void * ptr : components)
-	{
-		Component<C> temp (ptr);
-		update_elem(temp);
-    }
-}
-*/
 #endif

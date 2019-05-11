@@ -10,6 +10,7 @@
 
 class P : public Program
 {
+    EntityStuff es;
     sf::CircleShape s;
     UI ui;
 	    

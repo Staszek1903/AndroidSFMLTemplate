@@ -8,10 +8,6 @@ Console::Console(sf::RenderWindow & window)
 {
       if( ! font.loadFromFile( "Arial.ttf" ) )
 	    throw std::runtime_error( " no font.ttf ");	    
-      text.setString("SAMPLE TEXT");
-      text.setFont(font);
-      text.setFillColor(sf::Color::White);
-      text.setCharacterSize(character_size);
       texture.create(400,315);
       area.setTexture(texture.getTexture());
 
@@ -41,10 +37,15 @@ void Console::draw()
      ;
      (++i) %= content_size, ++row) 
     {
-        std::string l(/*"dupa");*/content[i]);
-    	text.setString(l);
-        text.setPosition(5,row*character_size);
-        texture.draw(text);
+        sf::Text t;
+        t.setString("SAMPLE TEXT");
+        t.setFont(font);
+        t.setFillColor(sf::Color::White);
+        t.setCharacterSize(character_size);
+
+        std::string l(content[i]);
+        t.setPosition(5,row*character_size);
+        texture.draw(t);
         if(i == bottom) break;
     }
 }
@@ -66,7 +67,7 @@ void Console::display()
 	area.setScale(hide_level, -hide_level);
 	
     if(hide_level > 0)
-    	window.draw(area);
+        window.draw(area);
 }
 
 void Console::set_window(sf::RenderWindow *window)
