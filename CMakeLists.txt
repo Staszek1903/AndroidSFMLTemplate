@@ -10,7 +10,10 @@ set(SRC main.cpp p.cpp program.cpp
  EntityStuff/system.cpp
 EntityStuff/component.cpp
  EntityStuff/entity.cpp
- EntityStuff/ComponentContainer.cpp)
+ EntityStuff/componentcontainer.cpp
+ EntityStuff/componentmanager.cpp
+ EntityStuff/entitymanager.cpp
+ EntityStuff/systemmanager.cpp)
 
 # define the pong target
 add_executable(exec ${SRC})
