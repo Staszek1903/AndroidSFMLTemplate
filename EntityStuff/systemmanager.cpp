@@ -1,7 +1,7 @@
 #include "systemmanager.h"
 
-SystemManager::SystemManager(EntityManager &manager)
-    : e_manager(manager)
+SystemManager::SystemManager(EntityManager &manager , EventManager & vm)
+    : e_manager(manager), ev_manager(vm)
 {
 
 }
@@ -11,11 +11,11 @@ void SystemManager::addSystem(System * s)
     systems.push_back(s);
 }
 
-void SystemManager::update()
+void SystemManager::update(double dt)
 {
     for(auto * s: systems)
     {
-        s->update(e_manager);
+        s->update(e_manager, ev_manager, dt);
     }
 }
 
