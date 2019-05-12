@@ -8,6 +8,7 @@
 #include "systemmanager.h"
 #include "componentmanager.h"
 #include "entitymanager.h"
+#include "eventmanager.h"
 #include <exception>
 #include <stdlib.h>
 
@@ -22,6 +23,7 @@ class EntityStuff
 {
 
 private:
+	EventManager event_manager;
     ComponentManager component_manager;
     EntityManager entity_manager;
     SystemManager system_manager;
@@ -30,20 +32,21 @@ public:
     EntityStuff();
     ~EntityStuff();
 	
-	template < class S >
-    void addSystem();
+	template < class S, class ... Args >
+    void addSystem(Args && ... args);
     
-    void update_systems();
+    void update_systems(double dt);
 
     ComponentManager & get_component_menager();
     EntityManager & get_entity_manager();
     SystemManager & get_system_manager();
+    EventManager & get_event_manager();
 };
 
-template < class S >
-void EntityStuff::addSystem()
+template < class S, class ... Args >
+void EntityStuff::addSystem(Args && ... args)
 {
-    auto * s = new S();
+    auto * s = new S(std::forward<Args>(args) ... );
     system_manager.addSystem(s);
 }
 #endif
