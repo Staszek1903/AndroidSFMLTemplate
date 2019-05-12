@@ -2,6 +2,7 @@
 #define SYSTEM_H_
 
 #include <vector>
+#include "eventmanager.h"
 #include "component.h"
 #include "entity.h"
 #include <bitset>
@@ -33,7 +34,7 @@ public:
     System();
     System(const System &) = delete;
     virtual ~System();
-    virtual void update(EntityManager & em) = 0;
+    virtual void update(EntityManager & em, EventManager & vm, double dt) = 0;
 
     template<class ... Args>
     Entities get_entities(EntityManager & em);
