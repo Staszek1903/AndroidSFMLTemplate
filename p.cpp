@@ -1,5 +1,11 @@
 #include "p.h"
 
+struct Ev : public BaseEvent
+{
+	Ev(Entity en) : en(en){;}
+	Entity en;	
+};
+
 struct C
 { 
     C(int i, int j) : i(i), j(j){}
@@ -12,20 +18,24 @@ struct C2
     C2(float a) : a(a){}
     float a;
 };
+
 struct C3
 {
     C3(std::string s) : s(s){}
     std::string s;
 };
 
-class S : public System
+class S : public System, public Receiver
 {
 public: 
-    S()
-    {}
+    S(EventManager & vm)
+    {
+    		vm.addReceiver(this);
+    		update_event_mask<Ev>();
+    }
     virtual ~S() override {}
 protected:
-    virtual void update(EntityManager & em) override
+    virtual void update(EntityManager & em, EventManager & vm, double dt) override
     {
 
         Console::get()<<"Comp C\n";
@@ -38,6 +48,15 @@ protected:
            c.j--;
        }
     }
+    
+    virtual void receive(BaseEvent & ev) override
+    {
+    	Console::get()<<"Event received\n";
+    	if(is_type<Ev>(&ev))
+    	{
+    		Console::get()<<"Event is type Ev\n";
+    	}
+    }
 };
 
 class S2 : public System
@@ -46,7 +65,7 @@ public:
     S2()
     {}
     virtual ~S2() override {}
-    virtual void update(EntityManager & em) override
+    virtual void update(EntityManager & em, EventManager & vm, double dt) override
     {
         Console::get()<<"comp C2"<<"\n";
         for(Entity en : get_entities<C2,C3>(em))
@@ -57,6 +76,7 @@ public:
             Console::get()<<c3.s<<" : "<<c2.a<< "\n";
 
             c2.a *= 2;
+            if(c2.a > 100.0f) vm.emit<Ev>(en);
         }
     }
 };
@@ -68,7 +88,7 @@ P::P()
     s.setRadius(100);
  	ui.createDefault();
  	
-    es.addSystem<S>();
+    es.addSystem<S>(es.get_event_manager());
     es.addSystem<S2>();
 
     Entity a1(es.get_entity_manager());
@@ -78,7 +98,8 @@ P::P()
     a2.create();
     a3.create();
 
-    //4 .event system
+    //4 .event system (Id eventu caly cza jest 0)
+    // 4.5 zamienic Entity::component na *operator i dostep do komponentow na operator->
     //5. ogarnąć kasowanie
     //      I komponentow
     //      II entitow
@@ -109,10 +130,12 @@ void P::onRender()
 
 void P::onEvent(sf::Event &ev)
 {
+	if(ev.type == sf::Event::TouchBegan)
+	es.update_systems(0.0f);
 	if(ev.type == sf::Event::KeyPressed)
 	{
 		if(ev.key.code == sf::Keyboard::A)
-            es.update_systems();
+            es.update_systems(0.0f);
         //if(ev.key.code == sf::Keyboard::B)
            // EntityStuff::get().addComponent<C3>(1);
         /*if(ev.key.code == sf::Keyboard::C)
