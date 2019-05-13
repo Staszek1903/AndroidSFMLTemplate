@@ -41,22 +41,20 @@ protected:
         Console::get()<<"Comp C\n";
        for(Entity en : get_entities<C>(em))
        {
-           C &c = en.component<C>().getComponent();
-           Console::get()<<" i: "<<c.i<<"\n j: "<<c.j<<"\n";
+           auto c = en.component<C>();
+           Console::get()<<" i: "<<c->i<<"\n j: "<<c->j<<"\n";
 
-           c.i++;
-           c.j--;
+           c->i++;
+           c->j--;
        }
     }
     
-    virtual void receive(BaseEvent & ev) override
+    virtual void receive(BaseEvent * ev) override
     {
-    	Ev * evev  = (Ev*)&ev;
-    	//Ev* evev = (Ev*)evv;
-    	
     	Console::get()<<"Event received\n";
-    	if(is_type<Ev>(&ev))
+    	if(is_type<Ev>(ev))
     	{
+    		Ev * evev  = (Ev*)ev;
     		Console::get()<<"Event is type Ev\n";
     		C2 & c = evev->en.component< C2 >().getComponent();
     		c.a = 1.23f;
@@ -75,13 +73,13 @@ public:
         Console::get()<<"comp C2"<<"\n";
         for(Entity en : get_entities<C2,C3>(em))
         {
-            C2 & c2 = en.component<C2>().getComponent();
-            C3 & c3 = en.component<C3>().getComponent();
+            auto c2 = en.component<C2>();
+            auto c3 = en.component<C3>();
 
-            Console::get()<<c3.s<<" : "<<c2.a<< "\n";
+            Console::get()<<(*c3).s<<" : "<<(*c2).a<< "\n";
 
-            c2.a *= 2;
-            if(c2.a > 100.0f) vm.emit<Ev>(en);
+            (*c2).a *= 2;
+            if((*c2).a > 100.0f) vm.emit<Ev>(en);
         }
     }
 };
@@ -103,11 +101,12 @@ P::P()
     a2.create();
     a3.create();
 
-    // 4.5 zamienic Component::getComponent na *operator i dostep do komponentow na operator->
+    
     //5. ogarnąć kasowanie
     //      I komponentow
     //      II entitow
-
+	// (nie defragmentowa pamieci po kasowaniu zrobic vector dostepnych miejsc)
+	
     a1.assign<C>(1,1);
     a2.assign<C>(-100, 100);
     a1.assign<C2>(1.23);
