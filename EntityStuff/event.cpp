@@ -2,14 +2,15 @@
 
 size_t BaseEvent::next_id = 1;
 
-BaseEvent::BaseEvent() {;}
+BaseEvent::BaseEvent(size_t id )
+	: current_id(id) {;}
 BaseEvent::~BaseEvent(){;}
 
 size_t BaseEvent::assign_next_id()
 {
-	current_id = next_id;
+	size_t temp_id = next_id;
 	next_id <<= 1;
-	return current_id;
+	return temp_id;
 }
 
 size_t BaseEvent::get_id()
