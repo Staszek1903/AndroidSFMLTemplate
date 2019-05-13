@@ -1,6 +1,6 @@
 #include "p.h"
 
-struct Ev : public BaseEvent
+struct Ev : public Event<Ev>
 {
 	Ev(Entity en) : en(en){;}
 	Entity en;	
@@ -51,10 +51,15 @@ protected:
     
     virtual void receive(BaseEvent & ev) override
     {
+    	Ev * evev  = (Ev*)&ev;
+    	//Ev* evev = (Ev*)evv;
+    	
     	Console::get()<<"Event received\n";
     	if(is_type<Ev>(&ev))
     	{
     		Console::get()<<"Event is type Ev\n";
+    		C2 & c = evev->en.component< C2 >().getComponent();
+    		c.a = 1.23f;
     	}
     }
 };
@@ -98,8 +103,7 @@ P::P()
     a2.create();
     a3.create();
 
-    //4 .event system (Id eventu caly cza jest 0)
-    // 4.5 zamienic Entity::component na *operator i dostep do komponentow na operator->
+    // 4.5 zamienic Component::getComponent na *operator i dostep do komponentow na operator->
     //5. ogarnąć kasowanie
     //      I komponentow
     //      II entitow
