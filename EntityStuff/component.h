@@ -10,6 +10,12 @@
 
 #define MAX_COMPONENT_ID 31
 
+/**
+	* Component base class
+	* Assigns id to new component types
+	* Holds pointer to component allocated
+	* in ComponentContainer
+	*/
 class BaseComponent
 {
 protected:
@@ -20,20 +26,50 @@ protected:
     size_t size;
 
 public:
+	/**
+		* Doesnt allocate component!
+		*/
     BaseComponent();
+    /**
+    	* Copies information about component
+    	* and its poiter
+    	* and NOT component itself
+    	*/
     BaseComponent(const BaseComponent &);
-    BaseComponent & operator= (const BaseComponent &);
+    /**
+    	* same as copy constructor
+    	*/
+     BaseComponent & operator= (const BaseComponent &);
 
     BaseComponent(uint8_t *data, size_t size);
     virtual ~BaseComponent();
+    /**
+    	* @return poiter to component data in
+    	* ComponentContainer
+    	*/
     virtual void * getDataPtr() const;
+    /**
+    	* @return size of compoent in bytes
+    	*/
     virtual size_t getDataSize() const;
+    /**
+    	* Destroys daa of a component
+    	*/
     virtual void release();
-
-    void allocate(ComponentManager & manager, size_t entity_id, size_t component_id);
+	
+	/**
+		* Alocates new data for the component
+		* @param manager - component manager
+		* @param entity_id - id of entity which component belogs to
+		* @param component_id - id of this component type
+		*/
+void allocate(ComponentManager & manager, size_t entity_id, size_t component_id);
 };
 
-
+/**
+	* Component wraper class .
+	* Used to interface with compoent data
+	*/
 template <class T>
 class Component : public BaseComponent
 {
@@ -41,20 +77,58 @@ private:
 	static int _id;
 
 public:
+    /**
+    	* Same as BaseComponent
+    	* but can create new component id
+    	* if type wasnt used previously
+    	*/
     Component();
+    /**
+    	* Wraps around pointer to data in
+    	* ComponentContainer
+    	*/
     Component(void *ptr);
+    /**
+    	* Same as BaseComponent cc-tor
+    	*/
     Component( const Component<T> & other)
         :BaseComponent(other){}
     Component<T> & operator= (const Component<T> & other);
     ~Component();
-
+	
+	/**
+		* @return reference to underlying component
+		*/
     T& getComponent();
+	/**
+		* Acces to underlying component members
+		* @return piointer to component
+		*/
 	T* operator->();
+	/**
+		* Same as getComponent
+		* @returns reference to underlying component
+		*/
 	T& operator*();
 	
+	/**
+		* Staticly assigns new id to component type if that type wasnt previously assigned
+		*/
     static void assign_id();
+    /**
+    	* reformates id into component bitmask
+    	* where only one bit is high
+    	* @returns mask
+    	*/
     static size_t get_mask();
+    /**
+		* @return id of component type
+		*/    
     static size_t get_id();
+    
+    /**
+    	* @return size of compoennt of type T in bytes
+    	*/
     static size_t getTypeSize();
 };
 
