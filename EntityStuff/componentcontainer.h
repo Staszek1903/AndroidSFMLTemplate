@@ -11,6 +11,11 @@
 
 #define CHUNK_SIZE 16
 
+/**
+	* Generic class of DataContainer
+	* Non template class available if containing varius types
+	*
+	*/
 class DataContainer
 {
     size_t elem_size, //element size in bytes
@@ -19,26 +24,46 @@ class DataContainer
     char * data_ptr;
 
 public:
+	/**
+		* @param elem_size - size of single memory cell in container in bytes
+		*/
     DataContainer(size_t elem_size);
     DataContainer(const DataContainer &);
     DataContainer & operator= (const DataContainer &) = delete;
     virtual ~ DataContainer();
 
 
+    size_t size();
+    size_t get_elem_size();
+    
+    /**
+    	* current amount of elements container is available to consist
+    	*/
+    size_t get_capacity();
+    
     /**
      * @brief resise changes capacity
      * @param n_elems - that many elems will fit in capacity
      */
-    size_t size();
-    size_t get_elem_size();
-    size_t get_capacity();
     void resise(size_t n_elems);
+    /**
+    	* alocates new component in memory
+    	* resizes container if needed
+    	*/
     void push(const char * data);
-
+	
+	/**
+		* accesses element in memory
+		* @param n - index of element
+		* @return pointer to element
+		*/
     void * operator[] (size_t n);
 
 };
 
+/**
+	* ComponentContainer class is DataContainer that bins ComponentData with id of entity it belogs to
+	*/
 class ComponentContainer : public DataContainer
 {
 protected:
@@ -48,49 +73,24 @@ protected:
       */
     std::map <size_t, size_t> id_component_map;
 public:
+    /**
+    	* same as DataContainer
+    	*/
     ComponentContainer(size_t elem_size);
+    /**
+    	* allocates new component data
+    	* saves binding of it with entity id
+    	* @param entity_id cannot be the same as id that is allredy added to container
+    	* @return pointer to allocated data
+    	*/
     void * addComponent(size_t entity_id);
+    /**
+    	* Gets ponter to component binded to id
+    	* @param entity_id 
+    	* @return pointer to data
+    	*/
     void * getComponent(size_t entity_id);
 
 };
-
-/*
-template< class T>
-class ComponentGetter : public ComponentContainer
-{
-    
-public:
-    ComponentGetter();
-
-    void addComponent(Component<T> component, size_t id);
-    Component<T> getComponent(size_t id);
-};
-
-template<class T>
-ComponentGetter<T>::ComponentGetter()
-    :ComponentContainer (sizeof (T))
-{}
-
-template<class T>
-void ComponentGetter<T>::addComponent(Component<T> component, size_t ent_id)
-{
-	const char * temp = static_cast<char *>(component.getDataPtr());
-	
-    size_t this_size = this->size();
-    id_component_map[ent_id] = this_size;
-    push(temp);
-}
-
-template<class T>
-Component <T>  ComponentGetter<T>::getComponent(size_t id)
-{
-    if(id_component_map.find(id) == id_component_map.end())
-        throw std::runtime_error ( "no id in component getter" );
-    
-    size_t index = id_component_map.at(id);
-    Component<T> ret (this->operator[](index));
-    return ret;
-}
-*/
 
 #endif // COMPONENTCONTAINER_H
