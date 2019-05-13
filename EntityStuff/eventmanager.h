@@ -22,7 +22,7 @@ public:
 	Receiver();
 	virtual ~Receiver();
 	size_t get_mask();	
-	virtual void receive(BaseEvent & ev) =0;
+	virtual void receive(BaseEvent * ev) =0;
 	
 	template < class E >
 	bool is_type(BaseEvent * ev);
@@ -70,7 +70,7 @@ void EventManager::emit(Args&& ... args)
 	   << "  \n";
 		if(p->get_mask() | Event<E>::get_id())
 		{
-			p->receive(ev);
+			p->receive(&ev);
 		}
 	}
 }
