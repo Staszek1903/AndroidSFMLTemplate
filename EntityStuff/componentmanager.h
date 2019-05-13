@@ -4,6 +4,9 @@
 #include <vector>
 #include "componentcontainer.h"
 
+/**
+	* contains component containars separate for each type
+	*/
 class ComponentManager
 {
     std::vector <ComponentContainer *> containers;
