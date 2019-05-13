@@ -2,6 +2,7 @@
 #define EVENT_H_
 
 #include <cstdlib>
+#include "../console.h"
 
 /**
 	* Base Event base class of event
@@ -17,7 +18,7 @@ protected:
 		* returning next free id
 		* @return free id
 		*/
-	size_t assign_next_id();
+	static size_t assign_next_id();
 	
 public:
 	/**
@@ -25,7 +26,7 @@ public:
 		* @param id - id to be assigned to event 
 		* type
 		*/
-	BaseEvent();
+	BaseEvent(size_t id);
 	virtual ~BaseEvent();
 	
 	size_t get_id();
@@ -37,8 +38,9 @@ class Event : public BaseEvent
 	static size_t id;
 public:
 	Event();
+	Event(const BaseEvent &){};
 	virtual ~Event();
-	static size_t get_id() {return id;} 
+	static size_t get_id(); 
 	
 };
 
@@ -47,11 +49,17 @@ size_t Event<E>::id = 0;
 
 template< class E >
 Event<E>::Event()
+	: BaseEvent((id)?id:assign_next_id())
 {
-	if(!id) id = assign_next_id();
 }
 
 template< class E >
 Event<E>::~Event(){}
 
+template <class E>
+size_t Event<E>::get_id() 
+{
+	if(!id) id = assign_next_id();
+	return id;
+}
 #endif /* EVENT_H_ */
