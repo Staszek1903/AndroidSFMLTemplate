@@ -45,6 +45,7 @@ template< class E >
 void Receiver::update_event_mask()
 {
 	mask |= Event<E>::get_id();
+	Console::get()<<"receiver mask is "<<mask<<"\n";
 }
 
 template < class E >
