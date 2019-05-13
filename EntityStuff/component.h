@@ -49,7 +49,9 @@ public:
     ~Component();
 
     T& getComponent();
-    
+	T* operator->();
+	T& operator*();
+	
     static void assign_id();
     static size_t get_mask();
     static size_t get_id();
@@ -124,4 +126,15 @@ size_t Component<T>::getTypeSize()
     return sizeof(T);
 }
 
+template < class T >
+T* Component<T>::operator->()
+{
+	return &getComponent();
+}
+
+template < class T >
+T& Component<T>::operator*()
+{
+	return getComponent();
+}
 #endif
