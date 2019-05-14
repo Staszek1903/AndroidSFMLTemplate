@@ -34,7 +34,7 @@ void * ComponentManager::get_compoenet_ptr(size_t entity_id, size_t component_id
 
 void ComponentManager::release_component( size_t entity_id, size_t component_id)
 {
-	auto cont =container.at(component_id);
+	auto cont =containers.at(component_id);
 	cont->releaseComponent(entity_id);
 }
 
