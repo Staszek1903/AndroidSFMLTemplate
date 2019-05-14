@@ -8,6 +8,7 @@
 #include <sstream>
 
 #include <map>
+#include <vector>
 
 #define CHUNK_SIZE 16
 
@@ -72,6 +73,7 @@ protected:
       * second: intex of component
       */
     std::map <size_t, size_t> id_component_map;
+    std::vector<size_t> free_indices;
 public:
     /**
     	* same as DataContainer
@@ -90,7 +92,17 @@ public:
     	* @return pointer to data
     	*/
     void * getComponent(size_t entity_id);
-
+	/**
+		* sets memory cell belonging to entity to as free and able for allocate
+		*@param entity_id
+		*/
+	void releaseComponent(size_t entity_id);
+	
+	/**
+		* defragments container data romoving emty indices and reducing container size
+		* @TODO
+		*/
+	void defragment();
 };
 
 #endif // COMPONENTCONTAINER_H
