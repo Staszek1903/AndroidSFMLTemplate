@@ -28,6 +28,20 @@ void * ComponentManager::allocate_new_component(size_t entity_id, size_t compone
 
 void * ComponentManager::get_compoenet_ptr(size_t entity_id, size_t component_id)
 {
-    auto & container = containers.at(component_id);
+    auto container = containers.at(component_id);
     return container->getComponent(entity_id);
+}
+
+void ComponentManager::release_component( size_t entity_id, size_t component_id)
+{
+	auto cont =container.at(component_id);
+	cont->releaseComponent(entity_id);
+}
+
+void ComponentManager::release_entity(size_t entity_id)
+{
+	for(auto contp : containers)
+	{
+		contp->releaseComponent(entity_id);
+	}
 }
