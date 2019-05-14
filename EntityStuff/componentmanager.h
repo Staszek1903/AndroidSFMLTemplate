@@ -39,6 +39,19 @@ public:
      * @return pointer to specific component
      */
     void * get_compoenet_ptr(size_t entity_id, size_t component_id);
+    
+    /**
+    	* releases memory space of particular component of particular entity
+    	*@param entity_id
+    	*@param component_id
+    	*/
+    void release_component(size_t entity_id, size_t component_id);
+    
+    /**
+    	* releases every component of particular entity
+    	* @param entity_id
+    	*/
+    void release_entity(size_t entity_id);
 };
 
 #endif // COMPONENTMANAGER_H
