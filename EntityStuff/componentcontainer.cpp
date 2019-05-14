@@ -74,11 +74,19 @@ void *ComponentContainer::addComponent(size_t entity_id)
         ss<<entity_id;
         throw std::runtime_error("component if id : <" + ss.str() + "> allready exists");
     }
-
-    id_component_map[entity_id] = this->size();
-    char * buffer = new char [get_elem_size()];
-    push(buffer);
-    delete [] buffer;
+	
+	if(free_indices.size() == 0)
+	{
+	    id_component_map[entity_id] = this->size();
+	    char * buffer = new char [get_elem_size()];
+	    push(buffer);
+	    delete [] buffer;
+	}
+	else
+	{
+		id_component_map[entity_id] = free_indices.back();
+		free_incides.pop_back();
+	}
 
     return this->operator[](id_component_map.at(entity_id));
 }
@@ -87,3 +95,13 @@ void *ComponentContainer::getComponent(size_t entity_id)
 {
     return this->operator[](id_component_map.at(entity_id));
 }
+
+void ComponentContainer::releaseComponent(size_t entity_id)
+{
+	auto it = id_component_map.find(entity_id);
+	if(it == id_component_map.end()) return;
+	size_t comp_index = id_component_map.at(entity_id);
+	
+	id_component_map.erase(it);
+	free_indices.push_back(comp_index);
+}	
