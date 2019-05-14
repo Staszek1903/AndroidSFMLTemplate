@@ -106,14 +106,12 @@ P::P()
     //      I komponentow
     //      II entitow
 	// (nie defragmentowa pamieci po kasowaniu zrobic vector dostepnych miejsc)
+	//ew funkcja do defragmentacji
 	
     a1.assign<C>(1,1);
     a2.assign<C>(-100, 100);
     a1.assign<C2>(1.23);
     a1.assign<C3>("SIEMA KURWY");
-
-	
-      // Console::get()<<"empty size: "<<Component<C>().getClassName()<<'\n';
  }
  
  P::~P()
