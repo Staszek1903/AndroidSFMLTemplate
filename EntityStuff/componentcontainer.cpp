@@ -85,7 +85,7 @@ void *ComponentContainer::addComponent(size_t entity_id)
 	else
 	{
 		id_component_map[entity_id] = free_indices.back();
-		free_incides.pop_back();
+		free_indices.pop_back();
 	}
 
     return this->operator[](id_component_map.at(entity_id));
