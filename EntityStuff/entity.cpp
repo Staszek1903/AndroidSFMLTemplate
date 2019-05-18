@@ -19,3 +19,8 @@ void Entity::create()
 {
     entity_data_index = e_manager.create_entity_data();
 }
+
+void Entity::release()
+{
+	e_manager.realeaseEntity(entity_data_index);
+}
