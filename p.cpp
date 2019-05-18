@@ -1,5 +1,6 @@
 #include "p.h"
 
+
 struct Ev : public Event<Ev>
 {
 	Ev(Entity en) : en(en){;}
@@ -79,7 +80,10 @@ public:
             Console::get()<<(*c3).s<<" : "<<(*c2).a<< "\n";
 
             (*c2).a *= 2;
-            if((*c2).a > 100.0f) vm.emit<Ev>(en);
+            if((*c2).a > 100.0f)  vm.emit<Ev>(en);
+        	{
+        		//en.release();
+        	}
         }
     }
 };
