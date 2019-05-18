@@ -35,3 +35,26 @@ EntityData *EntityManager::get_entity_data_ptr(size_t index)
 {
     return &(entities.at(index));
 }
+
+void EntityManager::realeaseEntity(size_t data_index)
+{
+	EntityData * data = get_entity_data_ptr(data_index);
+
+    if(!data) throw std::runtime_error("inexistent data_index");
+
+    std::stringstream e_id;
+    e_id<<data->entity_id;
+
+    if(!data->entity_id)
+        throw std::runtime_error("cannot release non existent entity");
+
+	for(int i=0; i<sizeof(size_t)*8; ++i)
+	{
+		if(data->component_mask & (1<<i))
+			c_manager.release_component(data->entity_id, i);
+	}
+	
+	auto it = entities.begin() + data_index;
+	entities.erase(it);
+}
+	
