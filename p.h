@@ -8,6 +8,8 @@
 #include "ui.h"
 #include "EntityStuff/entity_stuff.h"
 
+#include "resource_manager.cpp"
+
 class P : public Program
 {
     EntityStuff es;
