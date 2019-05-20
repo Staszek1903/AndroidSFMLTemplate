@@ -90,6 +90,9 @@ public:
 
 P::P()
 {
+	
+	ResourceManager::get();
+	
     s.setPosition(sf::Vector2f (200,200));
     s.setFillColor(sf::Color::Blue);
     s.setRadius(100);
