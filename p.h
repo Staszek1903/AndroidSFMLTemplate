@@ -8,7 +8,7 @@
 #include "ui.h"
 #include "EntityStuff/entity_stuff.h"
 
-#include "resource_manager.cpp"
+#include "resource_manager.h"
 
 class P : public Program
 {
