@@ -16,8 +16,9 @@ EntityStuff/component.cpp
  EntityStuff/systemmanager.cpp
  EntityStuff/event.cpp
  EntityStuff/eventmanager.cpp
- ScriptStuff/script.cpp)
-
+ ScriptStuff/script.cpp
+ ScriptStuff/scriptentry.cpp)
+ 
 # define the pong target
 add_executable(exec ${SRC})
 target_link_libraries(exec sfml-audio sfml-graphics)
