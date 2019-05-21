@@ -9,10 +9,10 @@
 #include "EntityStuff/entity_stuff.h"
 
 #include "resource_manager.h"
+#include "ScriptStuff/script.h"
 
 class P : public Program
 {
-    EntityStuff es;
     sf::CircleShape s;
     UI ui;
 	    
