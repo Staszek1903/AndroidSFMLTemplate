@@ -14,7 +14,7 @@ class Console
     static Console * instance;
     static sf::RenderWindow * win_pointer;
     static constexpr int content_size = 26;
-    static constexpr int line_size = 40;
+    static constexpr int line_size = 80;
     static constexpr int character_size = 12;
 
 	sf::Font font;
