@@ -10,26 +10,23 @@ Script::~Script()
 
 bool Script::load_from_file(const std::string & dir)
 {
-	
+	std::string content;
 	Console::get()<<"loading            script: "<<dir<<"\n";
 	
+	load_content(dir, content);
 	Console::get()<<content<<"\n";
 	
-	Paser pars;
-	pars.load(content);
-	
-		
-				
-	file.close(); 
-	return false;
+	entry.decode(content);
+	 
+	return true;
 }
 
 void Script::release()
 {
-	
+	entry.release();
 }
 
-void load_content(std::string & cont)
+void Script::load_content(const std::string& dir, std::string & cont)
 {
 	std::fstream file;
 	file.open(dir);
@@ -37,4 +34,6 @@ void load_content(std::string & cont)
 	
 	for(std::string buff; std::getline(file, buff);)
 		cont = cont + buff;
+		
+	file.close();
 }
