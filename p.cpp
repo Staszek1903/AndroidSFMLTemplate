@@ -18,6 +18,7 @@ P::P()
  
  P::~P()
  {
+ 	
  }
 
 void P::onUpdate()
