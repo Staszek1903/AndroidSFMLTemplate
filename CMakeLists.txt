@@ -15,7 +15,8 @@ EntityStuff/component.cpp
  EntityStuff/entitymanager.cpp
  EntityStuff/systemmanager.cpp
  EntityStuff/event.cpp
- EntityStuff/eventmanager.cpp)
+ EntityStuff/eventmanager.cpp
+ ScriptStuff/script.cpp)
 
 # define the pong target
 add_executable(exec ${SRC})
