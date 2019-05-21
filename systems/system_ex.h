@@ -85,3 +85,32 @@ public:
         }
     }
 };
+
+/**
+   
+    	INIT
+    es.addSystem<S>(es.get_event_manager());
+    es.addSystem<S2>();
+
+    Entity a1(es.get_entity_manager());
+    Entity a2(es.get_entity_manager());
+    Entity a3(es.get_entity_manager());
+    a1.create();
+    a2.create();
+    a3.create();
+
+    
+    //5. ogarnąć kasowanie
+    //      I komponentow
+    //      II entitow
+	// (nie defragmentowa pamieci po kasowaniu zrobic vector dostepnych miejsc)
+	//ew funkcja do defragmentacji
+	
+    a1.assign<C>(1,1);
+    a2.assign<C>(-100, 100);
+    a1.assign<C2>(1.23);
+    a1.assign<C3>("SIEMA KURWY");
+    
+    UPDATE:
+    es.update_systems(0.0f);
+	*/
