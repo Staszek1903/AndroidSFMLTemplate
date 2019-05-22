@@ -10,10 +10,6 @@ P::P()
     s.setFillColor(sf::Color::Blue);
     s.setRadius(100);
  	ui.createDefault();
- 	
- 	Script sc;
- 	sc.load_from_file("./textures/textures.conf");
- 	
  }
  
  P::~P()
@@ -39,7 +35,7 @@ void P::onEvent(sf::Event &ev)
 	if(ev.type == sf::Event::KeyPressed)
 	{
 		if(ev.key.code == sf::Keyboard::A)
-         {}
+         {Script sc;	sc.load_from_file("./textures/textures.conf");}
         //if(ev.key.code == sf::Keyboard::B)
            // EntityStuff::get().addComponent<C3>(1);
         /*if(ev.key.code == sf::Keyboard::C)
