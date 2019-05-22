@@ -8,24 +8,33 @@ ScriptEntry::~ScriptEntry()
 
 void ScriptEntry::decode(std::string data)
 {
+	
 	erase_whitespaces(data);
-	size_t terminate_pos = data.find(';');
+	
+	Console::get()<<data<<"\n";
+	size_t terminate_pos = find_terminate(data);
 	size_t label_end_pos = data.find(':');
 	size_t val_begin_pos =0;
 	if(terminate_pos == std::string::npos)
 		throw std::runtime_error("lacking ';' at end of entry;");
-		
+	
 	if(label_end_pos == std::string::npos)
+	{
 		name = "";
+	}
 	else
 	{
 		val_begin_pos = label_end_pos+1;
+		if(val_begin_pos >= data.size()) 
+		throw std::runtime_error(" no value after ':'");
 		auto label = data.substr(0,label_end_pos);
 		if(is_string(label))
 			this->name = label;
 		else
 			throw std::runtime_error(" label must be a valid string");
 	}
+	
+	return;
 	
 	auto v = data.substr(val_begin_pos, data.size() - val_begin_pos);
 	
@@ -113,3 +122,12 @@ bool ScriptEntry::is_array(std::string val)
 
 void ScriptEntry::release()
 {}
+
+size_t ScriptEntry::find_terminate(const std::string & s)
+{
+	for(int i= s.size()-1; i>=0; ++i)
+		if(s.at(i) == ';') return i;
+		else if(!std::iswspace(s.at(i))) throw std::runtime_error("garbage at and of line");
+
+	throw std::runtime_error(" ';' not fount at and of entry");
+}
