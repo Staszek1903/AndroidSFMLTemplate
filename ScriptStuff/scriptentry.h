@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <exception>
+#include "../console.h"
 
 class Value
 {
@@ -97,6 +98,12 @@ private:
 		* @return if so
 		*/
 	bool is_array(std::string val);
+	
+	/**
+		* @return position of last ';'
+		* @throw runtime_eror if ';' is not last non whitespace character
+		*/
+	size_t find_terminate(const std::string & s);
 };
 	
 
