@@ -5,6 +5,7 @@
 #include "touchbuffer.h"
 #include "renderer.h"
 #include "touchable.h"
+#include "error_generate.hpp";
 #include <SFML/Graphics.hpp>
 
 class ConsoleButtonHandler : public TouchableHandler
