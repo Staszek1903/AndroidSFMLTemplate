@@ -1,52 +1,32 @@
 #include "scriptentry.h"
 
 ScriptEntry::ScriptEntry()
+    : value(nullptr)
 {}
 
 ScriptEntry::~ScriptEntry()
-{}
+{
+    release();
+}
 
 void ScriptEntry::decode(std::string data)
-{
-	
-	erase_whitespaces(data);
-	
+{	
+    // pojedyncze value bez labela nie dzialają i nested arraye... też nie dzialają
 	Console::get()<<data<<"\n";
-	size_t terminate_pos = find_terminate(data);
-	size_t label_end_pos = data.find(':');
-	size_t val_begin_pos =0;
-	if(terminate_pos == std::string::npos)
-		throw std::runtime_error("lacking ';' at end of entry;");
+    if(Parser::get_last_non_whitespace(data) != ';')
+        throw std::runtime_error("entry not terminated with ';'");
+    name = decode_name(data);
+    std::string v = decode_value(data);
 	
-	if(label_end_pos == std::string::npos)
-	{
-		name = "";
-	}
-	else
-	{
-		val_begin_pos = label_end_pos+1;
-		if(val_begin_pos >= data.size()) 
-		throw std::runtime_error(" no value after ':'");
-		auto label = data.substr(0,label_end_pos);
-		if(is_string(label))
-			this->name = label;
-		else
-			throw std::runtime_error(" label must be a valid string");
-	}
-	
-	return;
-	
-	auto v = data.substr(val_begin_pos, data.size() - val_begin_pos);
-	
-	if(is_array(v))
+    if(Parser::is_array(v))
 		value = new ValueArray(v);
-	if(is_int(v))
+    else if(Parser::is_int(v))
 		value = new ValueInt(v);
-	else if(is_float(v))
+    else if(Parser::is_float(v))
 		value = new ValueFloat(v);
-	else if(is_string(v))
+    else if(Parser::is_string(v))
 		value = new ValueString(v);
-	else throw std::runtime_error("cannot indentifie value type");
+    else throw std::runtime_error("cannot identifie value type \n<" + v+">");
 }
 
 const std::string & ScriptEntry::get_name()
@@ -74,12 +54,24 @@ const std::vector<ScriptEntry> & ScriptEntry::get_array_value()
 
 int ScriptEntry::get_int_value()
 {
-	return 0;
+    if(!value)
+        throw std::runtime_error("value not initialized");
+
+    if(value->type != Value::ARRAY)
+        throw std::runtime_error("value not of value INT");
+    ValueInt * v = static_cast<ValueInt*>(value);
+    return  v->val;
 }
 
 float ScriptEntry::get_float_value()
 {
-	return 0.0f;
+    if(!value)
+        throw std::runtime_error("value not initialized");
+
+    if(value->type != Value::ARRAY)
+        throw std::runtime_error("value not of value INT");
+    ValueFloat * v = static_cast<ValueFloat*>(value);
+    return  v->val;
 }
 
 const std::string & ScriptEntry::get_string_value()
@@ -94,40 +86,60 @@ const std::string & ScriptEntry::get_string_value()
 	return v->val;
 }
 
-void ScriptEntry::erase_whitespaces(std::string & s)
-{
-	std::string n  ="";
-	for(char a : s)
-	{
-		if(a != ' ' && a != '\t' && a != '\n')
-			n = n + a;
-	}
-	
-	s = n; 
-}
-
-bool ScriptEntry::is_int(std::string val)
-{
-	return false;
-}
-
-bool ScriptEntry::is_float(std::string val)
-{return false;}
-
-bool ScriptEntry::is_string(std::string val)
-{return false;}	
-
-bool ScriptEntry::is_array(std::string val)
-{return false;}
-
 void ScriptEntry::release()
-{}
-
-size_t ScriptEntry::find_terminate(const std::string & s)
 {
-	for(int i= s.size()-1; i>=0; ++i)
-		if(s.at(i) == ';') return i;
-		else if(!std::iswspace(s.at(i))) throw std::runtime_error("garbage at and of line");
+    Value * temp = value;
+    value = nullptr;
+    if(temp != nullptr)
+        delete temp;
+}
 
-	throw std::runtime_error(" ';' not fount at and of entry");
+std::string ScriptEntry::decode_name(const std::string &data)
+{
+    size_t label_end_pos = data.find(':');
+
+    if(label_end_pos == std::string::npos)
+        return "";
+    else if(label_end_pos == 0)
+        throw std::runtime_error("expected label before ':'");
+    else
+    {
+        auto label = data.substr(0,label_end_pos);
+        Parser::erase_whitespaces(label);
+        if(label.size() > 0)
+            return label;
+        else
+            throw std::runtime_error(" label must be a valid string");
+    }
+}
+
+std::string ScriptEntry::decode_value(const std::string &data)
+{
+    size_t val_pos = data.find(':');
+    if(val_pos == std::string::npos) val_pos = 0;
+    size_t end_pos = data.find_last_of(';');
+    if(end_pos== std::string::npos)
+        throw std::runtime_error("expecting ';' at end of value");
+    if(val_pos+1 >= end_pos)
+        throw std::runtime_error("expecting value in entry");
+
+    return data.substr(val_pos+1, end_pos-(val_pos+1));
+}
+
+ValueInt::ValueInt(const std::string &data)
+    :Value(Value::INT), val(Parser::get_int(data)) {}
+
+ValueFloat::ValueFloat(const std::string &data)
+    : Value(Value::FLOAT), val(Parser::get_float(data)) {}
+
+ValueString::ValueString(const std::string &data)
+    : Value(Value::STRING), val(Parser::get_string(data)){}
+
+ValueArray::ValueArray(const std::string &data)
+    : Value(Value::ARRAY)
+{
+    auto svec = Parser::get_array(data);
+    val.resize(svec.size());
+    for(size_t i=0; i<val.size();++i)
+        val.at(i).decode(svec.at(i));
 }

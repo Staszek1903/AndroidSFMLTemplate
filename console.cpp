@@ -38,12 +38,13 @@ void Console::draw()
      (++i) %= content_size, ++row) 
     {
         sf::Text t;
-        t.setString("SAMPLE TEXT");
+
         t.setFont(font);
         t.setFillColor(sf::Color::White);
         t.setCharacterSize(character_size);
 
         std::string l(content[i]);
+        t.setString(l);
         t.setPosition(5,row*character_size);
         texture.draw(t);
         if(i == bottom) break;

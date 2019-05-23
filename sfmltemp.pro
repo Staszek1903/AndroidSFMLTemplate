@@ -6,6 +6,12 @@ CONFIG -= qt
 LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 
 SOURCES += \
+    EntityStuff/event.cpp \
+    EntityStuff/eventmanager.cpp \
+    ScriptStuff/parser.cpp \
+    ScriptStuff/script.cpp \
+    ScriptStuff/scriptentry.cpp \
+    error_generate.cpp \
         main.cpp \
     console.cpp \
     p.cpp \
@@ -24,7 +30,13 @@ SOURCES += \
     EntityStuff/componentcontainer.cpp
 
 HEADERS += \
+    EntityStuff/event.h \
+    EntityStuff/eventmanager.h \
+    ScriptStuff/parser.h \
+    ScriptStuff/script.h \
+    ScriptStuff/scriptentry.h \
     console.h \
+    error_generate.hpp \
     p.h \
     touchable.h \
     renderer.h \
@@ -40,3 +52,7 @@ HEADERS += \
     EntityStuff/systemmanager.h \
     EntityStuff/componentmanager.h \
     EntityStuff/componentcontainer.h
+
+DISTFILES += \
+    Arial.ttf \
+    textures/textures.conf

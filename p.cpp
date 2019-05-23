@@ -36,8 +36,10 @@ void P::onEvent(sf::Event &ev)
 	{
 		if(ev.key.code == sf::Keyboard::A)
          {Script sc;	sc.load_from_file("./textures/textures.conf");}
-        //if(ev.key.code == sf::Keyboard::B)
-           // EntityStuff::get().addComponent<C3>(1);
+        if(ev.key.code == sf::Keyboard::B)
+        {
+
+        }
         /*if(ev.key.code == sf::Keyboard::C)
 			em.addEntity<Cc>();
 		if(ev.key.code == sf::Keyboard::E)
