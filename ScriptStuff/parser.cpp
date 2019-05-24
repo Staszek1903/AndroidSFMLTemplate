@@ -102,11 +102,31 @@ bool Parser::is_containing(const char *data, size_t size, char elem)
 
 int Parser::get_int(std::string val)
 {
-    if(!is_int(val)) throw std::runtime_error("value is not int");
+    if(!is_decimal(val)) throw std::runtime_error("value is not decimal");
     erase_whitespaces(val);
     std::stringstream ss(val);
     int ret;
     ss>>ret;
+    return ret;
+}
+
+int Parser::get_hex_int(std::string val)
+{
+	if(!is_hex(val)) throw std::runtime_error("value is not hex");
+    erase_whitespaces(val);
+    std::stringstream ss;
+    ss<<std::hex<<val;
+    int ret;
+    ss>>ret;
+    return ret;
+}
+
+int Parser::get_bin_int(std::string val)
+{
+	    if(!is_binary(val)) throw std::runtime_error("value is not int");
+    erase_whitespaces(val);
+    size_t length =0;
+    int ret = std::stoi(val.substr(2, val.size()-2), &length, 2);
     return ret;
 }
 
