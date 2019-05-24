@@ -48,6 +48,10 @@ public:
     static bool is_containing(const char * data, size_t size, char elem);
 
     static int get_int(std::string val);
+    
+    static int get_hex_int(std::string val);
+    
+    static int get_bin_int(std::string  val);
 
     static float get_float(std::string val);
 
