@@ -103,8 +103,8 @@ void Entity::unassign()
     if(!data->entity_id)
         throw std::runtime_error("cannot unassign component from non existent entity");
         
-        e_manager.releaseComponent<C>(data->entity_id);
-        data->component_mask &= ~mask;
+    e_manager.releaseComponent<C>(data->entity_id);
+    data->component_mask &= ~mask;
 }
 
 template<class C>

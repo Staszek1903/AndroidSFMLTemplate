@@ -38,6 +38,7 @@ protected:
     /**
      * @brief onEvent function gets and processes window event
      * @param ev
+     *
      */
     virtual void onEvent(sf::Event &ev) = 0;
 

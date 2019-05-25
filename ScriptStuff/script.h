@@ -6,23 +6,7 @@
 #include <cstdlib>
 #include <fstream>
 #include "scriptentry.h"
-#include "../console.h"
-/*
-vname :
-{
-	snam :val;
-	snam2 : val2;
-	val3;
-	val4;
-	val5;
-	snam3 : 
-	{
-		ssnam1 : sval1
-		ssnam2 : sval 2;
-		ssnam3 : { 1;2;3;4;5 }
-	}
-}
-*/	
+#include "../console.h"	
 
 class Script
 {
@@ -45,10 +29,12 @@ public:
 		*/
 	void release();
 	
-	//getters
+
+    const ScriptEntry &getEntry() const;
+
 private:
-	
-	void load_content(const std::string & dir, std::string & cont);
+
+    void load_content(const std::string & dir, std::string & cont);
 };
 	
 #endif

@@ -154,19 +154,33 @@ std::vector<std::string> Parser::get_array(std::string val)
     if(!is_array(val)) throw std::runtime_error("value is not array");
     std::vector<std::string> arr;
 
-    erase_whitespaces(val);
-    std::string content = val.substr(1, val.size()-2);
+    size_t begin_block, end_block;
+    get_block(val, '{', '}', begin_block, end_block);
+    std::string content = val.substr(begin_block+1, end_block - begin_block);
 
-    size_t pos = 0;
+
+    size_t pos = static_cast<size_t>(-1);
     while(1)
     {
         size_t last_pos = pos;
-        if(pos+1 >= val.size()) break;
-        pos = val.find(';',pos+1);
+
+        if(pos+1 >= content.size()) break;
+        pos = content.find(';',pos+1);
+
         if(pos == std::string::npos)
             break;
 
-        arr.push_back(val.substr(last_pos+1, pos-last_pos));
+        get_block(content, '{', '}', begin_block, end_block,last_pos+1);
+        if(begin_block != std::string::npos && begin_block < pos && end_block > pos)
+        {
+            pos = content.find(';', end_block);
+            if(pos == std::string::npos)
+                throw std::runtime_error("array need to be terminated with ';'");
+
+            arr.push_back(content.substr(last_pos+1, pos-last_pos));
+            continue;
+        }
+        arr.push_back(content.substr(last_pos+1, pos-last_pos));
     }
 
     return arr;
@@ -192,4 +206,26 @@ char Parser::get_last_non_whitespace(const std::string &s)
     }
 
     throw std::runtime_error(" string does not contain any non whitespace characters");
+}
+
+void Parser::get_block(const std::string &val, char block_starter, char block_ender, size_t &start_pos, size_t &end_pos, size_t pos)
+{
+    start_pos = val.find(block_starter, pos);
+    end_pos = std::string::npos;
+    if(start_pos == std::string::npos)
+        return;
+
+    size_t counter = 1;
+    size_t i;
+    for(i = start_pos+1; counter > 0 && i<val.size(); ++i)
+    {
+        if(val.at(i) == block_starter)
+            ++counter;
+        else if(val.at(i) == block_ender)
+            --counter;
+    }
+
+    --i;
+    if(i < val.size())
+        end_pos = i;
 }

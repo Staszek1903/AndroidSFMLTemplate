@@ -1,3 +1,5 @@
+#ifndef RESOURCE_GETTER_H_
+#define RESOURCE_GETTER_H_
 
 #include <vector>
 
@@ -7,3 +9,5 @@
 	{ \
 		return name; \
 	} 
+
+#endif

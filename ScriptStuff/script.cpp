@@ -37,3 +37,8 @@ void Script::load_content(const std::string& dir, std::string & cont)
 		
 	file.close();
 }
+
+const ScriptEntry &Script::getEntry() const
+{
+    return entry;
+}

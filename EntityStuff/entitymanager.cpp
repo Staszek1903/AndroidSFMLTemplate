@@ -48,13 +48,13 @@ void EntityManager::realeaseEntity(size_t data_index)
     if(!data->entity_id)
         throw std::runtime_error("cannot release non existent entity");
 
-	for(int i=0; i<sizeof(size_t)*8; ++i)
+    for(size_t i=0; i<sizeof(size_t)*8; ++i)
 	{
 		if(data->component_mask & (1<<i))
 			c_manager.release_component(data->entity_id, i);
 	}
 	
-	auto it = entities.begin() + data_index;
+    auto it = entities.begin() + data_index;
 	entities.erase(it);
 }
 	

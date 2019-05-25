@@ -1,5 +1,5 @@
 TEMPLATE = app
-CONFIG += console c++11
+CONFIG += console c++17
 CONFIG -= app_bundle
 CONFIG -= qt
 
@@ -16,6 +16,7 @@ SOURCES += \
     console.cpp \
     p.cpp \
     program.cpp \
+    resource_manager.cpp \
     ui.cpp \
     touchable.cpp \
     touchbuffer.cpp \
@@ -38,6 +39,8 @@ HEADERS += \
     console.h \
     error_generate.hpp \
     p.h \
+    resource_getter.h \
+    resource_manager.h \
     touchable.h \
     renderer.h \
     program.h \

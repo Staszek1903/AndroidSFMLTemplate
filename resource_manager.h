@@ -7,19 +7,12 @@
 
 class ResourceManager:public Singleton < ResourceManager >
 {
-	ResourceManager(){};
-	~ResourceManager(){};
-
-	friend Singleton < ResourceManager > ;	
+    ResourceManager();
+    ~ResourceManager();
+    friend Singleton < ResourceManager > ;
 	
-	RESOURCE(sf::Texture, textures);
+    RESOURCE(sf::Texture, textures)
 
 };
-
-//ResourceManager::ResourceManager()
-//{}
-
-//ResourceManager::~ResourceManager()
-//{}
 
 #endif
