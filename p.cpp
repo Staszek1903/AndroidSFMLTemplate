@@ -31,7 +31,7 @@ void P::onRender()
 void P::onEvent(sf::Event &ev)
 {
 	if(ev.type == sf::Event::TouchBegan)
-	{}
+	{ Script sc;	sc.load_from_file("./textures/textures.conf"); }
 	if(ev.type == sf::Event::KeyPressed)
 	{
 		if(ev.key.code == sf::Keyboard::A)
