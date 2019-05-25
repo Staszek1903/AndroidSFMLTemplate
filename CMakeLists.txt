@@ -18,6 +18,8 @@ EntityStuff/component.cpp
  EntityStuff/eventmanager.cpp
  ScriptStuff/script.cpp
  ScriptStuff/scriptentry.cpp
+ ScriptStuff/parser.cpp
+ resource_manager.cpp
  error_generate.cpp)
  
 # define the pong target
