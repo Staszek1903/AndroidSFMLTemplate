@@ -1,4 +1,5 @@
 #include "programstage.h"
+#include "console.h"
 
 std::unique_ptr<ProgramStage> ProgramStage::next;
 
@@ -12,6 +13,7 @@ ProgramStage::~ProgramStage()
 
 void ProgramStage::switch_stage()
 {
+	//Console::get()<<"switching stage\n";
 	if(next)
 	{
 		next->init();
