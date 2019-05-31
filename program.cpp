@@ -37,7 +37,7 @@ void Program::run()
         try
         {
             input();
-            onUpdate();
+            ProgramStage::update_stage(0.0f);
             render();
         } catch (std::exception& exc) {
         	
@@ -101,7 +101,7 @@ void Program::input()
             break;
         }
 
-        onEvent(ev);
+        ProgramStage::input_stage(ev);
 	}
 }
 
@@ -114,7 +114,7 @@ void Program::render()
 	shape.setSize(sf::Vector2f (1000,1000 ));
 	win.draw(shape);
 	
-	onRender();
+	ProgramStage::render_stage(win);
 	Renderer::get().drawAll();
     Console::get().display();
 	win.display();
