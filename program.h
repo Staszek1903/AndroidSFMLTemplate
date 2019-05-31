@@ -6,6 +6,7 @@
 #include "renderer.h"
 #include "touchable.h"
 #include "error_generate.hpp"
+#include "programstage.h"
 #include <SFML/Graphics.hpp>
 
 class ConsoleButtonHandler : public TouchableHandler
@@ -24,24 +25,7 @@ protected:
 	sf::RenderWindow win;
  	Touchable console_button;
  	ConsoleButtonHandler cb_handler;
- 
-    /**
-     * @brief onRender function called after clrear screan and before window.display()
-     */
-    virtual void onRender() = 0;
-
-    /**
-     * @brief onUpdate funcion updates program state
-     */
-    virtual void onUpdate() = 0;
-
-    /**
-     * @brief onEvent function gets and processes window event
-     * @param ev
-     *
-     */
-    virtual void onEvent(sf::Event &ev) = 0;
-
+ 	
     /**
      * @brief halt_for_input functions stops the program oand awaits event to either close the window or continue the program
      */
