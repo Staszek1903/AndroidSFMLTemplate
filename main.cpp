@@ -6,7 +6,8 @@
 
 int main()
 {
-		P p;
+		ProgramStage::next_stage<P>();
+		Program p;
 		p.run();
 	
 	return 0;
