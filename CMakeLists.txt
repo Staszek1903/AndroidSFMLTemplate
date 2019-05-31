@@ -20,7 +20,8 @@ EntityStuff/component.cpp
  ScriptStuff/scriptentry.cpp
  ScriptStuff/parser.cpp
  resource_manager.cpp
- error_generate.cpp)
+ error_generate.cpp
+ programstage.cpp)
  
 # define the pong target
 add_executable(exec ${SRC})
