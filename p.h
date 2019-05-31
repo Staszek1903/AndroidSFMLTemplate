@@ -7,11 +7,12 @@
 #include "touchable.h"
 #include "ui.h"
 #include "EntityStuff/entity_stuff.h"
+#include "programstage.h"
 
 #include "resource_manager.h"
 #include "ScriptStuff/script.h"
 
-class P : public Program
+class P : public ProgramStage 
 {
     sf::CircleShape s;
     UI ui;
@@ -19,9 +20,11 @@ class P : public Program
 public:
     P();
     ~P() override;
-    virtual void onRender() override;
-    virtual void onUpdate() override;
-    virtual void onEvent(sf::Event &ev) override;
+    virtual void init() override;
+    virtual void render(sf::RenderWindow & win) override;
+    virtual void update(double dt) override;
+    virtual void input(sf::Event &ev) override;
+	virtual void release() override;
 };
 
 
