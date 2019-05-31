@@ -2,7 +2,7 @@
 
 
 P::P()
-{ }
+{}
  
  P::~P()
  {}
@@ -15,7 +15,9 @@ P::P()
     s.setPosition(sf::Vector2f (200,200));
     s.setFillColor(sf::Color::Blue);
     s.setRadius(100);
- 	ui.createDefault();	
+ 	ui.createDefault();
+ 	
+ 		Script sc;	sc.load_from_file("./textures/textures.conf");	
  }
 
 void P::update(double dt)
@@ -32,7 +34,7 @@ void P::render(sf::RenderWindow & win)
 void P::input(sf::Event &ev)
 {
 	if(ev.type == sf::Event::TouchBegan)
-	{ Script sc;	sc.load_from_file("./textures/textures.conf"); }
+	{  }
 	if(ev.type == sf::Event::KeyPressed)
 	{
 		if(ev.key.code == sf::Keyboard::A)
