@@ -36,7 +36,7 @@ void Program::run()
 		{
 			ProgramStage::switch_stage();
 			input();
-			ProgramStage::update_stage(0.0f);
+            ProgramStage::update_stage(0.0);
 			render();
 		}
 		catch(std::exception & exc)

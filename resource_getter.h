@@ -8,6 +8,12 @@
 	std::vector<type> & get_name() \
 	{ \
 		return name; \
-	} 
+    }\
+    void add_name( type & obj )\
+    {\
+        name.push_back(obj);\
+    }
+
+
 
 #endif

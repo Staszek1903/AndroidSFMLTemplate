@@ -10,14 +10,43 @@ P::P()
  void P::init()
  {
  	Console::get()<<"P::init\n";
- 	ResourceManager::get();
+    auto & tex_resource = ResourceManager<sf::Texture>::get();
 	
     s.setPosition(sf::Vector2f (200,200));
     s.setFillColor(sf::Color::Blue);
     s.setRadius(100);
  	ui.createDefault();
  	
- 		Script sc;	sc.load_from_file("./textures/textures.conf");	
+    Script sc;
+    sc.load_from_file("./textures/textures.conf");
+    for (ScriptEntry en: sc.getEntry().get_array_value())
+    {
+        std::string id = en.get_name();
+        std::string dir = "./textures/" + en.get_string_value();
+        sf::Texture &tex = tex_resource.push(id);
+
+        if(!tex.loadFromFile(dir))
+            throw std::runtime_error(" cannot load texture at <" + dir + ">");
+    }
+
+    sc.release();
+
+    sc.load_from_file("./levels/dev_room.lvl");
+
+    std::map <int, std::string> elems;
+    for (ScriptEntry en : sc.getEntry().get_array_value())
+    {
+
+        std::string id = en.get_name();
+        if(id == "map")
+        {
+            break;
+        }
+        std::string val = en.get_string_value();
+        elems[std::atoi(id.c_str())] = val;
+
+    }
+
  }
 
 void P::update(double dt)
@@ -51,4 +80,6 @@ void P::input(sf::Event &ev)
 }
 
 void P::release() 
-{}
+{
+    ResourceManager<sf::Texture>::release();
+}

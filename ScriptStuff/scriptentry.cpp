@@ -6,6 +6,7 @@ ScriptEntry::ScriptEntry()
 ScriptEntry::ScriptEntry(const ScriptEntry &other)
     :name(other.name)
 {
+    Console::get() << " STRINPT ENTRY CC-TOR \n";
     Value * tempv = other.value.get();
     switch (tempv->type)
     {
@@ -41,17 +42,17 @@ void ScriptEntry::decode(std::string data)
     else if(Parser::is_int(v))
 	{
         value = std::make_unique<ValueInt>(v);
-        Console::get()<< "value: <"<<get_int_value() << ">\n";
+        Console::get()<< "value int : <"<<get_int_value() << ">\n";
 	}
     else if(Parser::is_float(v))
     {
         value = std::make_unique<ValueFloat>(v);
-        Console::get()<<"value: <"<< get_float_value() << ">\n";
+        Console::get()<<"value float : <"<< get_float_value() << ">\n";
 	}
     else if(Parser::is_string(v))
     {
         value = std::make_unique<ValueString>(v);
-        Console::get()<< "value <"<<get_string_value() << ">\n";
+        Console::get()<< "value string <"<<get_string_value() << ">\n";
 	}
     else throw std::runtime_error("cannot identifie value type \n<" + v+">");
 }
@@ -74,7 +75,7 @@ const std::vector<ScriptEntry> & ScriptEntry::get_array_value() const
 		throw std::runtime_error("value not initialized");
 		
 	if(value->type != Value::ARRAY)
-		throw std::runtime_error("value not of value ARRAY");
+        throw std::runtime_error("value not of value ARRAY <" + std::to_string(value->type) + ">");
     ValueArray * v = static_cast<ValueArray*> (value.get());
 	return v->val;	
 }	
@@ -85,7 +86,7 @@ int ScriptEntry::get_int_value() const
         throw std::runtime_error("value not initialized");
 
     if(value->type != Value::INT)
-        throw std::runtime_error("value not of value INT");
+        throw std::runtime_error("value not of value INT <" + std::to_string(value->type) + ">");
     ValueInt * v = static_cast<ValueInt*>(value.get());
     return  v->val;
 }
@@ -96,7 +97,7 @@ float ScriptEntry::get_float_value() const
         throw std::runtime_error("value not initialized");
 
     if(value->type != Value::FLOAT)
-        throw std::runtime_error("value not of value INT");
+        throw std::runtime_error("value not of value FLOAT <" + std::to_string(value->type) + ">");
     ValueFloat * v = static_cast<ValueFloat*>(value.get());
     return  v->val;
 }
@@ -107,7 +108,7 @@ const std::string & ScriptEntry::get_string_value() const
 		throw std::runtime_error("value not initialized");
 		
 	if(value->type != Value::STRING)
-		throw std::runtime_error("value not of value STRING");
+        throw std::runtime_error("value not of value STRING <" + std::to_string(value->type) + ">");
     ValueString * v = static_cast<ValueString*> (value.get());
 	
     return v->val;
@@ -137,9 +138,11 @@ void ScriptEntry::release()
 
 std::string ScriptEntry::decode_name(const std::string &data)
 {
+    size_t begin =0, end = 0;
+    Parser::get_block(data,'{','}',begin, end, 0);
     size_t label_end_pos = data.find(':');
 
-    if(label_end_pos == std::string::npos)
+    if(label_end_pos == std::string::npos || label_end_pos > begin)
         return "";
     else if(label_end_pos == 0)
         throw std::runtime_error("expected label before ':'");
@@ -156,8 +159,11 @@ std::string ScriptEntry::decode_name(const std::string &data)
 
 std::string ScriptEntry::decode_value(const std::string &data)
 {
+    size_t begin =0, end = 0;
+    Parser::get_block(data,'{','}',begin, end, 0);
     size_t val_pos = data.find(':');
-    if(val_pos == std::string::npos) val_pos = static_cast<size_t>(-1);
+
+    if(val_pos == std::string::npos || val_pos > begin) val_pos = static_cast<size_t>(-1);
     size_t end_pos = data.find_last_of(';');
     if(end_pos== std::string::npos)
         throw std::runtime_error("expecting ';' at end of value");
@@ -188,14 +194,14 @@ ValueFloat::ValueFloat(const std::string &data)
     : Value(Value::FLOAT), val(Parser::get_float(data)) {}
 
 ValueFloat::ValueFloat(const Value &other)
-    : Value(Value::INT), val(static_cast<const ValueFloat *>(&other)->val)
+    : Value(Value::FLOAT), val(static_cast<const ValueFloat *>(&other)->val)
 {}
 
 ValueString::ValueString(const std::string &data)
     : Value(Value::STRING), val(Parser::get_string(data)){}
 
 ValueString::ValueString(const Value &other)
-    : Value(Value::INT), val(static_cast<const ValueString *>(&other)->val)
+    : Value(Value::STRING), val(static_cast<const ValueString *>(&other)->val)
 {}
 
 ValueArray::ValueArray(const std::string &data)
@@ -208,5 +214,5 @@ ValueArray::ValueArray(const std::string &data)
 }
 
 ValueArray::ValueArray(const Value &other)
-    : Value(Value::INT), val(static_cast<const ValueArray *>(&other)->val)
+    : Value(Value::ARRAY), val(static_cast<const ValueArray *>(&other)->val)
 {}

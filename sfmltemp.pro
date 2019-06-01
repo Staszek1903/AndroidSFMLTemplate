@@ -16,7 +16,7 @@ SOURCES += \
     console.cpp \
     p.cpp \
     program.cpp \
-    resource_manager.cpp \
+    programstage.cpp \
     ui.cpp \
     touchable.cpp \
     touchbuffer.cpp \
@@ -39,6 +39,7 @@ HEADERS += \
     console.h \
     error_generate.hpp \
     p.h \
+    programstage.h \
     resource_getter.h \
     resource_manager.h \
     touchable.h \
