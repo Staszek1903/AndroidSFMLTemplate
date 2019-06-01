@@ -48,7 +48,12 @@ void Program::run()
 			halt_for_input();
 		}
 
-	}
+    }
+}
+
+sf::RenderWindow &Program::get_window()
+{
+    return win;
 }
 
 void Program::input()

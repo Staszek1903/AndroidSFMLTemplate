@@ -6,7 +6,7 @@ ScriptEntry::ScriptEntry()
 ScriptEntry::ScriptEntry(const ScriptEntry &other)
     :name(other.name)
 {
-    Console::get() << " STRINPT ENTRY CC-TOR \n";
+    //Console::get() << " STRINPT ENTRY CC-TOR \n";
     Value * tempv = other.value.get();
     switch (tempv->type)
     {

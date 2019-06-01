@@ -6,9 +6,11 @@
 
 int main()
 {
-		ProgramStage::next_stage<P>();
-		Program p;
-		p.run();
+    Program p;
+
+    ProgramStage::next_stage<P>(p.get_window());
+
+    p.run();
 	
 	return 0;
 }

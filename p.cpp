@@ -1,21 +1,61 @@
 #include "p.h"
 
-
-P::P()
+P::P(sf::RenderWindow &win) : win(win)
 {}
  
  P::~P()
  {}
+
+ struct Position
+ {
+     Position(float x, float y) : x(x), y(y) {}
+     float x,y;
+ };
+
+ struct Texture
+ {
+     Texture( size_t index ) : index(index) {}
+     size_t index;
+ };
+
+ class RenderSystem : public System
+ {
+     sf::RenderWindow & win;
+ public:
+     RenderSystem(sf::RenderWindow & win) : win(win){}
+     ~RenderSystem(){}
+ protected:
+     virtual void update(EntityManager & em, EventManager & vm, double dt) override
+     {
+        auto & rm = ResourceManager<sf::Texture>::get();
+
+        for(Entity en : get_entities<Position, Texture>(em))
+        {
+            auto pos = en.component<Position>();
+            auto texture = en.component<Texture>();
+            sf::Texture & tex = rm.get_resource(texture->index);
+            sf::Sprite sprite;
+            sprite.setTexture(tex);
+            sprite.setPosition(sf::Vector2f(pos->x, pos->y));
+            win.draw(sprite);
+        }
+    }
+
+ };
  
  void P::init()
  {
  	Console::get()<<"P::init\n";
     auto & tex_resource = ResourceManager<sf::Texture>::get();
+
+    es.addSystem<RenderSystem>(win);
 	
     s.setPosition(sf::Vector2f (200,200));
     s.setFillColor(sf::Color::Blue);
     s.setRadius(100);
  	ui.createDefault();
+
+// LVL LOADER
  	
     Script sc;
     sc.load_from_file("./textures/textures.conf");
@@ -34,18 +74,49 @@ P::P()
     sc.load_from_file("./levels/dev_room.lvl");
 
     std::map <int, std::string> elems;
+    std::vector <std::vector<int> > lvl;
     for (ScriptEntry en : sc.getEntry().get_array_value())
     {
 
         std::string id = en.get_name();
-        if(id == "map")
+        if(id == "lvl")
         {
+            lvl.clear();
+            for(ScriptEntry row : en.get_array_value())
+            {
+                lvl.resize(lvl.size()+1);
+                for(ScriptEntry tile : row.get_array_value())
+                {
+                    lvl.back().push_back(tile.get_int_value());
+                }
+            }
+
             break;
         }
         std::string val = en.get_string_value();
         elems[std::atoi(id.c_str())] = val;
+    }
+
+
+    int x = 100, y = 100;
+    for(auto row : lvl)
+    {
+        for(int tile : row)
+        {
+            if(elems.at(tile) == "nothing")
+                continue;
+            Entity en(es.get_entity_manager());
+            en.create();
+            en.assign<Texture>(tex_resource.get_index(elems.at(tile)));
+            en.assign<Position>(x,y);
+            x+=32;
+        }
+        x = 0;
+        y += 32;
 
     }
+
+// END LVL LOADER
 
  }
 
@@ -58,6 +129,7 @@ void P::update(double dt)
 void P::render(sf::RenderWindow & win)
 {
     win.draw(s);
+   // es.update_systems(0.0);
 }
 
 void P::input(sf::Event &ev)

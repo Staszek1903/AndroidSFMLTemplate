@@ -14,11 +14,13 @@
 
 class P : public ProgramStage 
 {
+    sf::RenderWindow & win;
+    EntityStuff es;
     sf::CircleShape s;
     UI ui;
 	    
 public:
-    P();
+    P(sf::RenderWindow & win);
     ~P() override;
     virtual void init() override;
     virtual void render(sf::RenderWindow & win) override;

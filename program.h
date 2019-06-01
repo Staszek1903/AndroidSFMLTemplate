@@ -39,6 +39,11 @@ public:
      * @brief run runs the program. exits when window is closed
      */
 	void run();
+
+    /**
+     * @return window reference
+     */
+    sf::RenderWindow & get_window();
 };
 
 

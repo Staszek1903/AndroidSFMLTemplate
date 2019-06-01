@@ -12,8 +12,8 @@ class ProgramStage
 public:
 	ProgramStage();
 	virtual ~ProgramStage();
-	template<class T>
-	static void next_stage();
+    template<class T, class ... Args>
+    static void next_stage(Args && ... args);
 	
 	static void switch_stage();
 	static void input_stage(sf::Event &ev);
@@ -28,10 +28,10 @@ public:
 	virtual void release() =0;
 };
 
-template<class T>
-void ProgramStage::next_stage()
+template<class T, class ... Args>
+void ProgramStage::next_stage(Args && ... args)
 {
-	next = std::make_unique<T>();
+    next = std::make_unique<T>(args...);
 }
 
 #endif
