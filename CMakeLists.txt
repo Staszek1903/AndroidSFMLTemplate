@@ -19,7 +19,6 @@ EntityStuff/component.cpp
  ScriptStuff/script.cpp
  ScriptStuff/scriptentry.cpp
  ScriptStuff/parser.cpp
- resource_manager.cpp
  error_generate.cpp
  programstage.cpp)
  

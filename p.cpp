@@ -28,7 +28,7 @@ P::P(sf::RenderWindow &win) : win(win)
      virtual void update(EntityManager & em, EventManager & vm, double dt) override
      {
         auto & rm = ResourceManager<sf::Texture>::get();
-
+ int x = 100;
         for(Entity en : get_entities<Position, Texture>(em))
         {
             auto pos = en.component<Position>();
@@ -36,7 +36,8 @@ P::P(sf::RenderWindow &win) : win(win)
             sf::Texture & tex = rm.get_resource(texture->index);
             sf::Sprite sprite;
             sprite.setTexture(tex);
-            sprite.setPosition(sf::Vector2f(pos->x, pos->y));
+            sprite.setPosition(sf::Vector2f(x, 100));
+            x+=32;
             win.draw(sprite);
         }
     }
