@@ -25,9 +25,9 @@ class Console
     int bottom = 2;
     int carriage =0;
 
-    bool is_shown = true;
+    bool is_shown = false;
     bool need_redraw = true;
-    float hide_level = 2.0f;
+    float hide_level = 0.0f;
 
     Console(sf::RenderWindow &window);
 
@@ -42,6 +42,7 @@ public:
      */
     template<typename T>
     friend Console & operator<<(Console & c, const T & data);
+    friend Console & operator<<(Console & c, const sf::Vector2f &data);
 
     /**
      * @brief show shows or hides console
@@ -95,5 +96,9 @@ Console & operator<<(Console & c, const T &data)
 
     return c;
 }
+
+template <>
+Console & operator<< (Console & c, const sf::Vector2f &data);
+
 
 #endif /* CONSOLE_H_ */

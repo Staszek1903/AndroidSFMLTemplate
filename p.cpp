@@ -18,7 +18,7 @@ P::P(sf::RenderWindow &win) : win(win)
      size_t index;
  };
 
- class RenderSystem : public System
+/* class RenderSystem : public System
  {
      sf::RenderWindow & win;
  public:
@@ -41,22 +41,21 @@ P::P(sf::RenderWindow &win) : win(win)
         }
     }
 
- };
+ };*/
  
  void P::init()
  {
  	Console::get()<<"P::init\n";
     auto & tex_resource = ResourceManager<sf::Texture>::get();
 
-    es.addSystem<RenderSystem>(win);
+    //es.addSystem<RenderSystem>(win);
 	
     s.setPosition(sf::Vector2f (200,200));
     s.setFillColor(sf::Color::Blue);
     s.setRadius(100);
  	ui.createDefault();
 
-// LVL LOADER
- 	
+
     Script sc;
     sc.load_from_file("./textures/textures.conf");
     for (ScriptEntry en: sc.getEntry().get_array_value())
@@ -103,19 +102,28 @@ P::P(sf::RenderWindow &win) : win(win)
     {
         for(int tile : row)
         {
+            x+=32;
             if(elems.at(tile) == "nothing")
                 continue;
-            Entity en(es.get_entity_manager());
-            en.create();
-            en.assign<Texture>(tex_resource.get_index(elems.at(tile)));
-            en.assign<Position>(x,y);
-            x+=32;
+            if(elems.at(tile) == "player")
+            {
+                hero.setTexture(tex_resource.get_resource(elems.at(tile)));
+                hero.setPosition(x,y);
+                hero.velocity = {100,0};
+                continue;
+            }
+            //Entity en(es.get_entity_manager());
+            //en.create();
+            //en.assign<Texture>(tex_resource.get_index(elems.at(tile)));
+            //en.assign<Position>(x,y);
+
+            tile_map.add(sf::Vector2f(x,y), tex_resource.get_resource(elems.at(tile)));
+
         }
         x = 0;
         y += 32;
 
     }
-
 // END LVL LOADER
 
  }
@@ -124,12 +132,16 @@ void P::update(double dt)
 {
     sf::Vector2f pos = s.getPosition();
     s.setPosition({pos.x+1,pos.y+1});
+    hero.update(dt);
+    tile_map.colide(hero);
 }
 
 void P::render(sf::RenderWindow & win)
 {
     win.draw(s);
-   // es.update_systems(0.0);
+    win.draw(tile_map);
+    win.draw(hero);
+    //es.update_systems(0.0);
 }
 
 void P::input(sf::Event &ev)
@@ -139,10 +151,16 @@ void P::input(sf::Event &ev)
 	if(ev.type == sf::Event::KeyPressed)
 	{
 		if(ev.key.code == sf::Keyboard::A)
-         {Script sc;	sc.load_from_file("./textures/textures.conf");}
-        if(ev.key.code == sf::Keyboard::B)
+        {//Script sc;	sc.load_from_file("./textures/textures.conf");
+            hero.velocity.x = -100;
+        }
+        if(ev.key.code == sf::Keyboard::D)
         {
-
+            hero.velocity.x = 100;
+        }
+        if(ev.key.code == sf::Keyboard::W)
+        {
+            hero.velocity.y = -200;
         }
         /*if(ev.key.code == sf::Keyboard::C)
 			em.addEntity<Cc>();

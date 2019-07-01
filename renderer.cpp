@@ -16,7 +16,7 @@ Renderer::Renderer()
 	else
 		view.setViewport(sf::FloatRect(0.0f,0.0f,1.2f,1.0f));
 		
-view.reset(sf::FloatRect(0,0,PIXEL_WIDTH, PIXEL_WIDTH*aspect_ratio));
+view.reset(sf::FloatRect(0,0,(PIXEL_WIDTH), (PIXEL_WIDTH*aspect_ratio)));
 	win_pointer->setView(view);	
 }
 

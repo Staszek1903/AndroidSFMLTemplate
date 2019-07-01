@@ -2,15 +2,15 @@
  Program::Program():win(sf::VideoMode::getDesktopMode(), "title"), console_button(10, 50, 50,
 															  50)
 {
+
 	Console::set_window(&win);
 	Console::get();
-	Renderer::setWindow(win);
+        Renderer::setWindow(win);
 	Renderer::get();
-	console_button.setFillColor(sf::Color(0, 0, 0, 128));
-	console_button.setHandler(cb_handler);
-	win.setFramerateLimit(30);
-	Renderer::get().addDrawable(console_button);
-
+        console_button.setFillColor(sf::Color(0, 0, 0, 128));
+        console_button.setHandler(cb_handler);
+        win.setFramerateLimit(30);
+        Renderer::get().addDrawable(console_button);
 
 	// auto mode = sf::VideoMode::getDesktopMode();
 	// float aspect_ratio = (float)mode.height / (float)mode.width; 
@@ -36,7 +36,7 @@ void Program::run()
 		{
 			ProgramStage::switch_stage();
 			input();
-            ProgramStage::update_stage(0.0);
+            ProgramStage::update_stage(1.0/30.0);
 			render();
 		}
 		catch(std::exception & exc)

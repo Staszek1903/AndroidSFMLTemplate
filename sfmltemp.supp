@@ -1,0 +1,36 @@
+{
+   /usr/lib/dri/i965_dri.so[Memcheck:Addr4]
+   Memcheck:Addr4
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   fun:_ZN7Program6renderEv
+   fun:_ZN7Program3runEv
+   fun:main
+}
+{
+   /usr/lib/dri/i965_dri.so[Memcheck:Addr4]
+   Memcheck:Addr4
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   fun:_ZN7Program6renderEv
+   fun:_ZN7Program3runEv
+   fun:main
+}
+{
+   /usr/lib/dri/i965_dri.so[Memcheck:Addr4]
+   Memcheck:Addr4
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   fun:_ZN7Program6renderEv
+   fun:_ZN7Program3runEv
+   fun:main
+}

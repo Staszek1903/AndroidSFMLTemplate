@@ -120,4 +120,18 @@ void Console::clearLine(int line)
 {
 	for(int i=0; i<line_size; i++) content[line][i] = '\0';
 }
-	
+
+
+
+template<>
+Console &operator<<(Console &c, const sf::Vector2f &data)
+{
+    std::stringstream ss;
+    std::string text;
+    ss<< "{x:" <<data.x<<", y:"<<data.y<<"}";
+    text = ss.str();
+
+    c.addContent(text);
+
+    return c;
+}

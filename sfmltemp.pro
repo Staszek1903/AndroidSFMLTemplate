@@ -5,13 +5,26 @@ CONFIG -= qt
 
 LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 
+#LIBS +=-L/usr/lib/ -lboost_system -lboost_chrono -lboost_thread -lboost_timer
+
+
+debug {
+  DEFINES += DEBUG_BUILD
+}
+
 SOURCES += \
     EntityStuff/event.cpp \
     EntityStuff/eventmanager.cpp \
+    EntityStuff/sizemap.cpp \
+    PlatformerStuff/colidable.cpp \
+    PlatformerStuff/dynamic.cpp \
+    PlatformerStuff/tilemap.cpp \
+    PlatformerStuff/vect.cpp \
     ScriptStuff/parser.cpp \
     ScriptStuff/script.cpp \
     ScriptStuff/scriptentry.cpp \
     error_generate.cpp \
+    line.cpp \
         main.cpp \
     console.cpp \
     p.cpp \
@@ -33,11 +46,18 @@ SOURCES += \
 HEADERS += \
     EntityStuff/event.h \
     EntityStuff/eventmanager.h \
+    EntityStuff/sizemap.h \
+    PlatformerStuff/colidable.h \
+    PlatformerStuff/dynamic.h \
+    PlatformerStuff/tilemap.h \
+    PlatformerStuff/vect.h \
+    ScriptStuff/colidable.h \
     ScriptStuff/parser.h \
     ScriptStuff/script.h \
     ScriptStuff/scriptentry.h \
     console.h \
     error_generate.hpp \
+    line.h \
     p.h \
     programstage.h \
     resource_getter.h \
@@ -59,4 +79,6 @@ HEADERS += \
 
 DISTFILES += \
     Arial.ttf \
+    levels/dev_room.lvl \
+    sfmltemp.supp \
     textures/textures.conf

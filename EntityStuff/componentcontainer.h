@@ -10,6 +10,8 @@
 #include <map>
 #include <vector>
 
+#include "sizemap.h"
+
 #define CHUNK_SIZE 16
 
 /**
@@ -72,7 +74,7 @@ protected:
       * first: entity id
       * second: intex of component
       */
-    std::map <size_t, size_t> id_component_map;
+    std::map<size_t, size_t> id_component_map;
     std::vector<size_t> free_indices;
 public:
     /**

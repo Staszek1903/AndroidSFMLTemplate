@@ -77,14 +77,14 @@ void *ComponentContainer::addComponent(size_t entity_id)
 	
 	if(free_indices.size() == 0)
 	{
-	    id_component_map[entity_id] = this->size();
+        id_component_map.insert(std::make_pair(16,16));//(entity_id,this->size()));
 	    char * buffer = new char [get_elem_size()];
 	    push(buffer);
 	    delete [] buffer;
 	}
 	else
 	{
-		id_component_map[entity_id] = free_indices.back();
+        id_component_map.insert(std::make_pair(entity_id,free_indices.back()));
 		free_indices.pop_back();
 	}
 

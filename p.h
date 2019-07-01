@@ -6,19 +6,21 @@
 #include "console.h"
 #include "touchable.h"
 #include "ui.h"
-#include "EntityStuff/entity_stuff.h"
 #include "programstage.h"
 
 #include "resource_manager.h"
 #include "ScriptStuff/script.h"
+#include "PlatformerStuff/tilemap.h"
+#include "PlatformerStuff/dynamic.h"
+#include "line.h"
 
 class P : public ProgramStage 
 {
     sf::RenderWindow & win;
-    EntityStuff es;
     sf::CircleShape s;
     UI ui;
-	    
+    TileMap tile_map;
+    Dynamic hero;
 public:
     P(sf::RenderWindow & win);
     ~P() override;
