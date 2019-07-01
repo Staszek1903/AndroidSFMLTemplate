@@ -20,7 +20,12 @@ EntityStuff/component.cpp
  ScriptStuff/scriptentry.cpp
  ScriptStuff/parser.cpp
  error_generate.cpp
- programstage.cpp)
+ programstage.cpp
+ line.cpp
+ PlatformerStuff/colidable.cpp
+  PlatformerStuff/dynamic.cpp
+   PlatformerStuff/tilemap.cpp
+   PlatformerStuff/vect.cpp )
  
 # define the pong target
 add_executable(exec ${SRC})
