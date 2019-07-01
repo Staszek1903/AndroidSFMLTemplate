@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "colidable.h"
-#include "console.h"
+#include "../console.h"
 
 class Dynamic : public Colidable
 {
