@@ -3,8 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 #include "vect.h"
-#include "line.h"
-#include "console.h"
+#include "../line.h"
+#include "../console.h"
 
 /**
  * @brief The Colidable class detekts collision betwen sprites
