@@ -8,8 +8,8 @@
 class Dynamic : public Colidable
 {
 public:
-    sf::Vector2f velocity, const_acceleration = {0.0f,9.0f};
-    float decelleration_rate = 0.95f;
+    sf::Vector2f velocity, const_acceleration = {0.0f,500.0f};
+    float decelleration_rate = 300.0f; // pixel/s^2
 
     Dynamic();
 

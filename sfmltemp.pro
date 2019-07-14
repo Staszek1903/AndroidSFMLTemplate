@@ -18,8 +18,8 @@ SOURCES += \
     EntityStuff/sizemap.cpp \
     PlatformerStuff/colidable.cpp \
     PlatformerStuff/dynamic.cpp \
+    PlatformerStuff/steeringmanager.cpp \
     PlatformerStuff/tilemap.cpp \
-    PlatformerStuff/vect.cpp \
     ScriptStuff/parser.cpp \
     ScriptStuff/script.cpp \
     ScriptStuff/scriptentry.cpp \
@@ -41,7 +41,8 @@ SOURCES += \
     EntityStuff/entity_stuff.cpp \
     EntityStuff/systemmanager.cpp \
     EntityStuff/component.cpp \
-    EntityStuff/componentcontainer.cpp
+    EntityStuff/componentcontainer.cpp \
+    vect.cpp
 
 HEADERS += \
     EntityStuff/event.h \
@@ -49,8 +50,8 @@ HEADERS += \
     EntityStuff/sizemap.h \
     PlatformerStuff/colidable.h \
     PlatformerStuff/dynamic.h \
+    PlatformerStuff/steeringmanager.h \
     PlatformerStuff/tilemap.h \
-    PlatformerStuff/vect.h \
     ScriptStuff/colidable.h \
     ScriptStuff/parser.h \
     ScriptStuff/script.h \
@@ -75,7 +76,8 @@ HEADERS += \
     EntityStuff/component.h \
     EntityStuff/systemmanager.h \
     EntityStuff/componentmanager.h \
-    EntityStuff/componentcontainer.h
+    EntityStuff/componentcontainer.h \
+    vect.h
 
 DISTFILES += \
     Arial.ttf \

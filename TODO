@@ -1,0 +1,18 @@
+
+PlatformerSuff:
+	Uskutecznić steering managera
+	Abstrakcyjne collidable zwracające normalną boku, punkt kolizji i penetracje
+	
+	Zastanowić sie na collision_response
+		jesli normalna pozioma a objekt wyzej i próg < treshold to zmień normalną na pionową żeby zrobić hyc w gore 
+		
+	Ogarnąć metode zapisu danych objektow w pamieci (zeby byla uniwersalana i skalowalna)
+	
+	Friction zamiast deceleraion XD
+
+IOStuff:
+	Podpiąć przyciski dotykowe do sterowania
+	Ogarnąć prace kamery
+	
+3DStuff:
+	XD

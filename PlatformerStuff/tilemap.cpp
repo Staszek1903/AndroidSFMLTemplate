@@ -29,13 +29,8 @@ void TileMap::colide(Colidable &coll)
                     ((tile.getLocalBounds().width + coll.getLocalBounds().width)/2,
                      (tile.getLocalBounds().height + coll.getLocalBounds().height)/2    );
 
-            float difference = std::abs(std::abs(immers.x) - std::abs(immers.y));
-            Console::get()<<"diference: " << difference <<"\n";
+
             bool reverse = false;
-            if( difference < 3.0f)
-            {
-                continue;
-            }
             if(std::abs(immers.x) > std::abs(immers.y))
             {
                 immers.y =0;
@@ -51,6 +46,7 @@ void TileMap::colide(Colidable &coll)
 
             auto correction_vector = good_distanece - immers;
             coll.move(reverse? -correction_vector : correction_vector);
+            static_cast<Dynamic*>(&coll)->velocity = sf::Vector2f(0,0);
         }
     }
 }

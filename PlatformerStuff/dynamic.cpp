@@ -11,8 +11,11 @@ void Dynamic::update(float dt)
     auto pos = getPosition();
     pos = pos + (velocity*dt);
 
-    velocity*=decelleration_rate;
-    velocity += const_acceleration;
+    sf::Vector2f decel = velocity;
+    stuff::Vect::normalize(decel);
+    if(stuff::Vect::lenght(velocity) > (decelleration_rate * dt))
+        velocity -= (decel * (decelleration_rate * dt));
+    velocity += const_acceleration* dt;
     setPosition(pos);
 }
 

@@ -28,6 +28,7 @@ public:
     sf::Vector2f get_collision_point() const;
 
     sf::Vector2f get_global_center() const;
+    sf::Vector2f get_half_size() const;
 
     float get_range(const Colidable &other);
 

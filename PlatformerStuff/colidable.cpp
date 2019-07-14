@@ -38,12 +38,20 @@ sf::Vector2f Colidable::get_global_center() const
     return sf::Vector2f(x,y);
 }
 
+sf::Vector2f Colidable::get_half_size() const
+{
+    sf::FloatRect bb = getGlobalBounds();
+    float x = bb.width/2;
+    float y = bb.height/2;
+    return sf::Vector2f(x,y);
+}
+
 float Colidable::get_range(const Colidable &other)
 {
     auto global_center1 = get_global_center();
     auto global_center2 = other.get_global_center();
     auto d = global_center1 - global_center2;
-    float ret = Vect::lenght(d);
+    float ret = stuff::Vect::lenght(d);
     return ret;
 }
 
@@ -53,8 +61,8 @@ void Colidable::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(sp);
 
 #ifdef DEBUG_BUILD
-    Line l (get_global_center(),{0,0});
-    sf::Vector2f vect = (Vect::len_sq(collision_point) < std::numeric_limits<float>::epsilon())? sf::Vector2f(16,16) : collision_point;
+    stuff::Line l (get_global_center(),{0,0});
+    sf::Vector2f vect = (stuff::Vect::len_sq(collision_point) < std::numeric_limits<float>::epsilon())? sf::Vector2f(16,16) : collision_point;
     l.setVector(vect);
     l.setFillColor(sf::Color::Magenta);
     target.draw(l);
@@ -65,10 +73,10 @@ void Colidable::draw(sf::RenderTarget &target, sf::RenderStates states) const
                             sf::Vector2f(b.left + b.width, b.top + b.height),
                             sf::Vector2f(b.left, b.top + b.height)};
 
-    std::array<Line,4> bb = { Line(vert[0], vert[1]),
-                 Line(vert[1], vert[2]),
-                 Line(vert[2], vert[3]),
-                 Line(vert[3], vert[0]) };
+    std::array<stuff::Line,4> bb = { stuff::Line(vert[0], vert[1]),
+                 stuff::Line(vert[1], vert[2]),
+                 stuff::Line(vert[2], vert[3]),
+                 stuff::Line(vert[3], vert[0]) };
 
     for(auto & l : bb){
         //Console::get()<<"bb draw"<<b.left<<"\n";

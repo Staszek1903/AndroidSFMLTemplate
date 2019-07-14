@@ -33,7 +33,7 @@ void Touchable::handle(const TouchEvent & ev)
         if(handler)
         {
         	//Console::get()<<"jest H\n";
-        	handler->handle(ev);
+            handler(ev);
         } //else
        	//	Console::get()<<"ni ma H\n";     
 	} 
@@ -75,12 +75,11 @@ void Touchable::draw(sf::RenderTarget & target, sf::RenderStates states) const
     target.draw(array, states);
 }
 
-void Touchable::setHandler(TouchableHandler & h)
+void Touchable::setHandler(std::function<void (const TouchEvent &)> h)
 {
-	handler = &h;
+    handler = h;
 }
 
 Touchable::~Touchable()
 {
-	if(handler) delete handler;
 }

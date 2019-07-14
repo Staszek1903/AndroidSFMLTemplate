@@ -21,7 +21,7 @@ public:
 class Touchable : public TouchHandler, public sf::Shape
 {
 	std::vector <sf::Vector2f> points;
-	TouchableHandler * handler;
+    std::function<void(const TouchEvent & ev)> handler;
 		
 public:
 	Touchable(float x, float y, float w, float h);
@@ -34,7 +34,7 @@ public:
 	
   virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const override;		
 
-	void setHandler(TouchableHandler & h);
+    void setHandler(std::function<void(const TouchEvent &)> h);
     virtual ~Touchable() override;
 };
 

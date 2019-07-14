@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
-
+namespace stuff {
 class Vect
 {
 public:
@@ -20,6 +20,9 @@ public:
     static void normalize(sf::Vector2<T> & v);
 
     template<class T>
+    static sf::Vector2<T> normal(const sf::Vector2<T> &v);
+
+    template<class T>
     static float dot(const sf::Vector2<T> & a, const sf::Vector2<T> &b);
 
     template<class T>
@@ -28,6 +31,14 @@ public:
     template<class T>
     static double getRotationDegrees(const sf::Vector2<T> &v);
 };
+
+template<class T>
+sf::Vector2<T> Vect::normal(const sf::Vector2<T> &v)
+{
+    sf::Vector2<T> temp = v;
+    normalize(temp);
+    return temp;
+}
 
 template<class T>
 double Vect::getRotationDegrees(const sf::Vector2<T> &v)
@@ -71,5 +82,8 @@ void Vect::normalize(sf::Vector2<T> &v)
     v.x /= l;
     v.y /= l;
 }
+
+}
+
 
 #endif // VECT_H

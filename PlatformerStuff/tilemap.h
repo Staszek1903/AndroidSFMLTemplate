@@ -2,6 +2,7 @@
 #define TILEMAP_H
 
 #include "colidable.h"
+#include "dynamic.h"
 
 class TileMap : public sf::Drawable
 {

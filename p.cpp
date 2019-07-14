@@ -6,7 +6,7 @@ P::P(sf::RenderWindow &win) : win(win)
  P::~P()
  {}
 
- struct Position
+/* struct Position
  {
      Position(float x, float y) : x(x), y(y) {}
      float x,y;
@@ -18,7 +18,7 @@ P::P(sf::RenderWindow &win) : win(win)
      size_t index;
  };
 
-/* class RenderSystem : public System
+ class RenderSystem : public System
  {
      sf::RenderWindow & win;
  public:
@@ -55,6 +55,33 @@ P::P(sf::RenderWindow &win) : win(win)
     s.setFillColor(sf::Color::Blue);
     s.setRadius(100);
  	ui.createDefault();
+
+    ui.setHandler(UI::RIGHT,[this](const TouchEvent & ev){
+        if(ev.state == TouchEvent::BEGIN)
+            steering.setState(SteeringManager::GO_RIGHT);
+        else if (ev.state == TouchEvent::END)
+            steering.setState(SteeringManager::STAY);
+
+        //Console::get()<<"GO_RIGHT "<<steering.getState()<<"\n";
+    });
+
+    ui.setHandler(UI::LEFT,[this](const TouchEvent & ev){
+        if(ev.state == TouchEvent::BEGIN)
+            steering.setState(SteeringManager::GO_LEFT);
+        else if (ev.state == TouchEvent::END)
+            steering.setState(SteeringManager::STAY);
+
+        //Console::get()<<"GO_LEFT " <<steering.getState()<<"\n";
+    });
+
+    ui.setHandler(UI::UP,[this](const TouchEvent & ev){
+        if(ev.state == TouchEvent::BEGIN)
+            steering.setState(SteeringManager::JUMP);
+        //Console::get()<<"JUMP "<<steering.getState()<<"\n";
+    });
+
+    steering.setNominal_velocity(100);
+    steering.setJump_velocity(300);
 
 
     Script sc;
@@ -111,6 +138,7 @@ P::P(sf::RenderWindow &win) : win(win)
                 hero.setTexture(tex_resource.get_resource(elems.at(tile)));
                 hero.setPosition(x,y);
                 hero.velocity = {100,0};
+                steering.setSteered_entity(hero);
                 continue;
             }
             //Entity en(es.get_entity_manager());
@@ -133,6 +161,7 @@ void P::update(double dt)
 {
     sf::Vector2f pos = s.getPosition();
     s.setPosition({pos.x+1,pos.y+1});
+    steering.update();
     hero.update(dt);
     tile_map.colide(hero);
 }
@@ -153,21 +182,25 @@ void P::input(sf::Event &ev)
 	{
 		if(ev.key.code == sf::Keyboard::A)
         {//Script sc;	sc.load_from_file("./textures/textures.conf");
-            hero.velocity.x = -100;
+            steering.setState(SteeringManager::GO_LEFT);
         }
         if(ev.key.code == sf::Keyboard::D)
         {
-            hero.velocity.x = 100;
+            steering.setState(SteeringManager::GO_RIGHT);
         }
         if(ev.key.code == sf::Keyboard::W)
         {
-            hero.velocity.y = -200;
+            steering.setState(SteeringManager::JUMP);
         }
         /*if(ev.key.code == sf::Keyboard::C)
 			em.addEntity<Cc>();
 		if(ev.key.code == sf::Keyboard::E)
-	*/
+        */
 	}
+    if(ev.type == sf::Event::KeyReleased)
+        steering.setState(SteeringManager::STAY);
+
+    //ZASTĄPIĆ steering menagerem
 }
 
 void P::release() 

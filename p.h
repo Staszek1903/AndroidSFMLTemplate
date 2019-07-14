@@ -12,6 +12,7 @@
 #include "ScriptStuff/script.h"
 #include "PlatformerStuff/tilemap.h"
 #include "PlatformerStuff/dynamic.h"
+#include "PlatformerStuff/steeringmanager.h"
 #include "line.h"
 
 class P : public ProgramStage 
@@ -21,6 +22,8 @@ class P : public ProgramStage
     UI ui;
     TileMap tile_map;
     Dynamic hero;
+    SteeringManager steering;
+
 public:
     P(sf::RenderWindow & win);
     ~P() override;

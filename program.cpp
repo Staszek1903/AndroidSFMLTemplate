@@ -8,7 +8,16 @@
         Renderer::setWindow(win);
 	Renderer::get();
         console_button.setFillColor(sf::Color(0, 0, 0, 128));
-        console_button.setHandler(cb_handler);
+        console_button.setHandler([](const TouchEvent & ev){
+            static bool shown = true;
+            if (ev.state == TouchEvent::END)
+            {
+                shown = !shown;
+                Console::get() << "Console BUTTON" << shown << "\n";
+                Console::get().show(shown);
+            }
+        });
+
         win.setFramerateLimit(30);
         Renderer::get().addDrawable(console_button);
 
@@ -153,14 +162,3 @@ void Program::halt_for_input()
 				return;
 		}
 }
-
-void ConsoleButtonHandler::handle(const TouchEvent & ev)
-{
-	static bool shown = true;
-	if (ev.state == TouchEvent::END)
-	{
-		shown = !shown;
-		Console::get() << "Console BUTTON" << shown << "\n";
-		Console::get().show(shown);
-	}
-};

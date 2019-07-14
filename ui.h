@@ -22,7 +22,7 @@ public:
 	void createDefault();
     size_t getSize(){return nodes.size();}
 	
-    void setHandler(size_t t, TouchableHandler & h);
+    void setHandler(size_t t, std::function<void(const TouchEvent &)> h);
 	
 	enum Default
 	{

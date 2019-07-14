@@ -9,11 +9,6 @@
 #include "programstage.h"
 #include <SFML/Graphics.hpp>
 
-class ConsoleButtonHandler : public TouchableHandler
-{
-    virtual void handle(const TouchEvent & ev) override;
-};
-
 /**
  * @brief The Program class abstract class for real time SFML application
  */
@@ -24,7 +19,6 @@ class Program
 protected:
 	sf::RenderWindow win;
  	Touchable console_button;
- 	ConsoleButtonHandler cb_handler;
  	
     /**
      * @brief halt_for_input functions stops the program oand awaits event to either close the window or continue the program

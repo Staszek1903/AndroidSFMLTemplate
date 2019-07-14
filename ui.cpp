@@ -41,7 +41,7 @@ void UI::createDefault()
 	}
 }
 
-void UI::setHandler(size_t t, TouchableHandler & h)
+void UI::setHandler(size_t t, std::function<void(const TouchEvent & ev)> h)
 {
 	if(t >= nodes.size()) return;
 	nodes.at(t)->setHandler(h);
