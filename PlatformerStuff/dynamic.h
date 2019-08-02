@@ -2,10 +2,10 @@
 #define DYNAMIC_H
 
 #include <SFML/Graphics.hpp>
-#include "colidable.h"
 #include "../console.h"
+#include "../vect.h"
 
-class Dynamic : public Colidable
+class Dynamic : public sf::Sprite
 {
 public:
     sf::Vector2f velocity, const_acceleration = {0.0f,500.0f};
@@ -14,7 +14,8 @@ public:
     Dynamic();
 
     void update(float dt);
-    void correct_collision(const Colidable & other);
+    //void correct_collision(const Colidable & other);
+    void get_collision_normal();
 
 };
 

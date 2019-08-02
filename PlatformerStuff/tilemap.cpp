@@ -7,7 +7,7 @@ TileMap::TileMap()
 
 void TileMap::add(const sf::Vector2f &pos, const sf::Texture &text)
 {
-    Colidable c;
+    sf::Sprite c;
     c.setPosition(pos);
     c.setTexture(text);
     tile_map.push_back(c);
@@ -18,35 +18,28 @@ void TileMap::draw(sf::RenderTarget &target, sf::RenderStates states) const
     for(auto & tile : tile_map){
         target.draw(tile);
     }
+
+    for(auto d : debug_places)
+    {
+        sf::CircleShape c;
+        c.setRadius(10);
+        c.setPosition( d );
+        c.setFillColor(sf::Color::Green);
+        target.draw(c);
+    }
 }
 
 void TileMap::colide(Colidable &coll)
 {
+    debug_places.clear();
     for(auto & tile : tile_map){
-        if(tile.is_colliding(coll)){
-            auto immers = tile.get_collision_point(); // wektor od tile center do hero center
-            sf::Vector2f good_distanece
-                    ((tile.getLocalBounds().width + coll.getLocalBounds().width)/2,
-                     (tile.getLocalBounds().height + coll.getLocalBounds().height)/2    );
-
-
-            bool reverse = false;
-            if(std::abs(immers.x) > std::abs(immers.y))
-            {
-                immers.y =0;
-                good_distanece.y =0;
-                if((reverse = immers.x < 0)) immers = -immers;
-            }
-            else
-            {
-                immers.x =0; // normalizujemy do pio poziom
-                good_distanece.x = 0;
-                if((reverse = immers.y < 0)) immers = -immers;
-            }
-
-            auto correction_vector = good_distanece - immers;
-            coll.move(reverse? -correction_vector : correction_vector);
-            static_cast<Dynamic*>(&coll)->velocity = sf::Vector2f(0,0);
+        ColisionData data;
+        if(coll.is_colliding(tile, data))
+        {
+            debug_places.push_back(tile.getPosition());
+            Console::get()<<"JEST COLLISION "<<data.normal.x<<" "<<data.normal.y
+                         <<" PEN: "<< data.penetration<<" VEL: x:"<<coll.velocity.x<<" y: "<<coll.velocity.y<<"\n";
+            coll.resolve_collision(data, 0.0f);
         }
     }
 }

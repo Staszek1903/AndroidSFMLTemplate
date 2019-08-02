@@ -1,10 +1,5 @@
 #include "touchable.h"
 
-TouchableHandler::~TouchableHandler()
-{
-
-}
-
 Touchable::Touchable(float x, float y, float w, float h)
 	:handler(nullptr)
 {

@@ -1,18 +1,27 @@
 
 PlatformerSuff:
-	Uskutecznić steering managera
-	Abstrakcyjne collidable zwracające normalną boku, punkt kolizji i penetracje
+	Uskutecznić steering managera DONE?
 	
-	Zastanowić sie na collision_response
-		jesli normalna pozioma a objekt wyzej i próg < treshold to zmień normalną na pionową żeby zrobić hyc w gore 
+	Bez fanaberii
+	Platformówka AABB bez obrotów (ew obroty aproksymowane AABB)
+	Dokładny collision response objektów z prędkością
+		-prędkości (moze odbicia)
+		-tarcie
+	Może próg wejscia, choć lepiej windy i drabiny
+	
+	Objekty powią zane eventami
+	Moving platforms doors'n'shitad
 		
 	Ogarnąć metode zapisu danych objektow w pamieci (zeby byla uniwersalana i skalowalna)
 	
 	Friction zamiast deceleraion XD
 
 IOStuff:
-	Podpiąć przyciski dotykowe do sterowania
+	Podpiąć przyciski dotykowe do sterowania DONE <3
+	
 	Ogarnąć prace kamery
+	
+	powkładać to co trzeba do folderu
 	
 3DStuff:
 	XD

@@ -25,9 +25,9 @@ class Console
     int bottom = 2;
     int carriage =0;
 
-    bool is_shown = false;
+    bool is_shown = true;
     bool need_redraw = true;
-    float hide_level = 0.0f;
+    float hide_level = 2.0f;
 
     Console(sf::RenderWindow &window);
 

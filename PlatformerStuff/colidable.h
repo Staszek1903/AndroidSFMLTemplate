@@ -5,13 +5,15 @@
 #include "vect.h"
 #include "../line.h"
 #include "../console.h"
+#include "dynamic.h"
+#include "colisiondata.h"
+#include <assert.h>
 
 /**
  * @brief The Colidable class detekts collision betwen sprites
  */
-class Colidable : public sf::Sprite
+class Colidable : public Dynamic
 {
-    sf::Vector2f collision_point;
 public:
     Colidable();
     /**
@@ -19,13 +21,13 @@ public:
      * @param other sprite
      * @return true if collision occurs
      */
-    bool is_colliding(const Colidable & other);
-    /**
-     * @brief get_collision_point
-     * @return collision point
-     */
+    bool is_colliding(const Colidable & other, ColisionData & data) const;
 
-    sf::Vector2f get_collision_point() const;
+    void resolve_collision(Colidable & other,  ColisionData & data);
+
+    bool is_colliding(const sf::Sprite & other, ColisionData & data) const;
+
+    void resolve_collision(ColisionData & data, float bounciness);
 
     sf::Vector2f get_global_center() const;
     sf::Vector2f get_half_size() const;

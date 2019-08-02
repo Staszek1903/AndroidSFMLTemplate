@@ -30,6 +30,7 @@ public:
 
     template<class T>
     static double getRotationDegrees(const sf::Vector2<T> &v);
+
 };
 
 template<class T>

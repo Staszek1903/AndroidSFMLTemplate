@@ -21,7 +21,7 @@ class P : public ProgramStage
     sf::CircleShape s;
     UI ui;
     TileMap tile_map;
-    Dynamic hero;
+    Colidable hero;
     SteeringManager steering;
 
 public:

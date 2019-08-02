@@ -1,13 +1,65 @@
 #include "colidable.h"
 
 Colidable::Colidable()
-    : collision_point({0,0})
 {
 
 }
 
-bool Colidable::is_colliding(const Colidable &other)
+bool Colidable::is_colliding(const Colidable &other, ColisionData &data) const
 {
+    /* STARE ALE DZIALA
+    sf::FloatRect bb1 = getGlobalBounds();
+    sf::FloatRect bb2 = other.getGlobalBounds();
+
+    if(!(bb1.top < bb2.top+bb2.height && bb2.top < bb1.top + bb1.height &&
+            bb1.left < bb2.left+bb2.width && bb2.left < bb1.left+bb1.width))
+        return false;
+    return true;
+    */
+
+    sf::FloatRect bb1 = getGlobalBounds();
+    sf::FloatRect bb2 = other.getGlobalBounds();
+
+    // MAGIA STACK OVERFLOW:
+    // kolizja AABB vs ray
+
+    //AABB:
+    sf::Vector2f leftTop(bb1.left, bb1.top);
+    sf::Vector2f rightBottom(bb1.left + bb1.width + bb2.width,
+                             bb1.top + bb1.height + bb2.height);
+
+    //RAY
+    sf::Vector2f rayPos(bb2.left, bb2.top);
+    sf::Vector2f relativeVelocity = other.velocity - this->velocity; // predkość od tamtego do tego
+
+    sf::Vector2f rayVelocityFrac( 1.0f/relativeVelocity.x, 1.0f/relativeVelocity.y); //odwrotnosc predkosci od tamtego do tego
+
+    // tajemnicze zmienne mocy
+
+    float t1 = (rightBottom.x - rayPos.x)* rayVelocityFrac.x,
+          t2 = (leftTop.x - rayPos.x) * rayVelocityFrac.x,
+          t3 = (rightBottom.y - rayPos.y) * rayVelocityFrac.y,
+          t4 = (leftTop.y - rayPos.y) * rayVelocityFrac.y;
+
+    float tmax = std::min(std::max(t1,t2), std::max(t3,t4));
+    float tmin = std::max(std::min(t1,t2), std::min(t3,t4));
+
+    if(tmin > tmax) return false;
+
+    //data.relative_velocity = stuff::Vect::lenght(relativeVelocity);
+
+    return true;
+}
+
+
+void Colidable::resolve_collision(Colidable &other, ColisionData &data)
+{
+
+}
+
+bool Colidable::is_colliding(const sf::Sprite &other, ColisionData &data) const
+{
+    //STARE ALE DZIALA
     sf::FloatRect bb1 = getGlobalBounds();
     sf::FloatRect bb2 = other.getGlobalBounds();
 
@@ -15,19 +67,79 @@ bool Colidable::is_colliding(const Colidable &other)
             bb1.left < bb2.left+bb2.width && bb2.left < bb1.left+bb1.width))
         return false;
 
-    sf::Vector2f global_center1 = get_global_center();
-    sf::Vector2f global_center2 = other.get_global_center();
+    // MAGIA STACK OVERFLOW:
+    // kolizja AABB vs ray
 
-    auto offset = global_center2 - global_center1;
-    //Vect::normalize(offset);
-    collision_point = offset;
+    //AABB:
+    sf::Vector2f center_pos = get_global_center();
+    sf::Vector2f sum_half_size( (bb1.width + bb2.width)/2, (bb1.height + bb2.height)/2);
+    sf::Vector2f leftTop(center_pos.x - sum_half_size.x, center_pos.y - sum_half_size.y);
+    sf::Vector2f rightBottom(center_pos.x + sum_half_size.x, center_pos.y + sum_half_size.y);
+
+    //RAY
+    sf::Vector2f rayPos((bb2.width + bb2.left + bb2.left)/2,(bb2.height + bb2.top + bb2.top)/2); // obliczanie global center
+    sf::Vector2f relativeVelocity = - this->velocity; // predkość od tamtego do tego
+    data.relative_velocity = - relativeVelocity;
+    stuff::Vect::normalize(relativeVelocity);
+
+
+    sf::Vector2f rayVelocityFrac( 1.0f/relativeVelocity.x, 1.0f/relativeVelocity.y); //odwrotnosc predkosci od tamtego do tego
+
+    // tajemnicze zmienne mocy
+
+    float t1 = (rightBottom.x - rayPos.x)* rayVelocityFrac.x,
+          t2 = (leftTop.x - rayPos.x) * rayVelocityFrac.x,
+          t3 = (rightBottom.y - rayPos.y) * rayVelocityFrac.y,
+          t4 = (leftTop.y - rayPos.y) * rayVelocityFrac.y;
+
+    float tmax = std::min(std::max(t1,t2), std::max(t3,t4));
+    float tmin = std::max(std::min(t1,t2), std::min(t3,t4));
+
+    float t = 0;
+    if(tmax < 0 || tmin > tmax) return false; //  t = tmax;
+    t = tmin;
+
+    if(t == t1)
+    {
+        data.normal = NORMAL_RIGHT;
+        data.penetration =
+                (bb1.left + bb1.width) - bb2.left;
+        data.colision_point = sf::Vector2f(bb1.left + bb1.width, bb1.top);
+    }
+    else if(t == t2)
+    {
+        data.normal = NORMAL_LEFT;
+        data.penetration =
+                (bb2.left + bb2.width)- bb1.left;
+        data.colision_point = sf::Vector2f(bb1.left, bb1.top + bb1.height);
+    }
+    else if(t == t3)
+    {
+        data.normal = NORMAL_DOWN;
+        data.penetration =
+                (bb1.top + bb1.height) - bb2.top;
+        data.colision_point = sf::Vector2f(bb1.left + bb1.width, bb1.top + bb1.height);
+    }
+    else if(t == t4)
+    {
+        data.normal = NORMAL_UP;
+        data.penetration =
+                (bb2.top + bb2.height) - bb1.top;
+        data.colision_point = sf::Vector2f(bb1.left, bb1.top);
+    }
+    else assert(false);
 
     return true;
 }
 
-sf::Vector2f Colidable::get_collision_point() const
+void Colidable::resolve_collision(ColisionData &data, float bounciness)
 {
-    return collision_point;
+    sf::Vector2f & a = data.normal,
+            &b = data.relative_velocity;
+    velocity -= sf::Vector2f( std::abs(a.x) * b.x , std::abs(a.y) * b.y) * (1.0f + bounciness);
+
+    auto pos = getPosition();
+    setPosition(pos - (data.normal * data.penetration));
 }
 
 sf::Vector2f Colidable::get_global_center() const
@@ -62,7 +174,7 @@ void Colidable::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 #ifdef DEBUG_BUILD
     stuff::Line l (get_global_center(),{0,0});
-    sf::Vector2f vect = (stuff::Vect::len_sq(collision_point) < std::numeric_limits<float>::epsilon())? sf::Vector2f(16,16) : collision_point;
+    sf::Vector2f vect =  sf::Vector2f(16,16) ;
     l.setVector(vect);
     l.setFillColor(sf::Color::Magenta);
     target.draw(l);
@@ -87,5 +199,6 @@ void Colidable::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
     //Console::get()<<"collision point = "<<collision_point<<"\n";
 #endif
+
 }
 

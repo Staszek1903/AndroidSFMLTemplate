@@ -4,9 +4,15 @@
 #include "colidable.h"
 #include "dynamic.h"
 
+/**
+ * @brief The TileMap class przowywuje wszytkie statyczne elementy mapy
+ *
+ */
 class TileMap : public sf::Drawable
 {
-    std::vector <Colidable> tile_map;
+    std::vector <sf::Sprite> tile_map;
+
+    std::vector<sf::Vector2f> debug_places;
 public:
     TileMap();
 

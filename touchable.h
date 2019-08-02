@@ -10,12 +10,6 @@
 /**
  * @brief The TouchableHandler class is an obstract class for handler methode which is called on touchable interraction
  */
-class TouchableHandler
-{
-public:
-	virtual void handle(const TouchEvent & ev) =0;
-    virtual ~TouchableHandler();
-};
 
 
 class Touchable : public TouchHandler, public sf::Shape

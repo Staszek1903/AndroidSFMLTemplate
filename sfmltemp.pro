@@ -7,16 +7,14 @@ LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 
 #LIBS +=-L/usr/lib/ -lboost_system -lboost_chrono -lboost_thread -lboost_timer
 
-
-debug {
-  DEFINES += DEBUG_BUILD
-}
+DEFINES += DEBUG_BUILD
 
 SOURCES += \
     EntityStuff/event.cpp \
     EntityStuff/eventmanager.cpp \
     EntityStuff/sizemap.cpp \
     PlatformerStuff/colidable.cpp \
+    PlatformerStuff/colisiondata.cpp \
     PlatformerStuff/dynamic.cpp \
     PlatformerStuff/steeringmanager.cpp \
     PlatformerStuff/tilemap.cpp \
@@ -49,6 +47,7 @@ HEADERS += \
     EntityStuff/eventmanager.h \
     EntityStuff/sizemap.h \
     PlatformerStuff/colidable.h \
+    PlatformerStuff/colisiondata.h \
     PlatformerStuff/dynamic.h \
     PlatformerStuff/steeringmanager.h \
     PlatformerStuff/tilemap.h \
