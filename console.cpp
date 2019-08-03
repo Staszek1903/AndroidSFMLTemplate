@@ -122,8 +122,6 @@ void Console::clearLine(int line)
 }
 
 
-
-template<>
 Console &operator<<(Console &c, const sf::Vector2f &data)
 {
     std::stringstream ss;
@@ -135,3 +133,5 @@ Console &operator<<(Console &c, const sf::Vector2f &data)
 
     return c;
 }
+
+

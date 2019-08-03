@@ -141,6 +141,11 @@ P::P(sf::RenderWindow &win) : win(win)
                 steering.setSteered_entity(hero);
                 continue;
             }
+            else if (elems.at(tile) == "platform")
+            {
+                tile_map.add(sf::Vector2f(x,y), tex_resource.get_resource(elems.at(tile)), {{x,y},{x,y-100}});
+                continue;
+            }
             //Entity en(es.get_entity_manager());
             //en.create();
             //en.assign<Texture>(tex_resource.get_index(elems.at(tile)));
@@ -164,6 +169,7 @@ void P::update(double dt)
     steering.update();
     hero.update(dt);
     tile_map.colide(hero);
+    tile_map.update(dt);
 }
 
 void P::render(sf::RenderWindow & win)
@@ -178,29 +184,9 @@ void P::input(sf::Event &ev)
 {
 	if(ev.type == sf::Event::TouchBegan)
 	{  }
-	if(ev.type == sf::Event::KeyPressed)
-	{
-		if(ev.key.code == sf::Keyboard::A)
-        {//Script sc;	sc.load_from_file("./textures/textures.conf");
-            steering.setState(SteeringManager::GO_LEFT);
-        }
-        if(ev.key.code == sf::Keyboard::D)
-        {
-            steering.setState(SteeringManager::GO_RIGHT);
-        }
-        if(ev.key.code == sf::Keyboard::W)
-        {
-            steering.setState(SteeringManager::JUMP);
-        }
-        /*if(ev.key.code == sf::Keyboard::C)
-			em.addEntity<Cc>();
-		if(ev.key.code == sf::Keyboard::E)
-        */
-	}
-    if(ev.type == sf::Event::KeyReleased)
-        steering.setState(SteeringManager::STAY);
+    steering.input(ev);
 
-    //ZASTĄPIĆ steering menagerem
+    //Console::get()<<"states: " <<std::bitset<8>(steering.getState())<<"\n";
 }
 
 void P::release() 

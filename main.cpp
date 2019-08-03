@@ -47,7 +47,6 @@ int main()
     return 0;
 */
     Program p;
-
     ProgramStage::next_stage<P>(p.get_window());
 
     p.run();

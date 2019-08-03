@@ -84,6 +84,7 @@ private:
     void clearLine(int line);
 };
 
+
 template <typename T>
 Console & operator<<(Console & c, const T &data)
 {
@@ -97,8 +98,8 @@ Console & operator<<(Console & c, const T &data)
     return c;
 }
 
-template <>
-Console & operator<< (Console & c, const sf::Vector2f &data);
+Console &operator<<(Console &c, const sf::Vector2f &data);
+
 
 
 #endif /* CONSOLE_H_ */

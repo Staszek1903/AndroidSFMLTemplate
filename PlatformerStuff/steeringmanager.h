@@ -1,36 +1,39 @@
 #ifndef STEERINGMANAGER_H
 #define STEERINGMANAGER_H
 
-#include "dynamic.h"
+#include "colidable.h"
 
 class SteeringManager
 {
     float nominal_velocity;
     float jump_velocity;
-    int state;
-    Dynamic * steered_entity;
+    std::size_t state;
+    Colidable * steered_entity;
+
 public:
 
     enum
     {
-        STAY,
-        GO_LEFT,
-        GO_RIGHT,
-        GO_DOWN,
-        JUMP
+        STAY        = 0,
+        GO_LEFT     = (1<<0),
+        GO_RIGHT    = (1<<1),
+        GO_DOWN     = (1<<2),
+        JUMP        = (1<<3)
     };
 
     SteeringManager();
     SteeringManager(const SteeringManager &) = delete;
     void operator=(const SteeringManager*) =  delete;
 
-    Dynamic *getSteered_entity() const;
-    void setSteered_entity(Dynamic &value);
-    int getState() const;
-    void setState(int value);
+    Colidable *getSteered_entity() const;
+    void setSteered_entity(Colidable &value);
+    std::size_t getState() const;
+    void setState(std::size_t value);
+    void unsetState(std::size_t value);
     float getNominal_velocity() const;
     void setNominal_velocity(float value);
 
+    void input(sf::Event & ev);
     void update();
 
     float getJump_velocity() const;

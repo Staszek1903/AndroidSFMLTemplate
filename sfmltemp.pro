@@ -16,6 +16,7 @@ SOURCES += \
     PlatformerStuff/colidable.cpp \
     PlatformerStuff/colisiondata.cpp \
     PlatformerStuff/dynamic.cpp \
+    PlatformerStuff/guidable.cpp \
     PlatformerStuff/steeringmanager.cpp \
     PlatformerStuff/tilemap.cpp \
     ScriptStuff/parser.cpp \
@@ -49,6 +50,7 @@ HEADERS += \
     PlatformerStuff/colidable.h \
     PlatformerStuff/colisiondata.h \
     PlatformerStuff/dynamic.h \
+    PlatformerStuff/guidable.h \
     PlatformerStuff/steeringmanager.h \
     PlatformerStuff/tilemap.h \
     ScriptStuff/colidable.h \

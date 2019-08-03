@@ -1,27 +1,46 @@
 
 PlatformerSuff:
-	Uskutecznić steering managera DONE?
+	Uskutecznić steering managera 
+		-zamienic stany na flagi stanów tak żeby mogło być skakanie i iscie w bog jednocześnie 		DONE
+		- dorobic wykrywanie dotykania scian podlogi i sufitu										DONE
+		- customizowalny key binding 	
 	
 	Bez fanaberii
 	Platformówka AABB bez obrotów (ew obroty aproksymowane AABB)
-	Dokładny collision response objektów z prędkością
-		-prędkości (moze odbicia)
-		-tarcie
-	Może próg wejscia, choć lepiej windy i drabiny
 	
-	Objekty powią zane eventami
-	Moving platforms doors'n'shitad
+	Wyszukiwanie kolizji z objektami statycznymi za pomocą drzewa czwórkowego
+	
+	Dokładny collision response objektów z prędkością
+	-prędkości (moze odbicia) (ogarniete ale jeszcze sie zastanowcić)	(przeczytać source astrum)						!!!! 1
+	-tarcie																							DONE
+					
+	Może próg wejscia, choć lepiej windy i drabiny ( prog wejscia minimalny ale potrzebny )
+	
+	Objekty powiązane eventami/msg
+	msg sciąga dane z klasy i transformuje je do void* nazwe klasy przetrzymuje w mapie i nadaje jej id.
+	ID razem z ciałem  oraz adresem docelowym (ID jednostki doceowej) wysyła broadcastowo 
+		- na początek tylko przyciski sterujące drzwimi i platformami										!!!3
+		
+			
+	Moving platforms doors'n'shit
+		- na początek dwie poruszające sie platformy 
+		(mechanika: init( Punkt poczatkowy, Punkt końcowy, float predkość ))					!!!! 2
 		
 	Ogarnąć metode zapisu danych objektow w pamieci (zeby byla uniwersalana i skalowalna)
 	
-	Friction zamiast deceleraion XD
 
 IOStuff:
 	Podpiąć przyciski dotykowe do sterowania DONE <3
 	
-	Ogarnąć prace kamery
+	Ogarnąć prace kamery																		!!!4
+	
+	Animacje
 	
 	powkładać to co trzeba do folderu
 	
 3DStuff:
 	XD
+	
+EntitySuff:
+	- ogarnąć gościa z youtuba :
+		https://www.youtube.com/watch?v=XsvI8Sng6dk&list=PLhfAbcv9cehhkG7ZQK0nfIGJC_C-wSLrx&index=9
