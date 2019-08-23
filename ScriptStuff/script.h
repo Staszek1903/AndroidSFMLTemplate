@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <fstream>
 #include "scriptentry.h"
-#include "IOStuff/console.h"
+#include "../IOStuff/console.h"
 
 class Script
 {
