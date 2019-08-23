@@ -1,3 +1,4 @@
+
 #include "guidable.h"
 
 bool Guidable::getActive() const

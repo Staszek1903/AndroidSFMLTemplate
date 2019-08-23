@@ -3,8 +3,8 @@
 
 #include <vector>
 
-#include "../singleton.hpp"
-#include "../console.h"
+#include "IOStuff/singleton.hpp"
+#include "IOStuff/console.h"
 #include "systemmanager.h"
 #include "componentmanager.h"
 #include "entitymanager.h"

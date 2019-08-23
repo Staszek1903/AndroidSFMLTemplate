@@ -2,8 +2,8 @@
 #define DYNAMIC_H
 
 #include <SFML/Graphics.hpp>
-#include "../console.h"
-#include "../vect.h"
+#include "IOStuff/console.h"
+#include "IOStuff/vect.h"
 
 class Dynamic : public sf::Sprite
 {

@@ -10,9 +10,19 @@ LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 DEFINES += DEBUG_BUILD
 
 SOURCES += \
+    EntityStuff/componentcontainer.cpp \
     EntityStuff/event.cpp \
     EntityStuff/eventmanager.cpp \
     EntityStuff/sizemap.cpp \
+    IOStuff/console.cpp \
+    IOStuff/line.cpp \
+    IOStuff/program.cpp \
+    IOStuff/programstage.cpp \
+    IOStuff/renderer.cpp \
+    IOStuff/touchable.cpp \
+    IOStuff/touchbuffer.cpp \
+    IOStuff/ui.cpp \
+    IOStuff/vect.cpp \
     PlatformerStuff/colidable.cpp \
     PlatformerStuff/colisiondata.cpp \
     PlatformerStuff/dynamic.cpp \
@@ -22,31 +32,32 @@ SOURCES += \
     ScriptStuff/parser.cpp \
     ScriptStuff/script.cpp \
     ScriptStuff/scriptentry.cpp \
-    error_generate.cpp \
-    line.cpp \
-        main.cpp \
-    console.cpp \
+    main.cpp \
     p.cpp \
-    program.cpp \
-    programstage.cpp \
-    ui.cpp \
-    touchable.cpp \
-    touchbuffer.cpp \
-    renderer.cpp \
     EntityStuff/system.cpp \
     EntityStuff/entity.cpp \
     EntityStuff/entitymanager.cpp \
     EntityStuff/componentmanager.cpp \
     EntityStuff/entity_stuff.cpp \
     EntityStuff/systemmanager.cpp \
-    EntityStuff/component.cpp \
-    EntityStuff/componentcontainer.cpp \
-    vect.cpp
+    EntityStuff/component.cpp
 
 HEADERS += \
     EntityStuff/event.h \
     EntityStuff/eventmanager.h \
     EntityStuff/sizemap.h \
+    IOStuff/console.h \
+    IOStuff/line.h \
+    IOStuff/program.h \
+    IOStuff/programstage.h \
+    IOStuff/renderer.h \
+    IOStuff/resource_getter.h \
+    IOStuff/resource_manager.h \
+    IOStuff/singleton.hpp \
+    IOStuff/touchable.h \
+    IOStuff/touchbuffer.h \
+    IOStuff/ui.h \
+    IOStuff/vect.h \
     PlatformerStuff/colidable.h \
     PlatformerStuff/colisiondata.h \
     PlatformerStuff/dynamic.h \
@@ -57,19 +68,7 @@ HEADERS += \
     ScriptStuff/parser.h \
     ScriptStuff/script.h \
     ScriptStuff/scriptentry.h \
-    console.h \
-    error_generate.hpp \
-    line.h \
     p.h \
-    programstage.h \
-    resource_getter.h \
-    resource_manager.h \
-    touchable.h \
-    renderer.h \
-    program.h \
-    touchbuffer.h \
-    ui.h \
-    singleton.hpp \
     EntityStuff/system.h \
     EntityStuff/entity_stuff.h \
     EntityStuff/entity.h \
@@ -77,8 +76,7 @@ HEADERS += \
     EntityStuff/component.h \
     EntityStuff/systemmanager.h \
     EntityStuff/componentmanager.h \
-    EntityStuff/componentcontainer.h \
-    vect.h
+    EntityStuff/componentcontainer.h
 
 DISTFILES += \
     Arial.ttf \

@@ -5,7 +5,7 @@
 #include <string>
 
 #include "componentmanager.h"
-#include "../console.h"
+#include "IOStuff/console.h"
 #include <exception>
 
 #define MAX_COMPONENT_ID 31

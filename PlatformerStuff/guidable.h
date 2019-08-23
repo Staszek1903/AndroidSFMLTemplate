@@ -2,7 +2,7 @@
 #define GUIDABLE_H
 
 #include "colidable.h"
-#include "console.h"
+#include "IOStuff/console.h"
 
 class Guidable : public Colidable
 {

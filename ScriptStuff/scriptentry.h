@@ -5,7 +5,7 @@
 #include <vector>
 #include <exception>
 #include <memory>
-#include "../console.h"
+#include "IOStuff/console.h"
 #include "parser.h"
 
 class Value

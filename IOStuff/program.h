@@ -5,7 +5,6 @@
 #include "touchbuffer.h"
 #include "renderer.h"
 #include "touchable.h"
-#include "error_generate.hpp"
 #include "programstage.h"
 #include <SFML/Graphics.hpp>
 

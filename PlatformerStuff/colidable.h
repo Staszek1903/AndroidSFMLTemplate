@@ -2,9 +2,9 @@
 #define COLIDABLE_H
 
 #include <SFML/Graphics.hpp>
-#include "vect.h"
-#include "../line.h"
-#include "../console.h"
+#include "IOStuff/vect.h"
+#include "IOStuff/line.h"
+#include "IOStuff/console.h"
 #include "dynamic.h"
 #include "colisiondata.h"
 #include <assert.h>

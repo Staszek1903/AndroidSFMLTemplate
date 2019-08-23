@@ -2,18 +2,18 @@
 #define P_H
 
 #include <SFML/Graphics.hpp>
-#include "program.h"
-#include "console.h"
-#include "touchable.h"
-#include "ui.h"
-#include "programstage.h"
+#include "IOStuff/program.h"
+#include "IOStuff/console.h"
+#include "IOStuff/touchable.h"
+#include "IOStuff/ui.h"
+#include "IOStuff/programstage.h"
 
-#include "resource_manager.h"
+#include "IOStuff/resource_manager.h"
 #include "ScriptStuff/script.h"
 #include "PlatformerStuff/tilemap.h"
 #include "PlatformerStuff/dynamic.h"
 #include "PlatformerStuff/steeringmanager.h"
-#include "line.h"
+#include "IOStuff/line.h"
 
 class P : public ProgramStage 
 {

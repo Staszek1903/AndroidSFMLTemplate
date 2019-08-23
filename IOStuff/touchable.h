@@ -7,10 +7,6 @@
 #include "console.h"
 #include "renderer.h"
 
-/**
- * @brief The TouchableHandler class is an obstract class for handler methode which is called on touchable interraction
- */
-
 
 class Touchable : public TouchHandler, public sf::Shape
 {

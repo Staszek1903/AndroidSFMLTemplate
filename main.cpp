@@ -1,8 +1,7 @@
 #include "p.h"
 #include <SFML/Graphics.hpp>
 
-#include "console.h"
-#include "error_generate.hpp"
+#include "IOStuff/console.h"
 #include <vector>
 #include <memory.h>
 #include <iostream>

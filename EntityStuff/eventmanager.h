@@ -2,7 +2,7 @@
 #define EVENTMANAGER_H_
 
 #include "event.h"
-#include "../console.h"
+#include "IOStuff/console.h"
 #include <vector>
 #include <bitset>
 

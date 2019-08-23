@@ -51,7 +51,7 @@ void Program::run()
 		catch(std::exception & exc)
 		{
 
-			error_generate(exc.what());
+            //error_generate(exc.what());
 			Console::get() << "EXCEPTION:\n " << exc.what() << "\n PRESS ANY KEY TO PROCEED\n";
 			render();
 			halt_for_input();

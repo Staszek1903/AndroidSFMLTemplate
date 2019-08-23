@@ -11,7 +11,7 @@ PlatformerSuff:
 	Wyszukiwanie kolizji z objektami statycznymi za pomocą drzewa czwórkowego
 	
 	Dokładny collision response objektów z prędkością
-	-prędkości (moze odbicia) (ogarniete ale jeszcze sie zastanowcić)	(przeczytać source astrum)						!!!! 1
+	-prędkości (moze odbicia) (ogarniete ale jeszcze sie zastanowcić)	(przeczytać source astrum)						(DONE)
 	-tarcie																							DONE
 					
 	Może próg wejscia, choć lepiej windy i drabiny ( prog wejscia minimalny ale potrzebny )

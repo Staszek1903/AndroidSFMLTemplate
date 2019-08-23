@@ -166,10 +166,12 @@ void P::update(double dt)
 {
     sf::Vector2f pos = s.getPosition();
     s.setPosition({pos.x+1,pos.y+1});
+
     steering.update();
+    tile_map.update(dt);
     hero.update(dt);
     tile_map.colide(hero);
-    tile_map.update(dt);
+
 }
 
 void P::render(sf::RenderWindow & win)
