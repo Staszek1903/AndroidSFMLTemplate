@@ -8,12 +8,12 @@ Renderer::Renderer()
 	auto mode = sf::VideoMode::getDesktopMode();
     aspect_ratio = static_cast<float>(mode.height) / static_cast<float>(mode.width);
 	
-	if(aspect_ratio >1.0f) 
-	{
-		aspect_ratio = 1.0f/aspect_ratio;
-		view.setViewport(sf::FloatRect(0.0f,0.0f, 1.2f, aspect_ratio*aspect_ratio));
-	}
-	else
+//	if(aspect_ratio >1.0f)
+//	{
+//		aspect_ratio = 1.0f/aspect_ratio;
+//		view.setViewport(sf::FloatRect(0.0f,0.0f, 1.2f, aspect_ratio*aspect_ratio));
+//	}
+//	else
 		view.setViewport(sf::FloatRect(0.0f,0.0f,1.2f,1.0f));
 		
 view.reset(sf::FloatRect(0,0,(PIXEL_WIDTH), (PIXEL_WIDTH*aspect_ratio)));
@@ -41,7 +41,13 @@ void Renderer::draw(sf::Drawable & d)
 
 void Renderer::addDrawable(sf::Drawable & d)
 {
-	drawables.push_back(&d);
+    drawables.push_back(&d);
+}
+
+void Renderer::removeDrawable(sf::Drawable &d)
+{
+    auto iter = std::find(drawables.begin(), drawables.end(), &d);
+    drawables.erase(iter);
 }
 
 void Renderer::drawAll()

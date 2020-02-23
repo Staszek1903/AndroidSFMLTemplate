@@ -1,25 +1,29 @@
 #include "program.h"
- Program::Program():win(sf::VideoMode::getDesktopMode(), "title"), console_button(10, 50, 50,
-															  50)
+ Program::Program():win(sf::VideoMode::getDesktopMode(), "title")
 {
-
+    //win.setMouseCursorVisible(false);
 	Console::set_window(&win);
 	Console::get();
-        Renderer::setWindow(win);
+    Console::get().show(false);
+    Renderer::setWindow(win);
 	Renderer::get();
-        console_button.setFillColor(sf::Color(0, 0, 0, 128));
-        console_button.setHandler([](const TouchEvent & ev){
-            static bool shown = true;
-            if (ev.state == TouchEvent::END)
-            {
-                shown = !shown;
-                Console::get() << "Console BUTTON" << shown << "\n";
-                Console::get().show(shown);
-            }
-        });
 
-        win.setFramerateLimit(30);
-        Renderer::get().addDrawable(console_button);
+    console_button.create(10, 50, 50,
+                          50);
+
+    console_button.setFillColor(sf::Color(0, 0, 0, 128));
+    console_button.setHandler([](const TouchEvent & ev){
+        static bool shown = false;
+        if (ev.state == TouchEvent::END)
+        {
+            shown = !shown;
+            //Console::get() << "Console BUTTON" << shown << "\n";
+            Console::get().show(shown);
+        }
+    });
+
+    win.setFramerateLimit(100);
+//    Renderer::get().addDrawable(console_button);
 
 	// auto mode = sf::VideoMode::getDesktopMode();
 	// float aspect_ratio = (float)mode.height / (float)mode.width; 
@@ -58,6 +62,8 @@ void Program::run()
 		}
 
     }
+
+    /// PROGRAM STAGE RELEASE !!!!!!!!!!!!!!!!!!!!
 }
 
 sf::RenderWindow &Program::get_window()
@@ -115,6 +121,13 @@ void Program::input()
 
 		case sf::Event::KeyPressed:
 			TouchBuffer::get().emit(KeyboardEvent(ev.key.code, KeyboardEvent::PRESSED));
+            if(ev.key.code == sf::Keyboard::F12){
+                    static bool shown = false;
+                    shown = !shown;
+                    Console::get().show(shown);
+            }else if (ev.key.code == sf::Keyboard::Escape){
+                win.close();
+            }
 			break;
 
 		case sf::Event::KeyReleased:
@@ -139,8 +152,9 @@ void Program::render()
 	shape.setSize(sf::Vector2f(1000, 1000));
 	win.draw(shape);
 
-	ProgramStage::render_stage(win);
-	Renderer::get().drawAll();
+    Renderer::get().drawAll();
+    ProgramStage::render_stage(win);
+
 	Console::get().display();
 	win.display();
 }
