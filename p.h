@@ -15,6 +15,8 @@
 #include "PlatformerStuff/steeringmanager.h"
 #include "IOStuff/line.h"
 
+#include "EntityStuff/pool.hpp"
+
 class P : public ProgramStage 
 {
     sf::RenderWindow & win;

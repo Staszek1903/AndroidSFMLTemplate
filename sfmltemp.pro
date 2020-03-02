@@ -45,6 +45,7 @@ SOURCES += \
 HEADERS += \
     EntityStuff/event.h \
     EntityStuff/eventmanager.h \
+    EntityStuff/pool.hpp \
     EntityStuff/sizemap.h \
     IOStuff/console.h \
     IOStuff/line.h \

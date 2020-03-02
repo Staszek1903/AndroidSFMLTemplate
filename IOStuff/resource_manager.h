@@ -8,14 +8,19 @@
 template < class T >
 class ResourceManager:public Singleton < ResourceManager<T> >
 {
-    ResourceManager();
-    ~ResourceManager();
-    friend Singleton < ResourceManager > ;
+protected:
+
 
     std::vector <T> resource;
     std::map < std::string, size_t > ids;
 
 public:
+
+    ResourceManager();
+    ~ResourceManager();
+    friend Singleton < ResourceManager > ;
+
+
     T & push( std::string id);
 
     size_t get_index(std::string id);

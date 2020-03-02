@@ -6,12 +6,15 @@ P::P(sf::RenderWindow &win) : win(win)
  P::~P()
  {}
 
-/* struct Position
+ struct Position
  {
-     Position(float x, float y) : x(x), y(y) {}
-     float x,y;
+     Position(){std::cout<<"default c-tor"<<std::endl;}
+     Position(float x, float y) : x(x), y(y) {std::cout<<"argument c-tor"<<std::endl;}
+     ~Position(){std::cout<<"d-tor"<<std::endl;}
+     float x{0},y{0};
  };
 
+ /*
  struct Texture
  {
      Texture( size_t index ) : index(index) {}
@@ -46,6 +49,7 @@ P::P(sf::RenderWindow &win) : win(win)
  
  void P::init()
  {
+
  	Console::get()<<"P::init\n";
     auto & tex_resource = ResourceManager<sf::Texture>::get();
 

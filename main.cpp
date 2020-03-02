@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory.h>
 #include <iostream>
+#include <unistd.h>
 
 int main()
 {
@@ -45,10 +46,13 @@ int main()
 
     return 0;
 */
+
+    std::cout<<"cur brk "<<sbrk(0)<<std::endl;
     Program p;
     ProgramStage::next_stage<P>(p.get_window());
 
     p.run();
-	
+
+    std::cout<<"cur brk "<<sbrk(0)<<std::endl;
 	return 0;
 }
