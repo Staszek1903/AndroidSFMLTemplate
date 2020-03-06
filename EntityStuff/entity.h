@@ -34,11 +34,17 @@ namespace stuff {
         RawID id{EmptyID};
 
     public:
+        Entity();
+        Entity(RawID id);
+        Entity(const Entity & en);
+        Entity& operator=(const Entity & en);
+
         void create();
 
         void destroy();
 
         bool isValid();
+        RawID getRawID();
 
         template<class T, class ... Args>
         T& assign(Args&& ... args);
@@ -49,7 +55,8 @@ namespace stuff {
         template<class T>
         bool hasComponent();
 
-        bool hasComponents(TypeMask mask);
+        template <class ... Args>
+        bool hasComponents();
 
         template<class T>
         T& component();
@@ -100,10 +107,27 @@ namespace stuff {
     template<class T>
     inline bool Entity::hasComponent()
     {
+        if(id == stuff::EmptyID)
+            throw std::runtime_error("entity non existent");
+
+        stuff::TypeMask mask = Component<T>::getTypeMask();
         EntityData & data = stuff::Pool< EntityData >::get()[id];
         if(!data.valid)
             throw std::runtime_error("entity data invalid");
-        return (Component<T>::getTypeMask() | data.components_mask);
+        return (mask & data.components_mask);
+    }
+
+    template <class ... Args>
+    inline bool Entity::hasComponents()
+    {
+        if(id == stuff::EmptyID)
+            throw std::runtime_error("entity non existent");
+
+        stuff::TypeMask mask = getComponentsTypeMask<Args...>();
+        EntityData & data = stuff::Pool< EntityData >::get()[id];
+        if(!data.valid)
+            throw std::runtime_error("entity data invalid");
+        return ((data.components_mask & mask) == mask);
     }
 
     template<class T>
@@ -128,9 +152,12 @@ namespace stuff {
     template <class ... Args >
     void forEntitiesWithComponents(const std::function<void(Entity)> &func){
         TypeMask mask = getComponentsTypeMask<Args...>();
-        for(auto & data : Pool<EntityData>::get() ){
-            //if(data.valid && (data.components_mask & mask))
-             //   func();
+        stuff::Pool<EntityData>::ID it = stuff::Pool<EntityData>::get().begin();
+        stuff::Pool<EntityData>::ID it_end = stuff::Pool<EntityData>::get().end();
+        for(; it != it_end; ++it ){
+            stuff::Entity en(it.getRaw());
+            if(en.isValid() && en.hasComponents<Args...>()) //(it->components_mask & mask)==mask))
+                func(en);
         }
     }
 }

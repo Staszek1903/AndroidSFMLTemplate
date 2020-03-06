@@ -25,6 +25,16 @@
 //    e_manager.realeaseEntity(entity_data_index);
 //}
 
+stuff::Entity::Entity(){}
+
+stuff::Entity::Entity(stuff::RawID id)
+    :id(id)
+{}
+
+stuff::Entity::Entity(const stuff::Entity &en)
+    :id(en.id)
+{}
+
 void stuff::Entity::create()
 {
     if(id != EmptyID)
@@ -47,14 +57,9 @@ bool stuff::Entity::isValid()
     return data.valid;
 }
 
-bool stuff::Entity::hasComponents(stuff::TypeMask mask)
+stuff::RawID stuff::Entity::getRawID()
 {
-    if(id == stuff::EmptyID)
-        throw std::runtime_error("entity non existent");
-    EntityData & data = stuff::Pool< EntityData >::get()[id];
-    if(!data.valid)
-        throw std::runtime_error("entity data invalid");
-    return ((data.components_mask & mask) == mask);
+    return id;
 }
 
 stuff::EntityData::EntityData()

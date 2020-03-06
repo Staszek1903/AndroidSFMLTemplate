@@ -1,5 +1,5 @@
-//#ifndef EVENT_H_
-//#define EVENT_H_
+#ifndef EVENT_H_
+#define EVENT_H_
 
 //#include <cstdlib>
 //#include "../IOStuff/console.h"
@@ -62,4 +62,5 @@
 //	if(!id) id = assign_next_id();
 //	return id;
 //}
-//#endif /* EVENT_H_ */
+
+#endif /* EVENT_H_ */

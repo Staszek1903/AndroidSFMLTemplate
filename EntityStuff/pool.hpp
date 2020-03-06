@@ -40,6 +40,7 @@ namespace stuff {
             T& operator*() const;
             T* operator->() const;
             bool operator==(const ID & rhs);
+            bool operator!=(const ID & rhs);
 
             RawID getRaw();
 
@@ -80,7 +81,7 @@ namespace stuff {
         }
 
         ID end(){
-            return ID(last_used);
+            return ID(last_used+1);
         }
     };
 
@@ -205,9 +206,15 @@ namespace stuff {
     }
 
     template<class T>
-    bool Pool<T>::ID::operator==(const Pool<T>::ID &rhs)
+    inline bool Pool<T>::ID::operator==(const Pool<T>::ID &rhs)
     {
         return this->id == rhs.id;
+    }
+
+    template<class T>
+    inline bool Pool<T>::ID::operator!=(const Pool<T>::ID &rhs)
+    {
+        return this->id != rhs.id;
     }
 
     template<class T>
