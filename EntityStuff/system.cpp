@@ -1,5 +1,5 @@
-#include "system.h"
+//#include "system.h"
 
-System::System(){;}
+//System::System(){;}
 
-System::~System(){;}
+//System::~System(){;}
