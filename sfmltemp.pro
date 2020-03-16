@@ -10,10 +10,8 @@ LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 DEFINES += DEBUG_BUILD
 
 SOURCES += \
-    EntityStuff/componentcontainer.cpp \
     EntityStuff/event.cpp \
-    EntityStuff/eventmanager.cpp \
-    EntityStuff/sizemap.cpp \
+    EntityStuff/pool.cpp \
     IOStuff/console.cpp \
     IOStuff/line.cpp \
     IOStuff/program.cpp \
@@ -34,19 +32,12 @@ SOURCES += \
     ScriptStuff/scriptentry.cpp \
     main.cpp \
     p.cpp \
-    EntityStuff/system.cpp \
     EntityStuff/entity.cpp \
-    EntityStuff/entitymanager.cpp \
-    EntityStuff/componentmanager.cpp \
-    EntityStuff/entity_stuff.cpp \
-    EntityStuff/systemmanager.cpp \
     EntityStuff/component.cpp
 
 HEADERS += \
-    EntityStuff/event.h \
-    EntityStuff/eventmanager.h \
+    EntityStuff/event.hpp \
     EntityStuff/pool.hpp \
-    EntityStuff/sizemap.h \
     IOStuff/console.h \
     IOStuff/line.h \
     IOStuff/program.h \
@@ -70,14 +61,8 @@ HEADERS += \
     ScriptStuff/script.h \
     ScriptStuff/scriptentry.h \
     p.h \
-    EntityStuff/system.h \
-    EntityStuff/entity_stuff.h \
     EntityStuff/entity.h \
-    EntityStuff/entitymanager.h \
-    EntityStuff/component.h \
-    EntityStuff/systemmanager.h \
-    EntityStuff/componentmanager.h \
-    EntityStuff/componentcontainer.h
+    EntityStuff/component.h
 
 DISTFILES += \
     Arial.ttf \

@@ -1,19 +1,9 @@
-//#include "event.h"
+#include "event.hpp"
 
-//size_t BaseEvent::next_id = 1;
+std::vector< stuff::Event* >  stuff::Event::instances_ptr;
 
-//BaseEvent::BaseEvent(size_t id )
-//	: current_id(id) {;}
-//BaseEvent::~BaseEvent(){;}
-
-//size_t BaseEvent::assign_next_id()
-//{
-//	size_t temp_id = next_id;
-//	next_id <<= 1;
-//	return temp_id;
-//}
-
-//size_t BaseEvent::get_id()
-//{
-//	return current_id;
-//}
+void stuff::Event::resetHandlers()
+{
+    for(Event * ptr : instances_ptr)
+        ptr->reset();
+}

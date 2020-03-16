@@ -23,7 +23,7 @@ public:
  template < class T>
   T& Singleton<T>::get()
   {
-    //if(!instance) instance = new T();
+    if(!instance) instance = std::make_unique<T>();
   	return *instance;
   }
   

@@ -3,18 +3,18 @@
 
 #include "component.h"
 #include "pool.hpp"
-#include "entitymanager.h"
 #include <vector>
 #include <exception>
 #include <sstream>
 #include <limits>
 #include <functional>
 
-
-//TODO assign, unasign exceptions
-
 namespace stuff {
 
+    /**
+     * @brief The EntityData class - contains component ids data and components mask,
+     * used by Entity interface, should not by instantiated explicitly
+     */
     class EntityData{
     public:
         EntityData();
@@ -27,11 +27,17 @@ namespace stuff {
 
         bool valid{false};
         RawID components_ids[MAX_COMPONENT_TYPE_ID];
+
         unsigned int components_mask{0};
     };
 
+    /**
+     * @brief The Entity class unique number binding entity components, interface for component manipulations
+     */
     class Entity{
         RawID id{EmptyID};
+
+        static Pools * pools[MAX_COMPONENT_TYPE_ID];
 
     public:
         Entity();
@@ -39,25 +45,67 @@ namespace stuff {
         Entity(const Entity & en);
         Entity& operator=(const Entity & en);
 
+        /**
+         * @brief create - allocates memory for new entity and assigns new entity id
+         * cannot call create() on existing id, should detach explicitly first
+         */
         void create();
 
+        /**
+         * @brief detach - unbinds Entity from existing id;
+         */
+        void detach();
+
+        /**
+         * @brief destroy - deallocates entity data and all its components, frees and detaches id
+         * @todo free coresponding component data
+         */
         void destroy();
 
+        /**
+         * @brief isValid checks if entity id coresponds to existing data
+         * @return
+         */
         bool isValid();
+
         RawID getRawID();
 
+        /**
+         * @brief create component of type T and bind it to entity
+         * @tparam T - component type
+         * @tparam Args - components constructor argument types
+         * @param args - components constructor arguments
+         */
         template<class T, class ... Args>
         T& assign(Args&& ... args);
 
+        /**
+         *  @brief destroy and unbind component of en entity
+         *  @tparam T - components type
+         */
         template<class T>
         void unassign();
 
+        /**
+         * @brief chech if entity is binded to component if that type
+         * @tparam T - component type
+         * @return true if is binded, false otherwise
+         */
         template<class T>
         bool hasComponent();
 
+        /**
+         *  @brief same as hasComponet but for multiple components
+         *  @tparam Args - template parameter pack of component types;
+         */
         template <class ... Args>
         bool hasComponents();
 
+        /**
+         * @brief component access methode
+         * @tparam T - component type
+         * @return reference to component of entity of given type
+         */
         template<class T>
         T& component();
     };
@@ -80,6 +128,8 @@ namespace stuff {
         TypeID t_id = Component<T>::getTypeID();
         RawID c_id = Pool<T>::get().allocate(std::forward<Args>(args) ... ).getRaw();
         data.components_ids[t_id] = c_id;
+        pools[t_id] = &(Pool<T>::get());
+
         return Pool<T>::get()[c_id];
     }
 
@@ -161,110 +211,5 @@ namespace stuff {
         }
     }
 }
-
-///**
-//	* Wraper for entity data from EntityManager
-//	*/
-//class Entity
-//{
-//    size_t entity_data_index;
-
-//    EntityManager & e_manager;
-
-//public:
-//	/**
-//		* Creates empty object
-//		* @param manager - entity manager
-//		*/
-//    Entity(EntityManager & manager);
-//   /**
-//   	* Creaates object bound to entity
-//   	* @param data_index - index of entity data in entity manager
-//   	* @param em - entity manager
-//   	*/
-//    Entity(size_t data_index, EntityManager & em);
-//	virtual ~Entity();
-	
-//	/**
-//		* creates new id for entity within this object
-//		*/
-//    void create();
-	
-//	/**
-//		* alocates new component of type C and assidns it to this entity
-//		* @param args - Component arguments/
-//		*/
-//       template<class C, class ... Args>
-//    Component<C> assign(Args&& ... args);
-	
-//	/**
-//		* unassigns and releases component
-//		*/
-//	template <class C>
-//	void unassign();
-	
-//	/**
-//		* releases entity id and all of its components
-//		*/
-//	void release();
-	
-//	/**
-//		* @return component wraper for component assigned to this entity
-//		*/
-//    template< class C >
-//    Component<C> component();
-//};
-
-//template<typename  C, typename ... Args>
-//Component<C> Entity::assign(Args&& ... args)
-//{
-//    size_t mask = Component<C>::get_mask();
-//    EntityData * data = e_manager.get_entity_data_ptr(entity_data_index);
-
-//    if(!data) throw std::runtime_error("inexistent data_index");
-
-//    std::stringstream e_id;
-//    e_id<<data->entity_id;
-
-//    if(mask & data->component_mask)
-//        throw std::runtime_error(std::string("Entity::assign entity <")+ e_id.str() +
-//                                 "> allredy contains component " + typeid(C).name());
-//    if(!data->entity_id)
-//        throw std::runtime_error("cannot assign component to non existent entity");
-
-//    data->component_mask |= mask;
-//    auto component = e_manager.addComponent<C>(data->entity_id);
-//    C& c = component.getComponent();
-//    c = C(std::forward<Args>(args) ...);
-
-//    return component;
-//}
-
-//template <class C>
-//void Entity::unassign()
-//{
-//	size_t mask = Component<C>::get_mask();
-//    EntityData * data = e_manager.get_entity_data_ptr(entity_data_index);
-
-//    if(!data) throw std::runtime_error("inexistent data_index");
-
-//    std::stringstream e_id;
-//    e_id<<data->entity_id;
-
-//    if(!(mask & data->component_mask))
-//        throw std::runtime_error(std::string("Entity::assign entity <")+ e_id.str() +
-//                                 "> does not contain  component " + typeid(C).name());
-//    if(!data->entity_id)
-//        throw std::runtime_error("cannot unassign component from non existent entity");
-        
-//    e_manager.releaseComponent<C>(data->entity_id);
-//    data->component_mask &= ~mask;
-//}
-
-//template<class C>
-//Component<C> Entity::component()
-//{
-//    return e_manager.getComponent<C>(e_manager.get_entity_data_ptr(entity_data_index)->entity_id);
-//}
 
 #endif
