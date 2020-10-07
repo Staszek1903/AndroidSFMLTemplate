@@ -15,10 +15,11 @@ struct Description
 class UI
 {
 	std::vector <Touchable* > nodes;
+    void addNode(Touchable * t );
 public:
 	UI();
 	~UI();
-	void addNode(Touchable * t );
+
 	void createDefault();
     size_t getSize(){return nodes.size();}
 	

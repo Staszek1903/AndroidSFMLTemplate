@@ -31,6 +31,7 @@ SOURCES += \
     ScriptStuff/script.cpp \
     ScriptStuff/scriptentry.cpp \
     main.cpp \
+    menu.cpp \
     p.cpp \
     EntityStuff/entity.cpp \
     EntityStuff/component.cpp
@@ -60,6 +61,7 @@ HEADERS += \
     ScriptStuff/parser.h \
     ScriptStuff/script.h \
     ScriptStuff/scriptentry.h \
+    menu.h \
     p.h \
     EntityStuff/entity.h \
     EntityStuff/component.h

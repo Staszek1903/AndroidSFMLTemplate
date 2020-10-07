@@ -1,5 +1,7 @@
 #include "p.h"
 
+#include "menu.h"
+
 P::P(sf::RenderWindow &win) : win(win)
 {}
  
@@ -13,42 +15,11 @@ P::P(sf::RenderWindow &win) : win(win)
      ~Position(){std::cout<<"d-tor"<<std::endl;}
      float x{0},y{0};
  };
-
- /*
- struct Texture
- {
-     Texture( size_t index ) : index(index) {}
-     size_t index;
- };
-
- class RenderSystem : public System
- {
-     sf::RenderWindow & win;
- public:
-     RenderSystem(sf::RenderWindow & win) : win(win){}
-     ~RenderSystem(){}
- protected:
-     virtual void update(EntityManager & em, EventManager & vm, double dt) override
-     {
-        auto & rm = ResourceManager<sf::Texture>::get();
- int x = 100;
-        for(Entity en : get_entities<Position, Texture>(em))
-        {
-            auto pos = en.component<Position>();
-            auto texture = en.component<Texture>();
-            sf::Texture & tex = rm.get_resource(texture->index);
-            sf::Sprite sprite;
-            sprite.setTexture(tex);
-            sprite.setPosition(sf::Vector2f(x, 100));
-            x+=32;
-            win.draw(sprite);
-        }
-    }
-
- };*/
  
  void P::init()
  {
+
+    texture.loadFromFile("./textures/button.png");
 
  	Console::get()<<"P::init\n";
     auto & tex_resource = ResourceManager<sf::Texture>::get();
@@ -83,6 +54,8 @@ P::P(sf::RenderWindow &win) : win(win)
             steering.setState(SteeringManager::JUMP);
         //Console::get()<<"JUMP "<<steering.getState()<<"\n";
     });
+
+    ui.setHandler(UI::BUTTON, [](const TouchEvent & ev){ ProgramStage::next_stage<Menu>(); });
 
     steering.setNominal_velocity(100);
     steering.setJump_velocity(300);

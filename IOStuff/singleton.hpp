@@ -18,7 +18,7 @@ public:
 };
 
  template <class T>
- std::unique_ptr<T> Singleton<T>::instance = std::make_unique<T>();
+ std::unique_ptr<T> Singleton<T>::instance;// = std::make_unique<T>();
  
  template < class T>
   T& Singleton<T>::get()

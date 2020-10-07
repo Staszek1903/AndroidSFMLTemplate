@@ -25,6 +25,7 @@ class P : public ProgramStage
     TileMap tile_map;
     Colidable hero;
     SteeringManager steering;
+    sf::Texture texture;
 
 public:
     P(sf::RenderWindow & win);

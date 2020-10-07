@@ -8,17 +8,21 @@ class ProgramStage
 {
 	static std::unique_ptr<ProgramStage> next;
 	static std::unique_ptr<ProgramStage> current;
+
+protected:
+    static sf::RenderWindow * win;
 	
 public:
-	ProgramStage();
+    ProgramStage();
 	virtual ~ProgramStage();
     template<class T, class ... Args>
     static void next_stage(Args && ... args);
 	
-	static void switch_stage();
-	static void input_stage(sf::Event &ev);
-	static void update_stage(double dt);
-	static void render_stage(sf::RenderWindow & win);
+    static void setWindow(sf::RenderWindow & window);
+    static void switch_stage();
+    static void input_stage(sf::Event &ev);
+    static void update_stage(double dt);
+    static void render_stage(sf::RenderWindow & win);
 	 
 	
 	virtual void init() = 0;

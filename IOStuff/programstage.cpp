@@ -5,11 +5,18 @@ std::unique_ptr<ProgramStage> ProgramStage::next;
 
 std::unique_ptr<ProgramStage> ProgramStage::current;
 
+sf::RenderWindow * ProgramStage::win = nullptr;
+
 ProgramStage::ProgramStage()
 {}
 
 ProgramStage::~ProgramStage()
 {}
+
+void ProgramStage::setWindow(sf::RenderWindow &window)
+{
+    win = &window;
+}
 
 void ProgramStage::switch_stage()
 {

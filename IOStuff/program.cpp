@@ -49,14 +49,14 @@ void Program::run()
 		{
 			ProgramStage::switch_stage();
 			input();
-            ProgramStage::update_stage(1.0/30.0);
+            ProgramStage::update_stage(1.0/60.0);
 			render();
 		}
 		catch(std::exception & exc)
 		{
 
             //error_generate(exc.what());
-			Console::get() << "EXCEPTION:\n " << exc.what() << "\n PRESS ANY KEY TO PROCEED\n";
+            Console::get() << "EXCEPTION:\n " << exc.what() << "\n PRESS ANY KEY TO PROCEED\n PRESS ESCAPE TO END PROGRAM\n";
 			render();
 			halt_for_input();
 		}

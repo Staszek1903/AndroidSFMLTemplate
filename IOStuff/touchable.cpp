@@ -9,12 +9,7 @@ Touchable::Touchable()
 Touchable::Touchable(float x, float y, float w, float h)
 	:handler(nullptr)
 {
-	TouchBuffer::get().addHandler(*this);
-    Renderer::get().addDrawable(*this);
-	//Renderer::get().addDrawable(*this);
-	setPosition(x,y);
-	create_rect(w,h);
-    setFillColor(sf::Color::Black);
+    create(x,y,w,h);
 }
 
 Touchable::Touchable(float x, float y, const std::vector<sf::Vector2f > &points)
@@ -31,7 +26,7 @@ void Touchable::create(float x, float y, float w, float h)
 {
     TouchBuffer::get().addHandler(*this);
     Renderer::get().addDrawable(*this);
-    //Renderer::get().addDrawable(*this);
+
     setPosition(x,y);
     create_rect(w,h);
     setFillColor(sf::Color::Black);
@@ -56,12 +51,12 @@ void Touchable::handle(const TouchEvent & ev)
 
 std::size_t Touchable::getPointCount() const
 {
-	return points.size();
+    return points.size();
 }
 
 sf::Vector2f Touchable::getPoint(std::size_t i) const
 {
-	return points.at(i);
+    return points.at(i);
 }
 
 void Touchable::create_rect(float w, float h)
@@ -73,22 +68,23 @@ void Touchable::create_rect(float w, float h)
 	update();
 }
 	
-void Touchable::draw(sf::RenderTarget & target, sf::RenderStates states) const
-{
-    const size_t size = points.size();
-    sf::VertexArray array(sf::TriangleFan, size);
+//void Touchable::draw(sf::RenderTarget & target, sf::RenderStates states) const
+//{
+//    //sf::Shape::draw(target,states);
+////    const size_t size = points.size();
+////    sf::VertexArray array(sf::TriangleFan, size);
 	
-	states.transform = getTransform();
-	states.texture = getTexture();
+////	states.transform = getTransform();
+////	states.texture = getTexture();
 	
-    for(size_t i=0; i<size; ++i)
-	{
-		array[i].position = points.at(i);
-		array[i].color = getFillColor();
-	}
+////    for(size_t i=0; i<size; ++i)
+////	{
+////		array[i].position = points.at(i);
+////		array[i].color = getFillColor();
+////	}
 	
-    target.draw(array, states);
-}
+////    target.draw(array, states);
+//}
 
 void Touchable::setHandler(std::function<void (const TouchEvent &)> h)
 {

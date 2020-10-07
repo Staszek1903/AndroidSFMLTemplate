@@ -26,7 +26,6 @@ UI::~UI()
 void UI::addNode( Touchable * t )
 {
 	nodes.push_back(t);
-	Renderer::get().addDrawable(*t);
 }
 
 void UI::createDefault()
